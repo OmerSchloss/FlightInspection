@@ -5,8 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="500" Width="733.6">
+    <Grid x:Name="grd_main" Margin="0,0,3.2,0.4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="167*"/>
+            <RowDefinition Height="195*"/>
+            <RowDefinition Height="53*"/>
+            <RowDefinition Height="55*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions> 
+            <ColumnDefinition Width="242*"/>
+            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="229*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="list_features" Grid.Row="0" Grid.Column="0" Margin="13,26,20.4,25.4" Grid.RowSpan="2"/>
+        <Grid x:Name="grd_cor_data" Grid.Row="0" Grid.Column="1" Margin="12.6,6,10.2,11.2"/>
+        <!--   http://csharphelper.com/blog/2014/09/draw-graph-wpf-c/   -->
+        <Canvas x:Name="graph_features" Grid.Row="1" Grid.Column="1" Margin="11.6,1.8,9.2,10.4" />
 
-    </Grid>
+        <Canvas Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
+            <Ellipse x:Name ="Joystick" Fill="#FFF4F4F5" Height="100" Canvas.Left="76" Stroke="Black" Canvas.Top="29" Width="100"/>
+            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="102" Stroke="Black" Canvas.Top="54" Width="50"/>
+
+            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5"/>
+            <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" ValueChanged="Slider_ValueChanged_1" Height="122" Canvas.Left="35" Canvas.Top="10"/>
+        </Canvas>
+
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,0.6,15,0.2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140*"/>
+                <ColumnDefinition Width="300*"/>
+                <ColumnDefinition Width="110*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="90*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Open" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="10,3,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="122">
+                <Button.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="RoyalBlue" Offset="0"/>
+                        <GradientStop Color="DarkSlateBlue" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
+            </Button>
+            <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="27.2,5,21.2,0" VerticalAlignment="Top" Width="Auto">
+                <Button x:Name="btn_play_start" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_backward" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_play" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_pause" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_stop" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_forward" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+                <Button x:Name="btn_end" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+
+            </StackPanel>
+            <Label Content="Play speed" Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Height="Auto" Margin="2.2,3,0,2" HorizontalAlignment="Left" Width="109"/>
+            <TextBox  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0" Margin="2.4,8,7.8,13" RenderTransformOrigin="1.173,0.532" />
+            <Label Grid.Row="0" Grid.Column="4" Content="00:00:00" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="0.2,6,0.2,10" RenderTransformOrigin="1.144,0.542"/>
+
+
+        </Grid>
+        <Slider Grid.Row="3" Margin="31,7.8,14,18.4" Grid.ColumnSpan="3" ValueChanged="Slider_ValueChanged"/>
+
+
+
+    </Grid >
 </Window>

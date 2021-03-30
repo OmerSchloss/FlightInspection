@@ -24,5 +24,25 @@ namespace FlightInspection
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void list_features_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }
