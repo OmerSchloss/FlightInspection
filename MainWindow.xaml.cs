@@ -11,8 +11,6 @@ namespace FlightInspection
         public MainWindow()
         {
             InitializeComponent();
-            Example examp = new Example();
-            examp.printHello();
 
         }
 
