@@ -1,7 +1,7 @@
-﻿using Microsoft.Win32;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 
 namespace FlightInspection
 {
@@ -12,6 +12,7 @@ namespace FlightInspection
     {
         public MainWindow()
         {
+
             InitializeComponent();
 
         }
