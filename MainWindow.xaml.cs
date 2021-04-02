@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace FlightInspection
@@ -16,7 +18,9 @@ namespace FlightInspection
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+                File.ReadAllText(openFileDialog.FileName); // text(string) location
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
