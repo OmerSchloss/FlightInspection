@@ -25,9 +25,9 @@
 
         <Canvas Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
             <Ellipse x:Name ="Joystick" Fill="#FFF4F4F5" Height="100" Canvas.Left="76" Stroke="Black" Canvas.Top="29" Width="100"/>
-            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="102" Stroke="Black" Canvas.Top="54" Width="50"/>
+			<Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="102" Stroke="Black" Canvas.Top="54" Width="50" />
 
-            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5"/>
+			<Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5"/>
             <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" ValueChanged="Slider_ValueChanged_1" Height="122" Canvas.Left="35" Canvas.Top="10"/>
         </Canvas>
 
@@ -39,24 +39,38 @@
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="90*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Open" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="10,3,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="122">
-                <Button.Background>
-                    <RadialGradientBrush>
-                        <GradientStop Color="RoyalBlue" Offset="0"/>
-                        <GradientStop Color="DarkSlateBlue" Offset="1"/>
-                    </RadialGradientBrush>
-                </Button.Background>
-            </Button>
+			<Button Content="Open" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="10,3,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="122" Foreground="White">
+				<Button.Background>
+					<RadialGradientBrush>
+						<GradientStop Color="SteelBlue" Offset="0"/>
+						<GradientStop Color="Black" Offset="3"/>
+					</RadialGradientBrush>
+				</Button.Background>
+			</Button>
             <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="27.2,5,21.2,0" VerticalAlignment="Top" Width="Auto">
-                <Button x:Name="btn_play_start" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_backward" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_play" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_pause" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_stop" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_forward" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
-                <Button x:Name="btn_end" Content="Bton" HorizontalAlignment="Left" Height="35" Width="Auto"/>
+				<Button x:Name="btn_play_start" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/play_start.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_backward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/backward.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_play" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/play.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_pause" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/pause.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_stop" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/stop.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_forward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+				    <Image Source="/images/forward.png" Width="32" />
+				</Button>
+				<Button x:Name="btn_end" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+					<Image Source="/images/end.png" Width="32" />
+				</Button>
 
-            </StackPanel>
+			</StackPanel>
             <Label Content="Play speed" Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Height="Auto" Margin="2.2,3,0,2" HorizontalAlignment="Left" Width="109"/>
             <TextBox  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0" Margin="2.4,8,7.8,13" RenderTransformOrigin="1.173,0.532" />
             <Label Grid.Row="0" Grid.Column="4" Content="00:00:00" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="0.2,6,0.2,10" RenderTransformOrigin="1.144,0.542"/>
