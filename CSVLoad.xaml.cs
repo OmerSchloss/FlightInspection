@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using Microsoft.Win32;
 
 namespace FlightInspection
@@ -8,9 +9,11 @@ namespace FlightInspection
     /// </summary>
     public partial class CSVLoad : Window
     {
+        private int counter;
         public CSVLoad()
         {
             InitializeComponent();
+            counter = 0;
         }
 
         private void ChooseFileButton(object sender, RoutedEventArgs e)
@@ -18,8 +21,9 @@ namespace FlightInspection
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
-                textbox_file_path.Text = openFileDialog.FileName; // text(string) location
+                filePath.Text = openFileDialog.FileName; // text(string) location
         }
+
 
 
         private void ContinueButton(object sender, RoutedEventArgs e)
@@ -27,12 +31,18 @@ namespace FlightInspection
 
         }
 
-        private void TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void FilePathChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            if (textbox_file_path.Text.Contains(".csv"))
-            {
-                Continue.IsEnabled = true;
-            }
+            if (filePath.Text.Contains(".csv")) counter++;
+
+        }
+
+
+        private void VerifiedButton(object sender, RoutedEventArgs e)
+        {
+            string xmlFile = "C:\\Program Files\\FlightGear 2020.3.6\\data\\Protocol\\playback_small.xml";
+            if (File.Exists(xmlFile)) counter++;
+            if (counter == 2) Continue.IsEnabled = true;
         }
     }
 }

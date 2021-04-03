@@ -5,20 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="CSVLoad" Height="322.009" Width="550">
+        Title="CSVLoad" Height="364.009" Width="573">
     <Window.Resources>
         <SolidColorBrush x:Key="Brush1" Color="#FFAE2727"/>
     </Window.Resources>
-    <StackPanel HorizontalAlignment="Left" Width="540" >
-        <StackPanel.Background>
-            <ImageBrush ImageSource="/images/airplane.JPG"/>
-        </StackPanel.Background>
 
-        <TextBlock HorizontalAlignment="Center" FontSize ="35" Cursor="None" ><Run  Text="Welcom to Flight Inspection" FontFamily="Impact" FontSize="36"/></TextBlock>
-        <TextBlock FontSize ="15" Height="27" Margin="27,40,190,0" TextWrapping="Wrap" Text="Please choose a CSV file for starting the App" FontWeight="Bold"/>
-        <TextBox x:Name="textbox_file_path" Height="23" TextWrapping="Wrap" Text="Type your path here" Margin="27,0,200.8,0" RenderTransformOrigin="1.083,0.466" TextChanged="TextChanged"/>
-        <Button x:Name ="ChooseFile"  Content="Choose file" Margin="350,-20,119,0" Click="ChooseFileButton"/>
-        <Button x:Name ="Continue"  IsEnabled="False" Content="Continue" HorizontalAlignment="Left" Height="24" Margin="465,125,0,0" Width="68" Click="ContinueButton"/>
+    <Grid x:Name ="OpeningWindow" HorizontalAlignment="Left" Height="333" VerticalAlignment="Top" Width="563">
+        <Grid.Background>
+            <ImageBrush ImageSource="airplane.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="81*"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="158*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Center" FontSize ="35"  FontFamily="Impact" Margin="44,10,47,0" TextWrapping="Wrap" Text="Welcome to Flight Inspection" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="472" TextAlignment="Center" Height="45"/>
+        <TextBlock HorizontalAlignment="Left" FontSize ="15" Margin="19,5,0,49" TextWrapping="Wrap" Text="Please choose a CSV file for starting the App" FontWeight="Bold" Grid.ColumnSpan="2" Width="341" Grid.Row="1"/>
+        <TextBox x:Name="filePath" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="Type your path here or choose a file" Margin="19,33,59,36" RenderTransformOrigin="1.083,0.466" TextChanged="FilePathChanged" Grid.Row="1"/>
+        <Button x:Name ="ChooseFile" Grid.ColumnSpan="2" Content="Choose a file" Grid.Column="1" HorizontalAlignment="Left" Margin="196,33,0,0" Grid.Row="1" VerticalAlignment="Top" Width="79" Height="22" Click="ChooseFileButton"/>
+        <Button  x:Name ="Continue" Grid.Column="2"  IsEnabled="False" Content="Continue" HorizontalAlignment="Left" Margin="89,124,0,10" Width="68" Click="ContinueButton" Grid.Row="2"/>
+        <TextBlock HorizontalAlignment="Left" FontSize ="15" Margin="19,64,0,0" Grid.Row="1" TextWrapping="Wrap" Text="Verify that you have the correct XML file in the following path:" VerticalAlignment="Top" FontWeight="Bold" Grid.ColumnSpan="3" Width="456" Height="20"/>
+        <TextBox x:Name="xmlPath" IsEnabled="False" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="21" Margin="19,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="C:\Program Files\FlightGear 2020.3.6\data\Protocol" VerticalAlignment="Top" Width="318" />
+        <Button x:Name="Verified" Grid.ColumnSpan="2" Content="Verified" Grid.Column="1" HorizontalAlignment="Left" Margin="196,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="79" Click="VerifiedButton"/>
 
-    </StackPanel>
+    </Grid>
+
 </Window>
