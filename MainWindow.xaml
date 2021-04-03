@@ -55,7 +55,11 @@
                     <Image Source="/images/backward.png" Width="32" />
                 </Button>
                 <Button x:Name="btn_play" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/play.png" Width="32" />
+                    <Image Source="/images/play.png" Width="32" >
+                        <Image.OpacityMask>
+                            <ImageBrush/>
+                        </Image.OpacityMask>
+                    </Image>
                 </Button>
                 <Button x:Name="btn_pause" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
                     <Image Source="/images/pause.png" Width="32" />

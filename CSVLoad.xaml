@@ -10,19 +10,15 @@
         <SolidColorBrush x:Key="Brush1" Color="#FFAE2727"/>
     </Window.Resources>
     <StackPanel HorizontalAlignment="Left" Width="540" >
-        <TextBlock HorizontalAlignment="Center" FontSize ="35" Cursor="None" Foreground="#FF2B2727" ><Run  Text="Welcom to Flight Inspection" FontFamily="Impact" FontSize="36" Background="#FFFDFDFD"/></TextBlock>
+        <StackPanel.Background>
+            <ImageBrush ImageSource="/images/airplane.JPG"/>
+        </StackPanel.Background>
 
-        <TextBlock FontSize ="15" Height="27" Margin="27,60,196.8,0" TextWrapping="Wrap" Text="Please enter a CSV Path for starting the App" FontWeight="Bold"/>
-        <TextBox x:Name="textbox_file_path" Height="23" TextWrapping="Wrap" Text="Type your path here" Margin="27,0,200.8,0" RenderTransformOrigin="1.083,0.466" TextChanged="TextBox_TextChanged"/>
-        <Button Content="Apply" Margin="250,10,200.8,0" Click="Apply_Button_Click">
-            <Button.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="SteelBlue" Offset="0"/>
-                    <GradientStop Color="#FF302A2A" Offset="1"/>
-                </RadialGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button Content="Continue" HorizontalAlignment="Left" Height="31" Margin="400,50,0,0" Width="84" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Center" FontSize ="35" Cursor="None" ><Run  Text="Welcom to Flight Inspection" FontFamily="Impact" FontSize="36"/></TextBlock>
+        <TextBlock FontSize ="15" Height="27" Margin="27,40,190,0" TextWrapping="Wrap" Text="Please choose a CSV file for starting the App" FontWeight="Bold"/>
+        <TextBox x:Name="textbox_file_path" Height="23" TextWrapping="Wrap" Text="Type your path here" Margin="27,0,200.8,0" RenderTransformOrigin="1.083,0.466" TextChanged="TextChanged"/>
+        <Button x:Name ="ChooseFile"  Content="Choose file" Margin="350,-20,119,0" Click="ChooseFileButton"/>
+        <Button x:Name ="Continue"  IsEnabled="False" Content="Continue" HorizontalAlignment="Left" Height="24" Margin="465,125,0,0" Width="68" Click="ContinueButton"/>
 
     </StackPanel>
 </Window>

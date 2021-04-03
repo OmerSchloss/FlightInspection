@@ -1,6 +1,5 @@
-﻿using Microsoft.Win32;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Win32;
 
 namespace FlightInspection
 {
@@ -14,9 +13,7 @@ namespace FlightInspection
             InitializeComponent();
         }
 
-
-
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void ChooseFileButton(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
@@ -24,14 +21,18 @@ namespace FlightInspection
                 textbox_file_path.Text = openFileDialog.FileName; // text(string) location
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void ContinueButton(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-
+            if (textbox_file_path.Text.Contains(".csv"))
+            {
+                Continue.IsEnabled = true;
+            }
         }
     }
 }
