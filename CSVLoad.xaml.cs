@@ -9,6 +9,8 @@ namespace FlightInspection
     /// </summary>
     public partial class CSVLoad : Window
     {
+
+        
         private int counter;
         public CSVLoad()
         {
@@ -29,6 +31,7 @@ namespace FlightInspection
         private void ContinueButton(object sender, RoutedEventArgs e)
         {
 
+          
         }
 
         private void FilePathChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)

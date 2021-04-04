@@ -55,6 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FlightgearModel.cs" />
+    <Compile Include="FlightgearViewModel.cs" />
+    <Compile Include="NotifyPropertyChanged.cs" />
+    <Compile Include="PropertyChangedEventHandler.cs" />
+    <Compile Include="TelnetClient.cs" />
     <Page Include="CSVLoad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -10,11 +10,14 @@ namespace FlightInspection
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        FlightgearViewModel viewModel;
         public MainWindow()
         {
 
             InitializeComponent();
-
+            viewModel = new FlightgearViewModel(new FlightgearModel(new TelnetClient()));
+            DataContext = viewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
