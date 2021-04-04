@@ -30,12 +30,12 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" FontSize ="35"  FontFamily="Impact" Margin="0,17,41.2,20.8" TextWrapping="Wrap" Text="Welcome to Flight Inspection" Width="472" TextAlignment="Center"/>
 
         <TextBlock x:Name="textChooseXml" Grid.Row="1" Grid.Column="0" FontSize ="15" TextWrapping="Wrap" Text="Please copy the playback XML file to FlightGear\data\Protocol directory and choose the file:" FontWeight="Bold" Margin="10,18,19.8,2" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="xmlPath" Grid.Row="2" Grid.Column="0" Text="Type your path here or choose a file" TextChanged="xmlPath_TextChanged" Margin="10,4.2,8.8,15.6" />
-        <Button x:Name="Verified" Grid.Row="2" Grid.Column="1" Content="Choose xml file"  Click="VerifiedButton" Margin="6.2,4.2,3.8,16.6"/>
+        <TextBox x:Name="xmlPath" Grid.Row="2" Grid.Column="0" Text="Type your path here or choose a file" TextChanged="XMLPathChanged" Margin="10,4.2,8.8,15.6" />
+        <Button x:Name="Verified" Grid.Row="2" Grid.Column="1" Content="Choose xml file"  Click="ChooseXMLButton" Margin="6.2,4.2,3.8,16.6"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" FontSize ="15" Margin="10,3.4,2.8,43.8" TextWrapping="Wrap" Text="Please choose a CSV file for starting the App" FontWeight="Bold" Grid.RowSpan="2"/>
-        <TextBox x:Name="filePath" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Margin="10,9.2,8.8,10.8" Text="Type your path here or choose a file" TextChanged="FilePathChanged" />
-        <Button x:Name ="ChooseFile" Grid.Row="4" Grid.Column="1" Content="Choose csv file" Click="ChooseFileButton" Margin="7.2,9.2,2.8,12.8"/>
+        <TextBox x:Name="csvPath" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Margin="10,9.2,8.8,10.8" Text="Type your path here or choose a file" TextChanged="CSVPathChanged" />
+        <Button x:Name ="ChooseFile" Grid.Row="4" Grid.Column="1" Content="Choose csv file" Click="ChooseCSVButton" Margin="7.2,9.2,2.8,12.8"/>
 
         <Button Grid.Row="5" Grid.Column="1" x:Name ="Continue"  IsEnabled="False" Content="Continue" Click="ContinueButton" Margin="76.2,29.2,18.2,27.8" Grid.ColumnSpan="2"/>
 

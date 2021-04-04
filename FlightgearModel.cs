@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlightInspection
+﻿namespace FlightInspection
 {
     class FlightgearModel : NotifyPropertyChanged
     {
 
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
-        volatile Boolean stop;
+        //volatile Boolean stop;
 
         public FlightgearModel(TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
-            stop = false;
+            //stop = false;
         }
         //public void connect(string ip, int port)
         //{
