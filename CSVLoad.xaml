@@ -37,7 +37,7 @@
         <TextBox x:Name="csvPath" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Margin="10,9,9,13" Text="Type your path here or choose a file" TextChanged="CSVPathChanged" />
         <Button x:Name ="ChooseFile" Grid.Row="4" Grid.Column="1" Content="Choose csv file" Click="ChooseCSVButton" Margin="7.2,9.2,2.8,12.8"/>
 
-        <Button Grid.Row="5" Grid.Column="1" x:Name ="Continue"  IsEnabled="False" Content="Start" Click="StartButton" Margin="72,64,10,10" Grid.ColumnSpan="2"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name ="Continue"  IsEnabled="False" Content="Start" Click="ContinueButton" Margin="72,64,10,10" Grid.ColumnSpan="2"/>
 
     </Grid>
 

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -38,13 +37,13 @@ namespace FlightInspection
 
         private void ContinueButton(object sender, RoutedEventArgs e)
         {
-            List<string> featuresList = new List<string>();
+            /*List<string> featuresList = new List<string>();
             CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
             csvFromXaml.setFeaturesFromXml(xmlPath.Text);
-            csvFromXaml.createNewCSV(csvPath.Text);
+            csvFromXaml.createNewCSV(csvPath.Text);*/
 
             this.Hide();
-            MainWindow mainWindow = new MainWindow(xmlPath.Text, csvPath.Text);
+            MainWindow mainWindow = new MainWindow(csvPath.Text);
             mainWindow.ShowDialog();
             this.Show();
 
