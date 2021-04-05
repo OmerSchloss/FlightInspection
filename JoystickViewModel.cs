@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FlightInspection
 {
-    class FlightgearViewModel : NotifyPropertyChanged
+    class JoystickViewModel : NotifyPropertyChanged
     {
         private FlightgearModel model;
         //public event PropertyChangedEventHandler PropertyChanged;
-        public FlightgearViewModel(FlightgearModel model)
+        public JoystickViewModel(FlightgearModel model)
         {
             this.model = model;
             //model.PropertyChanged +=
@@ -19,6 +19,12 @@ namespace FlightInspection
             //    };
         }
 
+
+        public float elevator
+        {
+            get { return (0 * 50) + 30; }
+            set { }
+        }
 
         //public void NotifyPropertyChanged(string propName) { ...} //means the model has been changed
 

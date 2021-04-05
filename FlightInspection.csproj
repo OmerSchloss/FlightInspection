@@ -57,7 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="CSVHandler.cs" />
     <Compile Include="FlightgearModel.cs" />
-    <Compile Include="FlightgearViewModel.cs" />
+    <Compile Include="JoystickViewModel.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="PropertyChangedEventHandler.cs" />
     <Compile Include="TelnetClient.cs" />
@@ -106,6 +106,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include=".editorconfig" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

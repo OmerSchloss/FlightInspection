@@ -43,15 +43,15 @@ namespace FlightInspection
             csvFromXaml.createNewCSV(csvPath.Text);*/
 
             this.Hide();
-            MainWindow mainWindow = new MainWindow(csvPath.Text);
+            MainWindow mainWindow = new MainWindow(csvPath.Text, xmlPath.Text);
             mainWindow.ShowDialog();
             this.Show();
 
         }
-
+        
         private void ChooseXMLButton(object sender, RoutedEventArgs e)
         {
-
+                                                  
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "XML files (*.xml)|*.xml";
             if (openFileDialog.ShowDialog() == true)

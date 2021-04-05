@@ -7,3 +7,35 @@
 
     </Application.Resources>
 </Application>
+
+<!-- JoystickViewModel joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, new TelnetClient()));
+    string csvPath
+flightTable =     10000
+public float elevator {
+    get { return (model.elevator * 50) + 30; }
+    set { }
+}
+currentLineNumber
+    
+   fld
+    
+UserControl1 joystickView;
+    
+public float elevator {
+    get { 
+    this.csvHandler.getFeatureValueByLineAndColumn(this.currentTime, getColumnByFeature("elevator"));
+    }
+    set { }
+}
+    canvas_joystick.children.Add(joystickView);
+    
+float.Parse(
+private int getColumnByFeature(string feature){
+    int i = 0;
+    for (; i < this.featuresList.Count; i++) {
+        if this.featuresList[i].Equals(feature)
+            return i;
+    }
+    return -1;
+}
+-->

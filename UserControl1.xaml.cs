@@ -20,9 +20,18 @@ namespace FlightInspection
     /// </summary>
     public partial class UserControl1 : UserControl
     {
-        public UserControl1()
+
+        JoystickViewModel joystickViewModel;
+        public UserControl1(string csvPath, string xmlPath)
         {
             InitializeComponent();
+            joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, xmlPath, new TelnetClient()));
+            DataContext = joystickViewModel;
+        }
+
+        private void joystick_sides_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
         }
     }
 }

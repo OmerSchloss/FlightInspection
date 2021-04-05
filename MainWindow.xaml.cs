@@ -11,16 +11,19 @@ namespace FlightInspection
     public partial class MainWindow : Window
     {
 
-        FlightgearViewModel viewModel;
+        JoystickViewModel viewModel;
+        UserControl1 joystickView;
+
         private string xmlPath;
         private string csvPath;
 
-        public MainWindow(string csvPath)
+        public MainWindow(string csvPath, string xmlPath)
         {
 
             InitializeComponent();
-            viewModel = new FlightgearViewModel(new FlightgearModel(csvPath, new TelnetClient()));
-            DataContext = viewModel;
+            joystickView = new UserControl1(csvPath,xmlPath);
+            canvas_joystick.Children.Add(joystickView);
+
         }
 
 
@@ -42,6 +45,11 @@ namespace FlightInspection
         }
 
         private void Slider_ValueChanged_1(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
+
+        private void UserControl1_Loaded(object sender, RoutedEventArgs e)
         {
 
         }

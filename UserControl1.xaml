@@ -4,9 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightInspection"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="102" Stroke="Black" Canvas.Top="54" Width="50" />
+             mc:Ignorable="d" Height="170.6" Width="208.8">
+    <Grid Margin="0,0,566,285.6">
+        <Canvas HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="223">
+            <Ellipse x:Name ="Joystick" Fill="#FFF4F4F5" Height="100" Canvas.Left="76" Stroke="Black" Canvas.Top="29" Width="100"/>
+            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="101" Stroke="Black" Canvas.Top="{Binding elevator}" Width="50" />
+
+            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5"/>
+            <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" Height="122" Canvas.Left="35" Canvas.Top="10"/>
+        </Canvas>
     </Grid>
 </UserControl>

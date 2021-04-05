@@ -22,15 +22,13 @@
         <Grid x:Name="grd_cor_data" Grid.Row="0" Grid.Column="1" Margin="12.6,6,10.2,11.2"/>
         <!--   http://csharphelper.com/blog/2014/09/draw-graph-wpf-c/   -->
         <Canvas x:Name="graph_features" Grid.Row="1" Grid.Column="1" Margin="11.6,1.8,9.2,10.4" />
+        
 
-        <Canvas Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
-            <Ellipse x:Name ="Joystick" Fill="#FFF4F4F5" Height="100" Canvas.Left="76" Stroke="Black" Canvas.Top="29" Width="100"/>
-            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="102" Stroke="Black" Canvas.Top="54" Width="50" />
-
-            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5"/>
-            <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" ValueChanged="Slider_ValueChanged_1" Height="122" Canvas.Left="35" Canvas.Top="10"/>
+        
+        <Canvas x:Name="canvas_joystick" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
+            
         </Canvas>
-
+        
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,0.6,15,0.2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140*"/>
