@@ -10,11 +10,10 @@ namespace FlightInspection
     /// </summary>
     public partial class CSVLoad : Window
     {
-        private string xmlFile;
         public CSVLoad()
         {
             InitializeComponent();
-            this.xmlFile = "C:\\Program Files\\FlightGear 2020.3.6\\data\\Protocol\\playback_small.xml";
+            string xmlFile = "C:\\Program Files\\FlightGear 2020.3.6\\data\\Protocol\\playback_small.xml";
 
 
             if (File.Exists(xmlFile))
@@ -41,9 +40,13 @@ namespace FlightInspection
         {
             List<string> featuresList = new List<string>();
             CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
-            csvFromXaml.setFeaturesFromXml(this.xmlFile);
+            csvFromXaml.setFeaturesFromXml(xmlPath.Text);
             csvFromXaml.createNewCSV(csvPath.Text);
 
+            this.Hide();
+            MainWindow mainWindow = new MainWindow(xmlPath.Text, csvPath.Text);
+            mainWindow.ShowDialog();
+            this.Show();
 
         }
 
