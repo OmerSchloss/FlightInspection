@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="CSVLoad" Height="364.009" Width="569.667">
+        Title="CSVLoad" Height="394.009" Width="596.667">
     <Window.Resources>
         <SolidColorBrush x:Key="Brush1" Color="#FFAE2727"/>
     </Window.Resources>
 
-    <Grid x:Name ="OpeningWindow" HorizontalAlignment="Left" Height="333" VerticalAlignment="Top" Width="563">
+    <Grid x:Name ="OpeningWindow" HorizontalAlignment="Left" Height="365" VerticalAlignment="Top" Width="587">
         <Grid.Background>
             <ImageBrush ImageSource="airplane.jpg"/>
         </Grid.Background>
@@ -31,13 +31,13 @@
 
         <TextBlock x:Name="textChooseXml" Grid.Row="1" Grid.Column="0" FontSize ="15" TextWrapping="Wrap" Text="Please copy the playback XML file to FlightGear\data\Protocol directory and choose the file:" FontWeight="Bold" Margin="10,18,19.8,2" Grid.ColumnSpan="2"/>
         <TextBox x:Name="xmlPath" Grid.Row="2" Grid.Column="0" Text="Type your path here or choose a file" TextChanged="XMLPathChanged" Margin="10,4.2,8.8,15.6" />
-        <Button x:Name="Verified" Grid.Row="2" Grid.Column="1" Content="Choose xml file"  Click="ChooseXMLButton" Margin="6.2,4.2,3.8,16.6"/>
+        <Button x:Name="Verified" Grid.Row="2" Grid.Column="1" Content="Choose xml file"  Click="ChooseXMLButton" Margin="6,4,4,16"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="0" FontSize ="15" Margin="10,3.4,2.8,43.8" TextWrapping="Wrap" Text="Please choose a CSV file for starting the App" FontWeight="Bold" Grid.RowSpan="2"/>
-        <TextBox x:Name="csvPath" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Margin="10,9.2,8.8,10.8" Text="Type your path here or choose a file" TextChanged="CSVPathChanged" />
+        <TextBlock Grid.Row="3" Grid.Column="0" FontSize ="15" Margin="10,3.4,2.8,43.8" TextWrapping="Wrap" Text="Please choose a CSV file" FontWeight="Bold" Grid.RowSpan="2"/>
+        <TextBox x:Name="csvPath" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Margin="10,9,9,13" Text="Type your path here or choose a file" TextChanged="CSVPathChanged" />
         <Button x:Name ="ChooseFile" Grid.Row="4" Grid.Column="1" Content="Choose csv file" Click="ChooseCSVButton" Margin="7.2,9.2,2.8,12.8"/>
 
-        <Button Grid.Row="5" Grid.Column="1" x:Name ="Continue"  IsEnabled="False" Content="Continue" Click="ContinueButton" Margin="76.2,29.2,18.2,27.8" Grid.ColumnSpan="2"/>
+        <Button Grid.Row="5" Grid.Column="1" x:Name ="Continue"  IsEnabled="False" Content="Start" Click="StartButton" Margin="72,64,10,10" Grid.ColumnSpan="2"/>
 
     </Grid>
 

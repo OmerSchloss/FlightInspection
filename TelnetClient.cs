@@ -3,17 +3,24 @@
     class TelnetClient
     {
 
-        void connect(string ip, int port)
+        public void connect(string ip, int port)
         {
 
         }
 
 
-        void disconnect()
+        public void disconnect()
         {
 
         }
+        public void write(string command)
+        {
 
+        }
+        public string read()
+        {
+            return null;
+        }
 
     }
 }

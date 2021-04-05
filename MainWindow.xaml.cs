@@ -12,11 +12,11 @@ namespace FlightInspection
     {
 
         FlightgearViewModel viewModel;
-        public MainWindow()
+        public MainWindow(string csvPath)
         {
 
             InitializeComponent();
-            viewModel = new FlightgearViewModel(new FlightgearModel(new TelnetClient()));
+            viewModel = new FlightgearViewModel(new FlightgearModel(csvPath, new TelnetClient()));
             DataContext = viewModel;
         }
 

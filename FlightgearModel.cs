@@ -6,10 +6,14 @@
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
         //volatile Boolean stop;
+        private CSVHandler csvHandler;
+        private string csvPath;
 
-        public FlightgearModel(TelnetClient telnetClient)
+        public FlightgearModel(string csvPath, TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
+            this.csvPath = csvPath;
+            this.csvHandler = new CSVHandler(csvPath);
             //stop = false;
         }
         //public void connect(string ip, int port)

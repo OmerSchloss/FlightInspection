@@ -79,7 +79,7 @@
 
 
         </Grid>
-        <Slider Grid.Row="3" Margin="40,5,5,21" Grid.ColumnSpan="3" ValueChanged="Slider_ValueChanged"/>
+        <Slider Grid.Row="3" Margin="30,16,15,10" Grid.ColumnSpan="3" ValueChanged="Slider_ValueChanged" LargeChange="1" IsMoveToPointEnabled="True"/>
 
 
 

@@ -14,9 +14,8 @@ namespace FlightInspection
         public CSVLoad()
         {
             InitializeComponent();
+
             this.xmlFile = "C:\\Program Files\\FlightGear 2020.3.6\\data\\Protocol\\playback_small.xml";
-
-
             if (File.Exists(xmlFile))
             {
                 xmlPath.Text = xmlFile;
@@ -37,12 +36,19 @@ namespace FlightInspection
 
 
 
-        private void ContinueButton(object sender, RoutedEventArgs e)
+        private void StartButton(object sender, RoutedEventArgs e)
         {
-            List<string> featuresList = new List<string>();
-            CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
-            csvFromXaml.setFeaturesFromXml(this.xmlFile);
-            csvFromXaml.createNewCSV(csvPath.Text);
+            /* List<string> featuresList = new List<string>();
+             CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
+             this.xmlFile = xmlPath.Text;
+             csvFromXaml.setFeaturesFromXml(this.xmlFile);
+             csvFromXaml.createNewCSV(csvPath.Text);*/
+            CSVHandler csvHandler = new CSVHandler(csvPath.Text);
+            List<string> strings = csvHandler.csvParser();
+            this.Hide();
+            MainWindow mainWindow = new MainWindow(csvPath.Text);
+            mainWindow.ShowDialog();
+            this.Show();
 
 
         }
@@ -59,7 +65,8 @@ namespace FlightInspection
         private void XMLPathChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (csvPath == null || xmlPath == null || Continue == null) return;
-            if (csvPath.Text.Contains(".csv") && xmlPath.Text.Contains(".xml"))
+            if (csvPath.Text.Contains(".csv") && xmlPath.Text.Contains(".xml") && xmlPath.Text.Contains("data\\Protocol")
+)
                 Continue.IsEnabled = true;
             else
                 Continue.IsEnabled = false;
@@ -67,7 +74,8 @@ namespace FlightInspection
         private void CSVPathChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (csvPath == null || xmlPath == null || Continue == null) return;
-            if (csvPath.Text.Contains(".csv") && xmlPath.Text.Contains(".xml"))
+            if (csvPath.Text.Contains(".csv") && xmlPath.Text.Contains(".xml") && xmlPath.Text.Contains("data\\Protocol")
+)
                 Continue.IsEnabled = true;
             else
                 Continue.IsEnabled = false;
