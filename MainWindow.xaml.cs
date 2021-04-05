@@ -11,9 +11,6 @@ namespace FlightInspection
     public partial class MainWindow : Window
     {
 
-        JoystickViewModel viewModel;
-        UserControl1 joystickView;
-
         private string xmlPath;
         private string csvPath;
 
@@ -23,8 +20,8 @@ namespace FlightInspection
             InitializeComponent();
             this.xmlPath = xml;
             this.csvPath = csv;
-            joystickView = new UserControl1(csvPath,xmlPath);
-            canvas_joystick.Children.Add(joystickView);
+            JoystickView joystickview = new JoystickView(csvPath,xmlPath);
+            canvas_joystick.Children.Add(joystickview);
             MediaPanelView mediaPanelView = new MediaPanelView(csvPath, xmlPath);
             grd_media_panel.Children.Add(mediaPanelView);
 

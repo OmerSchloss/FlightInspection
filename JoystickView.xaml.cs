@@ -16,22 +16,18 @@ using System.Windows.Shapes;
 namespace FlightInspection
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for JoystickView.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    public partial class JoystickView : UserControl
     {
 
         JoystickViewModel joystickViewModel;
-        public UserControl1(string csvPath, string xmlPath)
+        public JoystickView(string csvPath, string xmlPath)
         {
             InitializeComponent();
+
             joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, xmlPath, new TelnetClient()));
             DataContext = joystickViewModel;
-        }
-
-        private void joystick_sides_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
         }
     }
 }

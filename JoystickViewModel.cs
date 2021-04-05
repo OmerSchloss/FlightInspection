@@ -22,7 +22,24 @@ namespace FlightInspection
 
         public float elevator
         {
-            get { return (0 * 50) + 30; }
+            get { return (model.elevator * 25) + 55; }
+            set { }
+        }
+        public float aileron
+        {
+            get { return (model.aileron * 25) + 90; }
+            set { }
+        }
+
+        public float rudder
+        {
+            get { return model.rudder; }
+            set { }
+        }
+
+        public float throttle
+        {
+            get { return model.throttle; }
             set { }
         }
 

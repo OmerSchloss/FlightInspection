@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 
 
@@ -22,12 +23,13 @@ namespace FlightInspection
         {
             this.telnetClient = telnetClient;
             this.csvPath = csvPath;
+            this.featuresList = new List<string>();
             this.csvHandler = new CSVHandler(csvPath);
             this.xmlPath = xmlPath;
             this.setFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
-            this.currentLineNumber = 0;
+            this.currentLineNumber = 1490;
 
             //stop = false;
         }
@@ -41,6 +43,32 @@ namespace FlightInspection
             set { }
         }
 
+        public float aileron
+        {
+            get
+            {
+                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("aileron"));
+            }
+            set { }
+        }
+
+        public float rudder
+        {
+            get
+            {
+                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("rudder"));
+            }
+            set { }
+        }
+
+        public float throttle
+        {
+            get
+            {
+                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("throttle"));
+            }
+            set { }
+        }
         public bool connect(string ip, int port)
         {
             if (telnetClient.connect(ip, port))
@@ -73,21 +101,21 @@ namespace FlightInspection
         private void setFeaturesFromXml()
         {
 
-            //XmlDocument xmlDoc = new XmlDocument();
-            //xmlDoc.Load(this.xmlPath);
-            //XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(this.xmlPath);
+            XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
 
 
-            //int i = 0;
+            int i = 0;
 
-            //while (i < featuresNames.Count)
-            //{
-            //    this.featuresList.Add(featuresNames[i].InnerText);
-            //    i++;
-            //    if (featuresNames[i].InnerText.Equals("aileron")) break;
+            while (i < featuresNames.Count)
+            {
+                this.featuresList.Add(featuresNames[i].InnerText);
+                i++;
+                if (featuresNames[i].InnerText.Equals("aileron")) break;
 
-            //}
-            //this.featuresList.TrimExcess();
+            }
+            this.featuresList.TrimExcess();
         }
 
         private int getColumnByFeature(string feature)
@@ -96,7 +124,12 @@ namespace FlightInspection
             for (; i < this.featuresList.Count; i++)
             {
                 if (this.featuresList[i].Equals(feature))
+                {
+                    //Console.WriteLine(feature);
+
+                    //Console.WriteLine(i);
                     return i;
+                }
             }
             return -1;
         }
