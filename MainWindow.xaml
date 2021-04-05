@@ -10,8 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="167*"/>
             <RowDefinition Height="195*"/>
-            <RowDefinition Height="53*"/>
-            <RowDefinition Height="55*"/>
+            <RowDefinition Height="109*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="242*"/>
@@ -28,57 +27,9 @@
         <Canvas x:Name="canvas_joystick" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
             
         </Canvas>
-        
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,0.6,15,0.2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="140*"/>
-                <ColumnDefinition Width="300*"/>
-                <ColumnDefinition Width="110*"/>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="90*"/>
-            </Grid.ColumnDefinitions>
-            <Button Content="Open" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="10,3,0,10" Click="Button_Click" HorizontalAlignment="Left" Width="122" Foreground="White">
-                <Button.Background>
-                    <RadialGradientBrush>
-                        <GradientStop Color="SteelBlue" Offset="0"/>
-                        <GradientStop Color="#FF302A2A" Offset="3"/>
-                    </RadialGradientBrush>
-                </Button.Background>
-            </Button>
-            <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="27.2,5,21.2,0" VerticalAlignment="Top" Width="Auto">
-                <Button x:Name="btn_play_start" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/play_start.png" Width="32" />
-                </Button>
-                <Button x:Name="btn_backward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/backward.png" Width="32" />
-                </Button>
-                <Button x:Name="btn_play" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/play.png" Width="32" >
-
-                    </Image>
-                </Button>
-                <Button x:Name="btn_pause" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/pause.png" Width="32" />
-                </Button>
-                <Button x:Name="btn_stop" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/stop.png" Width="32" />
-                </Button>
-                <Button x:Name="btn_forward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/forward.png" Width="32" />
-                </Button>
-                <Button x:Name="btn_end" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
-                    <Image Source="/images/end.png" Width="32" />
-                </Button>
-
-            </StackPanel>
-            <Label Content="Play speed" Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Height="Auto" Margin="2.2,3,0,2" HorizontalAlignment="Left" Width="109"/>
-            <TextBox  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0" Margin="2.4,8,7.8,13" RenderTransformOrigin="1.173,0.532" />
-            <Label Grid.Row="0" Grid.Column="4" Content="00:00:00" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="0.2,6,0.2,10" RenderTransformOrigin="1.144,0.542"/>
-
+        <Grid x:Name="grd_media_panel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
 
         </Grid>
-        <Slider Grid.Row="3" Margin="30,16,15,10" Grid.ColumnSpan="3" ValueChanged="Slider_ValueChanged" LargeChange="1" IsMoveToPointEnabled="True"/>
-
 
 
     </Grid >

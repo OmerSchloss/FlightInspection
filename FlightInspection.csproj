@@ -58,6 +58,10 @@
     <Compile Include="CSVHandler.cs" />
     <Compile Include="FlightgearModel.cs" />
     <Compile Include="JoystickViewModel.cs" />
+    <Compile Include="MediaPanelView.xaml.cs">
+      <DependentUpon>MediaPanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaPanelViewModel.cs" />
     <Compile Include="NotifyPropertyChanged.cs" />
     <Compile Include="PropertyChangedEventHandler.cs" />
     <Compile Include="TelnetClient.cs" />
@@ -83,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MediaPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

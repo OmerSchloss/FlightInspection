@@ -9,26 +9,28 @@ namespace FlightInspection
     class CSVHandler
     {
         private List<string> featuresList;
+        private List<string> linesList;
         private string csvPath;
-        int numOfLines;
-        int numOfColumns;
-        private float[][] flightTable;
+        private int numOfLines;
+        private int numOfColumns;
+        private float [,]flightTable;
 
 
         public CSVHandler(string csvPath)
         {
             
             this.csvPath = csvPath;
+            this.linesList = this.csvParser();
             this.tableSize();
-            this.create2DArrayFromCsv();
-
+            //this.create2DArrayFromCsv();
+            //flightTable = new float[numOfLines,numOfColumns];
         }
 
         public float getFeatureValueByLineAndColumn(int line, int column)
         {
-            return this.flightTable[line][column];
+            return float.Parse(this.linesList[line].Split(',')[column]);
         }
-
+        /*
         private void create2DArrayFromCsv()
         {
             int timeLine = 0;
@@ -43,12 +45,12 @@ namespace FlightInspection
                 string[] parts = line.Split(',');
                 for (int i = 0; i < parts.Length; i++)
                 {
-                    this.flightTable[timeLine][i] = float.Parse(parts[i]);
+                    this.flightTable[timeLine,i] = float.Parse(parts[i]);
                 }
                 timeLine++;
             }
         }
-
+        */
 
         public void tableSize()
         {

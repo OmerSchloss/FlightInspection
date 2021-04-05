@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="FlightInspection.MediaPanelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:FlightInspection"
+             mc:Ignorable="d" d:DesignWidth="800" Height="100.8">
+    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,1,15,0" Height="61" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="140*"/>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="110*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="90*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btn_connect"  Content="Connect to fg" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="15" FontWeight="SemiBold" Margin="10,3,0.4,10" Click="Btn_connect_Click" Foreground="White">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="SteelBlue" Offset="0"/>
+                    <GradientStop Color="#FF302A2A" Offset="3"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="27.2,5,21.2,0" VerticalAlignment="Top" Width="Auto">
+            <Button x:Name="btn_play_start" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/play_start.png" Width="32" />
+            </Button>
+            <Button x:Name="btn_backward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/backward.png" Width="32" />
+            </Button>
+            <Button x:Name="btn_play"  HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/play.png" Width="32" >
+                </Image>
+            </Button>
+            <Button x:Name="btn_pause" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/pause.png" Width="32" />
+            </Button>
+            <Button x:Name="btn_stop" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/stop.png" Width="32" />
+            </Button>
+            <Button x:Name="btn_forward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/forward.png" Width="32" />
+            </Button>
+            <Button x:Name="btn_end" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+                <Image Source="/images/end.png" Width="32" />
+            </Button>
+
+        </StackPanel>
+        <Label Content="Play speed" Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Height="Auto" Margin="2.2,3,0,2" HorizontalAlignment="Left" Width="109"/>
+        <TextBox  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0" Margin="2.4,8,7.8,13" RenderTransformOrigin="1.173,0.532" />
+        <Label Grid.Row="0" Grid.Column="4" Content="00:00:00" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="0.2,6,0.2,10" RenderTransformOrigin="1.144,0.542"/>
+
+
+        <Slider Margin="50,62,0.2,-37" Grid.Column="0" Grid.ColumnSpan="5" LargeChange="1" IsMoveToPointEnabled="True"/>
+
+    </Grid>
+</UserControl>

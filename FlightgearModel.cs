@@ -28,10 +28,10 @@ namespace FlightInspection
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
             this.currentLineNumber = 0;
-            
+
             //stop = false;
         }
-             
+
         public float elevator
         {
             get
@@ -40,6 +40,35 @@ namespace FlightInspection
             }
             set { }
         }
+
+        public bool connect(string ip, int port)
+        {
+            if (telnetClient.connect(ip, port))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void disconnect()
+        {
+            //stop = true;
+            telnetClient.disconnect();
+        }
+
+
+        //public void start()
+        //{
+        //    newThread(delegate () {
+        //        while (!stop)
+        //        {
+        //            telnetClient.write("get left sonar");
+        //            LeftSonar = Double.Parse(telnetClient.read());
+        //            // the same for the other sensors propertiesThread.Sleep(250);
+        //            // read the data in 4Hz
+        //        }
+        //    }).Start();
+        //}
 
         private void setFeaturesFromXml()
         {
@@ -95,6 +124,6 @@ namespace FlightInspection
         //        }
         //    }).Start();
         //}
-        
+
     }
 }

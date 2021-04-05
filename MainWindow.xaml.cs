@@ -17,13 +17,23 @@ namespace FlightInspection
         private string xmlPath;
         private string csvPath;
 
-        public MainWindow(string csvPath, string xmlPath)
+        public MainWindow(string csv, string xml)
         {
 
             InitializeComponent();
+            this.xmlPath = xml;
+            this.csvPath = csv;
             joystickView = new UserControl1(csvPath,xmlPath);
             canvas_joystick.Children.Add(joystickView);
+            MediaPanelView mediaPanelView = new MediaPanelView(csvPath, xmlPath);
+            grd_media_panel.Children.Add(mediaPanelView);
 
+
+            //DataContext = mediaPanel;
+            /*List<string> featuresList = new List<string>();
+            CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
+            csvFromXaml.setFeaturesFromXml(xmlPath.Text);
+            csvFromXaml.createNewCSV(csvPath.Text);*/
         }
 
 
