@@ -25,8 +25,11 @@ namespace FlightInspection
         public JoystickView(string csvPath, string xmlPath)
         {
             InitializeComponent();
+        }
 
-            joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, xmlPath, new TelnetClient()));
+        internal void setFlightgearModel(FlightgearModel flightgearModel)
+        {
+            joystickViewModel = new JoystickViewModel(flightgearModel);
             DataContext = joystickViewModel;
         }
     }

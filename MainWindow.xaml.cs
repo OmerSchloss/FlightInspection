@@ -13,6 +13,8 @@ namespace FlightInspection
 
         private string xmlPath;
         private string csvPath;
+        private FlightgearModel flightgearModel;
+        private TelnetClient tClient;
 
         public MainWindow(string csv, string xml)
         {
@@ -20,11 +22,24 @@ namespace FlightInspection
             InitializeComponent();
             this.xmlPath = xml;
             this.csvPath = csv;
+
+            tClient = new TelnetClient();
+            flightgearModel = new FlightgearModel(csvPath, xmlPath, tClient);
+
+
             JoystickView joystickview = new JoystickView(csvPath,xmlPath);
+            joystickview.setFlightgearModel(flightgearModel);
             canvas_joystick.Children.Add(joystickview);
-            MediaPanelView mediaPanelView = new MediaPanelView(csvPath, xmlPath);
+
+            MediaPanelView mediaPanelView = new MediaPanelView();
+            mediaPanelView.setFlightgearModel(flightgearModel);
             grd_media_panel.Children.Add(mediaPanelView);
 
+
+
+            FeaturesView featuresView = new FeaturesView();
+            featuresView.setFlightgearModel(flightgearModel);
+            grd_feature_view.Children.Add(featuresView);
 
             //DataContext = mediaPanel;
             /*List<string> featuresList = new List<string>();

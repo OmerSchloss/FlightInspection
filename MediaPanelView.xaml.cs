@@ -24,15 +24,19 @@ namespace FlightInspection
         private bool isConnected;
         private bool isPlayed;
         private MediaPanelViewModel mediaViewModel;
-        private TelnetClient tClient;
 
-        public MediaPanelView(string csvPath , string xmlPath)
+        public MediaPanelView()
         {
             InitializeComponent();
             isConnected = false;
-            tClient = new TelnetClient();
-            mediaViewModel = new MediaPanelViewModel( new FlightgearModel(csvPath,xmlPath,tClient ));
             isPlayed = false;
+           //sliderTime.Maximum =
+        }
+
+        internal void setFlightgearModel(FlightgearModel flightgearModel)
+        {
+            mediaViewModel = new MediaPanelViewModel(flightgearModel);
+            DataContext = mediaViewModel;
         }
 
         private void Btn_connect_Click(object sender, RoutedEventArgs e)
@@ -51,8 +55,13 @@ namespace FlightInspection
                 {
                     MessageBox.Show("connected");
 
-                    btn_connect.Content = "stop Connection";
+                    btn_connect.Content = "Stop connection";
                     isConnected = true;
+                }
+                else
+                {
+                    MessageBox.Show("Connection failed!");
+                    isConnected = false;
                 }
             }
             else
@@ -75,6 +84,11 @@ namespace FlightInspection
         private void btn_pause_Click(object sender, RoutedEventArgs e)
         {
             isPlayed = false;
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
         }
     }
 }

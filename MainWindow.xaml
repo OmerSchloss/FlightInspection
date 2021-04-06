@@ -17,19 +17,19 @@
             <ColumnDefinition Width="253*"/>
             <ColumnDefinition Width="229*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="list_features" Grid.Row="0" Grid.Column="0" Margin="13,26,20.4,25.4" Grid.RowSpan="2"/>
         <Grid x:Name="grd_cor_data" Grid.Row="0" Grid.Column="1" Margin="12.6,6,10.2,11.2"/>
         <!--   http://csharphelper.com/blog/2014/09/draw-graph-wpf-c/   -->
         <Canvas x:Name="graph_features" Grid.Row="1" Grid.Column="1" Margin="11.6,1.8,9.2,10.4" />
-        
 
-        
+
+
         <Canvas x:Name="canvas_joystick" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
-            
+
         </Canvas>
         <Grid x:Name="grd_media_panel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
 
         </Grid>
+        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,0"/>
 
 
     </Grid >

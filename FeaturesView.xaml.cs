@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace FlightInspection
 {
@@ -9,11 +10,9 @@ namespace FlightInspection
     {
         FeaturesViewModel featuresViewModel;
 
-        public FeaturesView(string csvPath, string xmlPath)
+        public FeaturesView()
         {
             InitializeComponent();
-            featuresViewModel = new FeaturesViewModel(new FlightgearModel(csvPath, xmlPath, new TelnetClient()));
-            DataContext = featuresViewModel;
 
             /* for (int i = 0; i < 10; ++i)
              {
@@ -21,6 +20,12 @@ namespace FlightInspection
                  newItem.Content = "Item " + i;
                  listBox.Items.Add(newItem);
              }*/
+        }
+
+        internal void setFlightgearModel(FlightgearModel flightgearModel)
+        {
+            featuresViewModel = new FeaturesViewModel(flightgearModel);
+            DataContext = featuresViewModel;
         }
     }
 }
