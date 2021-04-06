@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="733.6">
+        Title="MainWindow" Height="500" Width="733.6"
+        Closed="Window_Closed">
     <Grid x:Name="grd_main" Margin="0,0,3.2,0.4">
         <Grid.RowDefinitions>
             <RowDefinition Height="167*"/>

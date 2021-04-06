@@ -62,11 +62,15 @@ namespace FlightInspection
         }
         public void write(string command)
         {
-            if (this.client != null)
+            try
             {
-                byte[] messageSent = Encoding.ASCII.GetBytes(command);
-                this.client.Send(messageSent);
+                if (this.client != null)
+                {
+                    byte[] messageSent = Encoding.ASCII.GetBytes(command);
+                    this.client.Send(messageSent);
+                }
             }
+            catch (SocketException se){ };
         }
         public string read()
         {

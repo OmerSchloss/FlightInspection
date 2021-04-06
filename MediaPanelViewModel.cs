@@ -31,11 +31,47 @@ namespace FlightInspection
             this.fgModel.play(isConnected);
         }
 
+        public void pauseFg()
+        {
+            this.fgModel.pause();
+        }
+
+
         public void disconnectFromFG()
         {
             fgModel.disconnect();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        internal void startFromZeroFg()
+        {
+            fgModel.resetCurrent();
+        }
+
+        internal void backwardTenSecFg()
+        {
+            fgModel.backwardTenSec();
+        }
+
+        internal int getNumOfLines()
+        {
+            return fgModel.getNumberOfLines();
+        }
+
+        internal void forwardTenSecFg()
+        {
+            fgModel.forwardTenSec();
+        }
+
+        internal void endFg()
+        {
+            fgModel.endCurrentLine();
+        }
+
+        internal void closeThread()
+        {
+            fgModel.closeThread();
+        }
     }
 }

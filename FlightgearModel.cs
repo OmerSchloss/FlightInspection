@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Xml;
@@ -16,8 +17,9 @@ namespace FlightInspection
         private List<string> featuresList;
         private string fullcsvPath;
         private string xmlPath;
-        int currentLineNumber;
-
+        private int currentLineNumber;
+        private bool threatStarted;
+        private bool isConnect;
 
         public FlightgearModel(string csvPath, string xmlPath, TelnetClient telnetClient)
         {
@@ -29,9 +31,85 @@ namespace FlightInspection
             this.setFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
-            this.currentLineNumber = 0;
-
+            CurrentLineNumber = 0;
+            threatStarted = false;
             stop = false;
+        }
+
+
+        public void play(bool isConnected)
+        {
+            isConnect = isConnected;
+            stop = false;
+            if (!threatStarted)
+            {
+                new Thread(delegate ()
+                {
+                    threatStarted = true;
+                    while (threatStarted)
+                    {
+                        if (isConnect)
+                        {
+                            this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                        }
+                        if ((!stop) && (this.currentLineNumber < this.csvHandler.getNumOfLines()-2))
+                        {
+                            CurrentLineNumber = CurrentLineNumber + 1;
+
+                        }
+                        System.Threading.Thread.Sleep(10);
+
+                    }
+                }
+                      ).Start();
+            }
+
+        }
+
+        internal void closeThread()
+        {
+            threatStarted = false;
+        }
+
+        internal void resetCurrent()
+        {
+            CurrentLineNumber = 0;
+        }
+
+        internal void backwardTenSec()
+        {
+            if (this.currentLineNumber < 100)
+            {
+                CurrentLineNumber = 0;
+            }
+            else
+            {
+                CurrentLineNumber = CurrentLineNumber - 100;
+            }
+        }
+
+        internal int getNumberOfLines()
+        {
+            return this.csvHandler.getNumOfLines();
+        }
+
+        internal void endCurrentLine()
+        {
+            stop = true;
+            CurrentLineNumber = this.csvHandler.getNumOfLines() - 2;
+        }
+
+        internal void forwardTenSec()
+        {
+
+            if(this.currentLineNumber < this.csvHandler.getNumOfLines()-101)
+            {
+                CurrentLineNumber = CurrentLineNumber + 100;
+            }
+            else
+            {
+                CurrentLineNumber = this.csvHandler.getNumOfLines() - 1;
+            }
         }
 
         public bool connect(string ip, int port)
@@ -43,26 +121,10 @@ namespace FlightInspection
             return false;
         }
 
-        public void play(bool isConnected)
+        public void pause()
         {
-            new Thread(delegate ()
-            {
-                while (!stop)
-                {
-                    if (this.currentLineNumber < this.csvHandler.getNumOfLines())
-                    {
-                        if (isConnected)
-                        {
-                            this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
-                        }
-                        this.currentLineNumber++;
-                        System.Threading.Thread.Sleep(100);
-                    }
-                }
-            }
-                  ).Start();
+            stop = true;
         }
-
         public void disconnect()
         {
             stop = true;

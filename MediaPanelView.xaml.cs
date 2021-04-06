@@ -22,21 +22,20 @@ namespace FlightInspection
     public partial class MediaPanelView : UserControl
     {
         private bool isConnected;
-        private bool isPlayed;
         private MediaPanelViewModel mediaViewModel;
 
         public MediaPanelView()
         {
             InitializeComponent();
             isConnected = false;
-            isPlayed = false;
-           //sliderTime.Maximum =
         }
 
         internal void setFlightgearModel(FlightgearModel flightgearModel)
         {
             mediaViewModel = new MediaPanelViewModel(flightgearModel);
-            DataContext = mediaViewModel;
+            DataContext = flightgearModel;
+
+            sliderTime.Maximum = mediaViewModel.getNumOfLines();
         }
 
         private void Btn_connect_Click(object sender, RoutedEventArgs e)
@@ -74,21 +73,49 @@ namespace FlightInspection
 
         private void btn_play_Click(object sender, RoutedEventArgs e)
         {
-            if (!isPlayed)
-            {
-                isPlayed = true;
-                mediaViewModel.playFg(isConnected);
-            }
+
+            mediaViewModel.playFg(isConnected);
+
+        }
+
+        internal void closeWindow()
+        {
+            mediaViewModel.closeThread();
         }
 
         private void btn_pause_Click(object sender, RoutedEventArgs e)
         {
-            isPlayed = false;
+            mediaViewModel.pauseFg();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+        }
 
+        private void btn_play_start_Click(object sender, RoutedEventArgs e)
+        {
+            mediaViewModel.startFromZeroFg();
+        }
+
+        private void btn_backward_Click(object sender, RoutedEventArgs e)
+        {
+            mediaViewModel.backwardTenSecFg();
+        }
+
+        private void btn_forward_Click(object sender, RoutedEventArgs e)
+        {
+            mediaViewModel.forwardTenSecFg();
+        }
+
+        private void btn_end_Click(object sender, RoutedEventArgs e)
+        {
+            mediaViewModel.endFg();
+        }
+
+        private void btn_stop_Click(object sender, RoutedEventArgs e)
+        {
+            btn_pause_Click(sender, e);
+            btn_play_start_Click(sender, e);
         }
     }
 }

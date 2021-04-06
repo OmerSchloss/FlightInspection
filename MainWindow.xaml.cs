@@ -15,6 +15,7 @@ namespace FlightInspection
         private string csvPath;
         private FlightgearModel flightgearModel;
         private TelnetClient tClient;
+        private MediaPanelView mediaPanelView;
 
         public MainWindow(string csv, string xml)
         {
@@ -31,7 +32,7 @@ namespace FlightInspection
             joystickview.setFlightgearModel(flightgearModel);
             canvas_joystick.Children.Add(joystickview);
 
-            MediaPanelView mediaPanelView = new MediaPanelView();
+            mediaPanelView = new MediaPanelView();
             mediaPanelView.setFlightgearModel(flightgearModel);
             grd_media_panel.Children.Add(mediaPanelView);
 
@@ -74,6 +75,11 @@ namespace FlightInspection
         private void UserControl1_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            mediaPanelView.closeWindow();
         }
     }
 }

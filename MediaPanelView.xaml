@@ -22,20 +22,20 @@
             </Button.Background>
         </Button>
         <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Height="40" Margin="27.2,5,21.2,0" VerticalAlignment="Top" Width="Auto">
-            <Button x:Name="btn_play_start" Content="⏮" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" />
-            <Button x:Name="btn_backward" Content="⏪" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" />
-            <Button x:Name="btn_play"  HorizontalAlignment="Left" Content="▶" FontSize="23" Click="btn_play_Click" Height="35" Width="Auto" Background="White" BorderBrush="White" />
+            <Button x:Name="btn_play_start" Content="⏮" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_play_start_Click" />
+            <Button x:Name="btn_backward" Content="⏪" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_backward_Click" />
+            <Button x:Name="btn_play" HorizontalAlignment="Left" Content="▶" FontSize="23" Click="btn_play_Click" Height="35" Width="Auto" Background="White" BorderBrush="White" />
             <Button x:Name="btn_pause" Content="⏸" FontSize="23" Click="btn_pause_Click" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" />
-            <Button x:Name="btn_stop" HorizontalAlignment="Left" Content="⏹" Height="35" FontSize="23" Width="Auto" Background="White" BorderBrush="White" />
-            <Button x:Name="btn_forward" Content="⏩"  FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" />
-            <Button x:Name="btn_end" HorizontalAlignment="Left" Content="⏭" FontSize="23" Height="35" Width="Auto" Background="White" BorderBrush="White" />
+            <Button x:Name="btn_stop" HorizontalAlignment="Left" Content="⏹" Height="35" FontSize="23" Width="Auto" Background="White" BorderBrush="White" Click="btn_stop_Click" />
+            <Button x:Name="btn_forward" Content="⏩"  FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_forward_Click" />
+            <Button x:Name="btn_end" HorizontalAlignment="Left" Content="⏭" FontSize="23" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_end_Click" />
         </StackPanel>
         <Label Content="Play speed" Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Height="Auto" Margin="2.2,3,0,2" HorizontalAlignment="Left" Width="109"/>
         <TextBox  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0" Margin="2.4,8,7.8,13" RenderTransformOrigin="1.173,0.532" />
         <Label Grid.Row="0" Grid.Column="4" Content="00:00:00" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="0.2,6,0.2,10" RenderTransformOrigin="1.144,0.542"/>
 
 
-        <Slider x:Name="sliderTime" Minimum="0" Margin="50,62,0.2,-37" Grid.Column="0" Grid.ColumnSpan="5" LargeChange="1" IsMoveToPointEnabled="True" ValueChanged="Slider_ValueChanged"/>
+        <Slider x:Name="sliderTime" Minimum="0" Maximum="2000"  Value="{Binding CurrentLineNumber}" Margin="50,62,0.2,-37" Grid.Column="0" Grid.ColumnSpan="5" LargeChange="1" IsMoveToPointEnabled="True" ValueChanged="Slider_ValueChanged"/>
 
     </Grid>
 </UserControl>
