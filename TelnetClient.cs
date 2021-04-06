@@ -8,9 +8,9 @@ namespace FlightInspection
     class TelnetClient
     {
         private Socket client = null;
-        /*        private IPHostEntry ipHost;
-                private IPAddress ipAddr;
-                private IPEndPoint localEndPoint;*/
+/*        private IPHostEntry ipHost;
+        private IPAddress ipAddr;
+        private IPEndPoint localEndPoint;*/
         public bool connect(string ip, int port)
         {
             try
@@ -64,8 +64,7 @@ namespace FlightInspection
         {
             if (this.client != null)
             {
-                byte[] messageSent = Encoding.ASCII.GetBytes("Test Client<EOF>");
-                int byteSent = this.client.Send(messageSent);
+                this.client.Send(Encoding.ASCII.GetBytes(command));
             }
         }
         public string read()

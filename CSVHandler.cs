@@ -18,7 +18,7 @@ namespace FlightInspection
 
         public CSVHandler(string csvPath)
         {
-            
+
             this.csvPath = csvPath;
             this.linesList = this.csvParser();
             this.tableSize();
@@ -92,7 +92,10 @@ namespace FlightInspection
         }
 
 
-
+        public string getCSVLine(int line)
+        {
+            return linesList[line];
+        }
         public void createNewCSV()
         {
             //string currentLine;

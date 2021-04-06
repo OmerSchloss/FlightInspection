@@ -28,11 +28,11 @@
             <Button x:Name="btn_backward" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
                 <Image Source="/images/backward.png" Width="32" />
             </Button>
-            <Button x:Name="btn_play"  HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+            <Button x:Name="btn_play"  HorizontalAlignment="Left" Click="btn_play_Click" Height="35" Width="Auto" Background="White">
                 <Image Source="/images/play.png" Width="32" >
                 </Image>
             </Button>
-            <Button x:Name="btn_pause" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
+            <Button x:Name="btn_pause" Click="btn_pause_Click" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">
                 <Image Source="/images/pause.png" Width="32" />
             </Button>
             <Button x:Name="btn_stop" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White">

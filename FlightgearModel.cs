@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Xml;
 
 namespace FlightInspection
@@ -9,7 +10,7 @@ namespace FlightInspection
 
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
-        //volatile Boolean stop;
+        volatile bool stop;
         private CSVHandler csvHandler;
         private string csvPath;
         private List<string> featuresList;
@@ -30,7 +31,7 @@ namespace FlightInspection
             fullcsvPath = "new_reg_flight.csv";
             this.currentLineNumber = 1490;
 
-            //stop = false;
+            stop = false;
         }
 
         public bool connect(string ip, int port)
@@ -42,9 +43,26 @@ namespace FlightInspection
             return false;
         }
 
+        public void play()
+        {
+            new Thread(delegate ()
+            {
+                while (!stop)
+                {
+                    if (this.currentLineNumber < this.csvHandler.getNumOfLines())
+                    {
+                        this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                        this.currentLineNumber++;
+                        System.Threading.Thread.Sleep(100);
+                    }
+                }
+            }
+                  ).Start();
+        }
+
         public void disconnect()
         {
-            //stop = true;
+            stop = true;
             telnetClient.disconnect();
         }
 
