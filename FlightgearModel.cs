@@ -22,24 +22,21 @@ namespace FlightInspection
         volatile bool stop;
         private CSVHandler csvHandler;
         private string csvPath;
-        private List<string> featuresList;
         private string fullcsvPath;
         private string xmlPath;
-        int currentLineNumber;
 
 
         public FlightgearModel(string csvPath, string xmlPath, TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
             this.csvPath = csvPath;
-            this.featuresList = new List<string>();
             this.csvHandler = new CSVHandler(csvPath);
             this.xmlPath = xmlPath;
-            this.setFeaturesFromXml();
+            FeaturesList = getFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
             this.currentLineNumber = 0;
-
+            //this.featuresList = new List<string>();
             stop = false;
         }
 
@@ -70,8 +67,8 @@ namespace FlightInspection
                         System.Threading.Thread.Sleep(100);
                     }
                 }
-            }
-                  ).Start();
+
+            }).Start();
         }
 
         public void disconnect()
@@ -140,6 +137,8 @@ namespace FlightInspection
             }
         }
 
+
+        private int currentLineNumber;
         public int CurrentLineNumber
         {
             get { return currentLineNumber; }
@@ -181,6 +180,15 @@ namespace FlightInspection
             }
         }
 
+        private List<string> featuresList;
+        public List<string> FeaturesList
+        {
+            get { return featuresList; }
+            set
+            {
+                featuresList = value;
+                NotifyPropertyChanged(nameof(FeaturesList));
+
         public float roll
         {
             get { return _roll; }
@@ -211,38 +219,27 @@ namespace FlightInspection
             }
         }
 
-
-        //public void start()
-        //{
-        //    newThread(delegate () {
-        //        while (!stop)
-        //        {
-        //            telnetClient.write("get left sonar");
-        //            LeftSonar = Double.Parse(telnetClient.read());
-        //            // the same for the other sensors propertiesThread.Sleep(250);
-        //            // read the data in 4Hz
-        //        }
-        //    }).Start();
-        //}
-
-        private void setFeaturesFromXml()
+        private List<string> getFeaturesFromXml()
         {
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(this.xmlPath);
             XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
+            List<string> features = new List<string>();
 
 
             int i = 0;
 
             while (i < featuresNames.Count)
             {
-                this.featuresList.Add(featuresNames[i].InnerText);
+                features.Add(featuresNames[i].InnerText);
                 i++;
                 if (featuresNames[i].InnerText.Equals("aileron")) break;
 
             }
-            this.featuresList.TrimExcess();
+            features.TrimExcess();
+            return features;
+
         }
 
         private int getColumnByFeature(string feature)
@@ -260,30 +257,7 @@ namespace FlightInspection
             }
             return -1;
         }
-        //public void connect(string ip, int port)
-        //{
-        //    telnetClient.connect(ip, port);
-        //}
 
-        //public void disconnect()
-        //{
-        //    stop = true;
-        //    telnetClient.disconnect();
-        //}
-
-
-        //public void start()
-        //{
-        //    newThread(delegate () {
-        //        while (!stop)
-        //        {
-        //            telnetClient.write("get left sonar");
-        //            LeftSonar = Double.Parse(telnetClient.read());
-        //            // the same for the other sensors propertiesThread.Sleep(250);
-        //            // read the data in 4Hz
-        //        }
-        //    }).Start();
-        //}
 
     }
 }
