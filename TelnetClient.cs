@@ -64,7 +64,8 @@ namespace FlightInspection
         {
             if (this.client != null)
             {
-                this.client.Send(Encoding.ASCII.GetBytes(command));
+                byte[] messageSent = Encoding.ASCII.GetBytes(command);
+                this.client.Send(messageSent);
             }
         }
         public string read()

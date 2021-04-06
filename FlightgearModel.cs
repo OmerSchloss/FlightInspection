@@ -29,7 +29,7 @@ namespace FlightInspection
             this.setFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
-            this.currentLineNumber = 1490;
+            this.currentLineNumber = 0;
 
             stop = false;
         }

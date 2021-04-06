@@ -40,7 +40,7 @@ namespace FlightInspection
             if (!isConnected)
             {
 
-                MessageBoxResult result = MessageBox.Show("For connecting to FlightGear App,\n First open the app. \n Then, copy these lines to Setting-> Additional Setting: \n\n --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small \n --fdm = null \n\n and now just press fly! \n\n Press Yes to copy these lines. ","FlightGeat connection",MessageBoxButton.YesNoCancel);
+                MessageBoxResult result = MessageBox.Show("For connecting to FlightGear App,\n First open the app. \n Then, copy these lines to Setting-> Additional Setting: \n\n --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small \n --fdm=null\n\n and now just press fly! \n\n Press Yes to copy these lines. ","FlightGeat connection",MessageBoxButton.YesNoCancel);
                 if(result == MessageBoxResult.Yes)
                 {
                     Clipboard.SetText("--generic=socket,in,10,127.0.0.1,5400,tcp,playback_small\n--fdm=null");
