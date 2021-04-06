@@ -43,7 +43,7 @@ namespace FlightInspection
             return false;
         }
 
-        public void play()
+        public void play(bool isConnected)
         {
             new Thread(delegate ()
             {
@@ -51,7 +51,10 @@ namespace FlightInspection
                 {
                     if (this.currentLineNumber < this.csvHandler.getNumOfLines())
                     {
-                        this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                        if (isConnected)
+                        {
+                            this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                        }
                         this.currentLineNumber++;
                         System.Threading.Thread.Sleep(100);
                     }

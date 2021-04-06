@@ -68,7 +68,7 @@ namespace FlightInspection
             if (!isPlayed)
             {
                 isPlayed = true;
-                mediaViewModel.playFg();
+                mediaViewModel.playFg(isConnected);
             }
         }
 

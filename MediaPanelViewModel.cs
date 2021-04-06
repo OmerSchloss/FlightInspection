@@ -26,9 +26,9 @@ namespace FlightInspection
             return false;
         }
 
-        public void playFg()
+        public void playFg(bool isConnected)
         {
-            this.fgModel.play();
+            this.fgModel.play(isConnected);
         }
 
         public void disconnectFromFG()
