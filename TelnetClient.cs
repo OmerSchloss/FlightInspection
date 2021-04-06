@@ -8,9 +8,9 @@ namespace FlightInspection
     class TelnetClient
     {
         private Socket client = null;
-/*        private IPHostEntry ipHost;
-        private IPAddress ipAddr;
-        private IPEndPoint localEndPoint;*/
+        /*        private IPHostEntry ipHost;
+                private IPAddress ipAddr;
+                private IPEndPoint localEndPoint;*/
         public bool connect(string ip, int port)
         {
             try

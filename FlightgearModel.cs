@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml;
-
 
 namespace FlightInspection
 {
-    class FlightgearModel : NotifyPropertyChanged
+    class FlightgearModel : INotifyPropertyChanged
     {
 
         //public event PropertyChangedEventHandler PropertyChanged;
@@ -32,6 +31,31 @@ namespace FlightInspection
             this.currentLineNumber = 1490;
 
             //stop = false;
+        }
+
+        public bool connect(string ip, int port)
+        {
+            if (telnetClient.connect(ip, port))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void disconnect()
+        {
+            //stop = true;
+            telnetClient.disconnect();
+        }
+
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public float elevator
@@ -69,20 +93,21 @@ namespace FlightInspection
             }
             set { }
         }
-        public bool connect(string ip, int port)
+
+        public int CurrentLineNumber
         {
-            if (telnetClient.connect(ip, port))
+            get { return currentLineNumber; }
+            set
             {
-                return true;
+                currentLineNumber = value;
+                NotifyPropertyChanged(nameof(CurrentLineNumber));
             }
-            return false;
         }
 
-        public void disconnect()
-        {
-            //stop = true;
-            telnetClient.disconnect();
-        }
+
+
+
+
 
 
         //public void start()

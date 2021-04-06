@@ -56,6 +56,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CSVHandler.cs" />
+    <Compile Include="FeaturesView.xaml.cs">
+      <DependentUpon>FeaturesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FeaturesViewModel.cs" />
     <Compile Include="FlightgearModel.cs" />
     <Compile Include="JoystickView.xaml.cs">
       <DependentUpon>JoystickView.xaml</DependentUpon>
@@ -65,12 +69,14 @@
       <DependentUpon>MediaPanelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaPanelViewModel.cs" />
-    <Compile Include="NotifyPropertyChanged.cs" />
-    <Compile Include="PropertyChangedEventHandler.cs" />
     <Compile Include="TelnetClient.cs" />
     <Page Include="CSVLoad.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FeaturesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="JoystickView.xaml">
       <SubType>Designer</SubType>

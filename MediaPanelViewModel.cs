@@ -1,14 +1,8 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace FlightInspection
 {
-    class MediaPanelViewModel : NotifyPropertyChanged
+    class MediaPanelViewModel : INotifyPropertyChanged
     {
         private FlightgearModel fgModel;
         public MediaPanelViewModel(FlightgearModel fg)
@@ -18,7 +12,7 @@ namespace FlightInspection
 
         public bool connectToFG()
         {
-            if(fgModel.connect("127.0.0.1", 5400))
+            if (fgModel.connect("127.0.0.1", 5400))
             {
                 return true;
             }
@@ -29,5 +23,7 @@ namespace FlightInspection
         {
             fgModel.disconnect();
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
