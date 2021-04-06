@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace FlightInspection
 {
@@ -26,6 +25,11 @@ namespace FlightInspection
         {
             featuresViewModel = new FeaturesViewModel(flightgearModel);
             DataContext = featuresViewModel;
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            featuresViewModel.VM_FeatureToDisplay = ListBox_Features_List.SelectedItem.ToString();
         }
     }
 }

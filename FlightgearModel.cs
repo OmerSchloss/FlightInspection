@@ -17,6 +17,8 @@ namespace FlightInspection
         private float _roll;
         private float _pitch;
         private float _yaw;
+        private float currentFeatureValue;
+
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
         volatile bool stop;
@@ -25,6 +27,7 @@ namespace FlightInspection
         private List<string> featuresList;
         private string fullcsvPath;
         private string xmlPath;
+        private string featureToDisplay;
         private int currentLineNumber;
         private bool threatStarted;
         private bool isConnect;
@@ -71,6 +74,7 @@ namespace FlightInspection
                         if ((!stop) && (CurrentLineNumber < this.csvHandler.getNumOfLines() - 2))
                         {
                             this.updateProperties();
+                            CurrentFeatureValue = getCurrentFeatureValue(featureToDisplay);
                             CurrentLineNumber = CurrentLineNumber + 1;
                         }
                         System.Threading.Thread.Sleep(100);
@@ -136,6 +140,52 @@ namespace FlightInspection
         }
 
 
+
+        private List<string> getFeaturesFromXml()
+        {
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(this.xmlPath);
+            XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
+            List<string> features = new List<string>();
+
+
+            int i = 0;
+
+            while (i < featuresNames.Count)
+            {
+                features.Add(featuresNames[i].InnerText);
+                i++;
+                if (featuresNames[i].InnerText.Equals("aileron")) break;
+
+            }
+            features.TrimExcess();
+            return features;
+
+        }
+
+        private int getColumnByFeature(string feature)
+        {
+            int i = 0;
+            for (; i < this.featuresList.Count; i++)
+            {
+                if (this.featuresList[i].Equals(feature))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public float getCurrentFeatureValue(string featureToDisplay)
+        {
+            this.featureToDisplay = featureToDisplay;
+            int column = getColumnByFeature(featureToDisplay);
+            int line = currentLineNumber;
+            return csvHandler.getFeatureValueByLineAndColumn(line, column);
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 
@@ -144,7 +194,8 @@ namespace FlightInspection
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        private void updateProperties(){
+        private void updateProperties()
+        {
             elevator = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("elevator"));
             aileron = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("aileron"));
             rudder = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("rudder"));
@@ -161,7 +212,8 @@ namespace FlightInspection
         public float elevator
         {
             get { return _elevator; }
-            set {
+            set
+            {
                 _elevator = value;
                 NotifyPropertyChanged("elevator");
             }
@@ -170,7 +222,8 @@ namespace FlightInspection
         public float aileron
         {
             get { return _aileron; }
-            set {
+            set
+            {
                 _aileron = value;
                 NotifyPropertyChanged("aileron");
             }
@@ -179,7 +232,8 @@ namespace FlightInspection
         public float rudder
         {
             get { return _rudder; }
-            set {
+            set
+            {
                 _rudder = value;
                 NotifyPropertyChanged("rudder");
             }
@@ -188,21 +242,14 @@ namespace FlightInspection
         public float throttle
         {
             get { return _throttle; }
-            set {
+            set
+            {
                 _throttle = value;
                 NotifyPropertyChanged("throttle");
             }
         }
 
-        public int CurrentLineNumber
-        {
-            get { return currentLineNumber; }
-            set
-            {
-                currentLineNumber = value;
-                NotifyPropertyChanged(nameof(CurrentLineNumber));
-            }
-        }
+
 
         public float altimeter
         {
@@ -235,26 +282,6 @@ namespace FlightInspection
             }
         }
 
-        public List<string> FeaturesList
-        {
-            get { return featuresList; }
-            set
-            {
-                featuresList = value;
-                NotifyPropertyChanged(nameof(FeaturesList));
-            }
-        }
-
-        public float roll
-        {
-            get { return _roll; }
-            set
-            {
-                _roll = value;
-                NotifyPropertyChanged("roll");
-            }
-        }
-
         public float pitch
         {
             get { return _pitch; }
@@ -275,45 +302,53 @@ namespace FlightInspection
             }
         }
 
-        private List<string> getFeaturesFromXml()
+        public float roll
         {
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(this.xmlPath);
-            XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
-            List<string> features = new List<string>();
-
-
-            int i = 0;
-
-            while (i < featuresNames.Count)
+            get { return _roll; }
+            set
             {
-                features.Add(featuresNames[i].InnerText);
-                i++;
-                if (featuresNames[i].InnerText.Equals("aileron")) break;
-
+                _roll = value;
+                NotifyPropertyChanged("roll");
             }
-            features.TrimExcess();
-            return features;
-
         }
 
-        private int getColumnByFeature(string feature)
-        {
-            int i = 0;
-            for (; i < this.featuresList.Count; i++)
-            {
-                if (this.featuresList[i].Equals(feature))
-                {
-                    //Console.WriteLine(feature);
 
-                    //Console.WriteLine(i);
-                    return i;
-                }
+
+        // get a list of all the features in the csv
+
+        public List<string> FeaturesList
+        {
+            get { return featuresList; }
+            set
+            {
+                featuresList = value;
+                NotifyPropertyChanged(nameof(FeaturesList));
+
             }
-            return -1;
         }
 
+
+        // get the current value of the given feature 
+        public float CurrentFeatureValue
+        {
+            get { return currentFeatureValue; }
+
+            set
+            {
+                currentFeatureValue = value;
+                NotifyPropertyChanged(nameof(CurrentFeatureValue));
+            }
+        }
+
+        public int CurrentLineNumber
+        {
+            get { return currentLineNumber; }
+            set
+            {
+                currentLineNumber = value;
+                NotifyPropertyChanged(nameof(CurrentLineNumber));
+            }
+        }
 
     }
 }
