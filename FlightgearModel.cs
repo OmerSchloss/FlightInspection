@@ -188,6 +188,8 @@ namespace FlightInspection
             {
                 featuresList = value;
                 NotifyPropertyChanged(nameof(FeaturesList));
+            }
+        }
 
         public float roll
         {
