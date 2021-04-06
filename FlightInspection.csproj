@@ -61,6 +61,9 @@
     </Compile>
     <Compile Include="FeaturesViewModel.cs" />
     <Compile Include="FlightgearModel.cs" />
+    <Compile Include="InfoView.xaml.cs">
+      <DependentUpon>InfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JoystickView.xaml.cs">
       <DependentUpon>JoystickView.xaml</DependentUpon>
     </Compile>
@@ -77,6 +80,10 @@
     <Page Include="FeaturesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="JoystickView.xaml">
       <SubType>Designer</SubType>
