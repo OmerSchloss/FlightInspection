@@ -28,7 +28,7 @@ namespace FlightInspection
             flightgearModel = new FlightgearModel(csvPath, xmlPath, tClient);
 
 
-            JoystickView joystickview = new JoystickView(csvPath,xmlPath);
+            JoystickView joystickview = new JoystickView();
             joystickview.setFlightgearModel(flightgearModel);
             canvas_joystick.Children.Add(joystickview);
 

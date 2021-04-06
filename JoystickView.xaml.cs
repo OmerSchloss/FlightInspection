@@ -22,7 +22,7 @@ namespace FlightInspection
     {
 
         JoystickViewModel joystickViewModel;
-        public JoystickView(string csvPath, string xmlPath)
+        public JoystickView()
         {
             InitializeComponent();
         }

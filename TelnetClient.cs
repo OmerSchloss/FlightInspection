@@ -70,7 +70,7 @@ namespace FlightInspection
                     this.client.Send(messageSent);
                 }
             }
-            catch (SocketException se){ };
+            catch (ObjectDisposedException se) { }
         }
         public string read()
         {
