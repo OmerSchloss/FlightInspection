@@ -1,40 +1,59 @@
-﻿namespace FlightInspection
+﻿using System;
+using System.Diagnostics;
+using System.ComponentModel;
+
+namespace FlightInspection
 {
-    class JoystickViewModel
+    class JoystickViewModel : INotifyPropertyChanged
     {
+        
+       
         private FlightgearModel model;
-        //public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
         public JoystickViewModel(FlightgearModel model)
         {
             this.model = model;
-            //model.PropertyChanged +=
-            //    delegate (Object sender, PropertyChangedEventArgs e) {
-            //        NotifyPropertyChanged("VM_" + e.PropertyName);
-            //    };
+            model.PropertyChanged +=
+                delegate (Object sender, PropertyChangedEventArgs e) {
+                    NotifyPropertyChanged("VM_" + e.PropertyName);
+                };
+        }
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
 
-        public float elevator
+        public float VM_elevator
         {
-            get { return (model.elevator * 25) + 55; }
-            set { }
+            get {
+                return (model.elevator * 25) + 55; }
+            set {}
         }
-        public float aileron
+        
+             
+        public float VM_aileron
         {
-            get { return (model.aileron * 25) + 90; }
-            set { }
-        }
-
-        public float rudder
-        {
-            get { return model.rudder; }
-            set { }
+            get {
+                return (model.aileron * 25) + 100; }
+            set {}
         }
 
-        public float throttle
+        public float VM_rudder
         {
-            get { return model.throttle; }
-            set { }
+            get { 
+                return model.rudder; }
+            set {}
+        }
+
+        public float VM_throttle
+        {
+            get { 
+                return model.throttle; }
+            set {}
         }
 
         //public void NotifyPropertyChanged(string propName) { ...} //means the model has been changed

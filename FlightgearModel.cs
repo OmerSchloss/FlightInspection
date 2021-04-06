@@ -7,7 +7,16 @@ namespace FlightInspection
 {
     class FlightgearModel : INotifyPropertyChanged
     {
-
+        private float _elevator;
+        private float _rudder;
+        private float _aileron;
+        private float _throttle;
+        private float _altimeter;
+        private float _airspeed;
+        private float _direction;
+        private float _roll;
+        private float _pitch;
+        private float _yaw;
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
         volatile bool stop;
@@ -54,7 +63,9 @@ namespace FlightInspection
                         if (isConnected)
                         {
                             this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                            
                         }
+                        this.updateProperties();
                         this.currentLineNumber++;
                         System.Threading.Thread.Sleep(100);
                     }
@@ -79,40 +90,54 @@ namespace FlightInspection
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        private void updateProperties(){
+            elevator = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("elevator"));
+            aileron = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("aileron"));
+            rudder = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("rudder"));
+            throttle = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("throttle"));
+            altimeter = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("altimeter_indicated-altitude-ft"));
+            airspeed = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("airspeed-kt"));
+            direction = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("heading-deg"));
+            roll = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("roll-deg"));
+            pitch = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("pitch-deg"));
+            yaw = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("side-slip-deg"));
+                        
+        }
+
         public float elevator
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("elevator"));
+            get { return _elevator; }
+            set {
+                _elevator = value; 
+                NotifyPropertyChanged("elevator");
             }
-            set { }
         }
 
         public float aileron
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("aileron"));
+            get { return _aileron; }
+            set { 
+                _aileron = value; 
+                NotifyPropertyChanged("aileron");
             }
-            set { }
         }
 
         public float rudder
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("rudder"));
+            get { return _rudder; }
+            set { 
+                _rudder = value; 
+                NotifyPropertyChanged("rudder");
             }
-            set { }
         }
 
         public float throttle
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("throttle"));
+            get { return _throttle; }
+            set { 
+                _throttle = value; 
+                NotifyPropertyChanged("throttle");
             }
-            set { }
         }
 
         public int CurrentLineNumber
@@ -125,10 +150,66 @@ namespace FlightInspection
             }
         }
 
+        public float altimeter
+        {
+            get { return _altimeter; }
+            set
+            {
+                _altimeter = value;
+                NotifyPropertyChanged("altimeter");
+            }
+        }
 
+        public float airspeed
+        {
+            get { return _airspeed; }
+            set
+            {
+                _airspeed = value;
+                NotifyPropertyChanged("airspeed");
+            }
+        }
 
+        
+        public float direction
+        {
+            get { return _direction; }
+            set
+            {
+                _direction = value;
+                NotifyPropertyChanged("direction");
+            }
+        }
 
+        public float roll
+        {
+            get { return _roll; }
+            set
+            {
+                _roll = value;
+                NotifyPropertyChanged("roll");
+            }
+        }
 
+        public float pitch
+        {
+            get { return _pitch; }
+            set
+            {
+                _pitch = value;
+                NotifyPropertyChanged("pitch");
+            }
+        }
+
+        public float yaw
+        {
+            get { return _yaw; }
+            set
+            {
+                _yaw = value;
+                NotifyPropertyChanged("yaw");
+            }
+        }
 
 
         //public void start()
