@@ -6,13 +6,8 @@
              xmlns:local="clr-namespace:FlightInspection"
              mc:Ignorable="d" Width="239.917" Height="360">
     <Grid Margin="0,0,515,0">
-        <ListBox Margin="22,12,-217,25">
-            <ListBox.Items>
-                <ListBoxItem Content="Item 1" />
-                <ListBoxItem Content="Item 2" />
-                <ListBoxItem Content="Item 3" />
-                <ListBoxItem Content="Item 4" />
-            </ListBox.Items>
+        <ListBox  x:Name="ListBox_Features_List" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="22,12,-217,25">
+
         </ListBox>
 
     </Grid>
