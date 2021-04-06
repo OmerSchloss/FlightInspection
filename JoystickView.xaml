@@ -10,10 +10,10 @@
         <Grid Margin="0,0,566,285.6">
         <Canvas HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="223">
             <Ellipse x:Name ="Joystick" Fill="#FFF4F4F5" Height="100" Canvas.Left="76" Stroke="Black" Canvas.Top="29" Width="100"/>
-            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="{Binding aileron}" Stroke="Black" Width="50" Canvas.Top="{Binding elevator}" />
+            <Ellipse x:Name="Knob" Fill="DarkSlateBlue" Height="50" Canvas.Left="{Binding VM_aileron}" Stroke="Black" Width="50" Canvas.Top="{Binding VM_elevator}" />
 
-            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5" Minimum="0" Maximum="1" Value="{Binding rudder}"/>
-            <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" Height="122" Canvas.Left="35" Canvas.Top="10" Minimum="0" Maximum="1" Value="{Binding throttle}" />
+            <Slider x:Name="joystick_sides" Grid.Column="2" Canvas.Left="64" Canvas.Top="141" Width="132" RenderTransformOrigin="0.562,0.5" Minimum="0" Maximum="1" Value="{Binding VM_rudder}"/>
+            <Slider x:Name="joystick_height" Orientation="Vertical"  Grid.Column="2" HorizontalAlignment="Left" Width="35" Height="122" Canvas.Left="35" Canvas.Top="10" Minimum="0" Maximum="1" Value="{Binding VM_throttle}" />
         </Canvas>
     </Grid>
 </UserControl>

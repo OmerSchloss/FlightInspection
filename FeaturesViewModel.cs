@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace FlightInspection
@@ -28,7 +29,11 @@ namespace FlightInspection
 
         }
 
+        public List<string> VM_FeaturesList
+        {
+            get { return model.FeaturesList; }
 
+        }
 
 
         public void NotifyPropertyChanged(string propName)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Xml;
@@ -8,108 +7,37 @@ namespace FlightInspection
 {
     class FlightgearModel : INotifyPropertyChanged
     {
-
+        private float _elevator;
+        private float _rudder;
+        private float _aileron;
+        private float _throttle;
+        private float _altimeter;
+        private float _airspeed;
+        private float _direction;
+        private float _roll;
+        private float _pitch;
+        private float _yaw;
         //public event PropertyChangedEventHandler PropertyChanged;
         TelnetClient telnetClient;
         volatile bool stop;
         private CSVHandler csvHandler;
         private string csvPath;
-        private List<string> featuresList;
         private string fullcsvPath;
         private string xmlPath;
-        private int currentLineNumber;
-        private bool threatStarted;
-        private bool isConnect;
+
 
         public FlightgearModel(string csvPath, string xmlPath, TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
             this.csvPath = csvPath;
-            this.featuresList = new List<string>();
             this.csvHandler = new CSVHandler(csvPath);
             this.xmlPath = xmlPath;
-            this.setFeaturesFromXml();
+            FeaturesList = getFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
-            CurrentLineNumber = 0;
-            threatStarted = false;
+            this.currentLineNumber = 0;
+            //this.featuresList = new List<string>();
             stop = false;
-        }
-
-
-        public void play(bool isConnected)
-        {
-            isConnect = isConnected;
-            stop = false;
-            if (!threatStarted)
-            {
-                new Thread(delegate ()
-                {
-                    threatStarted = true;
-                    while (threatStarted)
-                    {
-                        if (isConnect)
-                        {
-                            this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
-                        }
-                        if ((!stop) && (this.currentLineNumber < this.csvHandler.getNumOfLines()-2))
-                        {
-                            CurrentLineNumber = CurrentLineNumber + 1;
-
-                        }
-                        System.Threading.Thread.Sleep(10);
-
-                    }
-                }
-                      ).Start();
-            }
-
-        }
-
-        internal void closeThread()
-        {
-            threatStarted = false;
-        }
-
-        internal void resetCurrent()
-        {
-            CurrentLineNumber = 0;
-        }
-
-        internal void backwardTenSec()
-        {
-            if (this.currentLineNumber < 100)
-            {
-                CurrentLineNumber = 0;
-            }
-            else
-            {
-                CurrentLineNumber = CurrentLineNumber - 100;
-            }
-        }
-
-        internal int getNumberOfLines()
-        {
-            return this.csvHandler.getNumOfLines();
-        }
-
-        internal void endCurrentLine()
-        {
-            stop = true;
-            CurrentLineNumber = this.csvHandler.getNumOfLines() - 2;
-        }
-
-        internal void forwardTenSec()
-        {
-
-            if(this.currentLineNumber < this.csvHandler.getNumOfLines()-101)
-            {
-                CurrentLineNumber = CurrentLineNumber + 100;
-            }
-            else
-            {
-                CurrentLineNumber = this.csvHandler.getNumOfLines() - 1;
-            }
         }
 
         public bool connect(string ip, int port)
@@ -121,10 +49,28 @@ namespace FlightInspection
             return false;
         }
 
-        public void pause()
+        public void play(bool isConnected)
         {
-            stop = true;
+            new Thread(delegate ()
+            {
+                while (!stop)
+                {
+                    if (this.currentLineNumber < this.csvHandler.getNumOfLines())
+                    {
+                        if (isConnected)
+                        {
+                            this.telnetClient.write(this.csvHandler.getCSVLine(this.currentLineNumber) + "\r\n");
+                            
+                        }
+                        this.updateProperties();
+                        this.currentLineNumber++;
+                        System.Threading.Thread.Sleep(100);
+                    }
+                }
+
+            }).Start();
         }
+
         public void disconnect()
         {
             stop = true;
@@ -141,42 +87,58 @@ namespace FlightInspection
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        private void updateProperties(){
+            elevator = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("elevator"));
+            aileron = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("aileron"));
+            rudder = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("rudder"));
+            throttle = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("throttle"));
+            altimeter = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("altimeter_indicated-altitude-ft"));
+            airspeed = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("airspeed-kt"));
+            direction = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("heading-deg"));
+            roll = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("roll-deg"));
+            pitch = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("pitch-deg"));
+            yaw = this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("side-slip-deg"));
+                        
+        }
+
         public float elevator
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("elevator"));
+            get { return _elevator; }
+            set {
+                _elevator = value; 
+                NotifyPropertyChanged("elevator");
             }
-            set { }
         }
 
         public float aileron
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("aileron"));
+            get { return _aileron; }
+            set { 
+                _aileron = value; 
+                NotifyPropertyChanged("aileron");
             }
-            set { }
         }
 
         public float rudder
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("rudder"));
+            get { return _rudder; }
+            set { 
+                _rudder = value; 
+                NotifyPropertyChanged("rudder");
             }
-            set { }
         }
 
         public float throttle
         {
-            get
-            {
-                return this.csvHandler.getFeatureValueByLineAndColumn(this.currentLineNumber, getColumnByFeature("throttle"));
+            get { return _throttle; }
+            set { 
+                _throttle = value; 
+                NotifyPropertyChanged("throttle");
             }
-            set { }
         }
 
+
+        private int currentLineNumber;
         public int CurrentLineNumber
         {
             get { return currentLineNumber; }
@@ -187,43 +149,99 @@ namespace FlightInspection
             }
         }
 
+        public float altimeter
+        {
+            get { return _altimeter; }
+            set
+            {
+                _altimeter = value;
+                NotifyPropertyChanged("altimeter");
+            }
+        }
 
+        public float airspeed
+        {
+            get { return _airspeed; }
+            set
+            {
+                _airspeed = value;
+                NotifyPropertyChanged("airspeed");
+            }
+        }
 
+        
+        public float direction
+        {
+            get { return _direction; }
+            set
+            {
+                _direction = value;
+                NotifyPropertyChanged("direction");
+            }
+        }
 
+        private List<string> featuresList;
+        public List<string> FeaturesList
+        {
+            get { return featuresList; }
+            set
+            {
+                featuresList = value;
+                NotifyPropertyChanged(nameof(FeaturesList));
+            }
+        }
 
+        public float roll
+        {
+            get { return _roll; }
+            set
+            {
+                _roll = value;
+                NotifyPropertyChanged("roll");
+            }
+        }
 
+        public float pitch
+        {
+            get { return _pitch; }
+            set
+            {
+                _pitch = value;
+                NotifyPropertyChanged("pitch");
+            }
+        }
 
-        //public void start()
-        //{
-        //    newThread(delegate () {
-        //        while (!stop)
-        //        {
-        //            telnetClient.write("get left sonar");
-        //            LeftSonar = Double.Parse(telnetClient.read());
-        //            // the same for the other sensors propertiesThread.Sleep(250);
-        //            // read the data in 4Hz
-        //        }
-        //    }).Start();
-        //}
+        public float yaw
+        {
+            get { return _yaw; }
+            set
+            {
+                _yaw = value;
+                NotifyPropertyChanged("yaw");
+            }
+        }
 
-        private void setFeaturesFromXml()
+        private List<string> getFeaturesFromXml()
         {
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(this.xmlPath);
             XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
+            List<string> features = new List<string>();
 
 
             int i = 0;
 
             while (i < featuresNames.Count)
             {
-                this.featuresList.Add(featuresNames[i].InnerText);
+                features.Add(featuresNames[i].InnerText);
                 i++;
                 if (featuresNames[i].InnerText.Equals("aileron")) break;
 
             }
-            this.featuresList.TrimExcess();
+            features.TrimExcess();
+            return features;
+
         }
 
         private int getColumnByFeature(string feature)
@@ -241,30 +259,7 @@ namespace FlightInspection
             }
             return -1;
         }
-        //public void connect(string ip, int port)
-        //{
-        //    telnetClient.connect(ip, port);
-        //}
 
-        //public void disconnect()
-        //{
-        //    stop = true;
-        //    telnetClient.disconnect();
-        //}
-
-
-        //public void start()
-        //{
-        //    newThread(delegate () {
-        //        while (!stop)
-        //        {
-        //            telnetClient.write("get left sonar");
-        //            LeftSonar = Double.Parse(telnetClient.read());
-        //            // the same for the other sensors propertiesThread.Sleep(250);
-        //            // read the data in 4Hz
-        //        }
-        //    }).Start();
-        //}
 
     }
 }
