@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.ComponentModel;
 
@@ -20,7 +20,6 @@ namespace FlightInspection
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 };
         }
-
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -29,20 +28,20 @@ namespace FlightInspection
         //altimeter_indicated-altitude-ft
         public float VM_altimeter
         {
-            get { return model.altimeter; }
+            get { return (float)(Math.Floor(model.altimeter * 100) / 100); }
             set { }
         }
 
         //airspeed-kt    
         public float VM_airspeed
         {
-            get { return model.airspeed; }
+            get { return (float)(Math.Floor(model.airspeed * 100) / 100); }
             set { }
         }
 
         public float VM_rudder
         {
-            get { return model.rudder; }
+            get { return (float)(Math.Floor(model.rudder * 100) / 100); }
             set { }
         }
 
@@ -54,29 +53,30 @@ namespace FlightInspection
 
         public float VM_direction
         {
-            get { return model.direction; }
+            get { return (float)(Math.Floor(model.direction * 100) / 100); }
             set { }
         }
 
         public float VM_roll
         {
-            get { return model.roll; }
+            get { return (float)(Math.Floor(model.roll * 100) / 100); }
             set { }
         }
 
         public float VM_pitch
         {
-            get { return model.pitch; }
+            get { return (float)(Math.Floor(model.pitch * 100) / 100); }
             set { }
         }
 
         public float VM_yaw
         {
-            get { return model.yaw; }
+            get { return (float)(Math.Floor(model.yaw * 100) / 100); }
             set { }
         }
 
         //public void NotifyPropertyChanged(string propName) { ...} //means the model has been changed
+
 
     }
 }

@@ -16,6 +16,8 @@ namespace FlightInspection
         private FlightgearModel flightgearModel;
         private TelnetClient tClient;
         private MediaPanelView mediaPanelView;
+        private InfoView infoView;
+
 
         public MainWindow(string csv, string xml)
         {
@@ -38,7 +40,7 @@ namespace FlightInspection
 
             infoView = new InfoView();
             infoView.setFlightgearModel(flightgearModel);
-            grd_media_panel.Children.Add(infoView);
+            grd_info_view.Children.Add(infoView);
 
             FeaturesView featuresView = new FeaturesView();
             featuresView.setFlightgearModel(flightgearModel);

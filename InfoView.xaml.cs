@@ -20,9 +20,16 @@ namespace FlightInspection
     /// </summary>
     public partial class InfoView : UserControl
     {
+        InfoViewModel infoViewModel;
         public InfoView()
         {
             InitializeComponent();
+        }
+
+        internal void setFlightgearModel(FlightgearModel flightgearModel)
+        {
+            infoViewModel = new InfoViewModel(flightgearModel);
+            DataContext = infoViewModel;
         }
     }
 }
