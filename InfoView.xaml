@@ -1,18 +1,36 @@
 ﻿<UserControl x:Class="FlightInspection.InfoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FlightInspection"
-             mc:Ignorable="d" Height="329.051" Width="634.585">
-    <Grid>
-        <Grid x:Name="graph_features" Grid.Row="0" Grid.Column="0"/>
-        <Grid x:Name="graph_feature" Margin="10,10,470.4,-10.2"/>
-        <Grid x:Name="graph_feature_Copy" Margin="202,10,278.4,-10.2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="234*"/>
-                <RowDefinition Height="95*"/>
-            </Grid.RowDefinitions>
-        </Grid>
+             mc:Ignorable="d" Height="200" Width="225">
+  <Grid Margin="0,0,394.4,-0.2">
+
+    <Grid x:Name="graph_feature" Margin="0,0,-225,0.2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Label Content="Label" Margin="9,16,11.2,4.4"/>
+      <Label Content="Label" Margin="11.8,16,8.4,4.4" RenderTransformOrigin="2.098,0.513" Grid.Column="1"/>
+      <Label Content="Label" Margin="5.6,15,9.8,5.4" Grid.Column="2"/>
+      <Label Content="Label" Margin="11,14.2,9.2,5.4" Grid.Row="2"/>
+      <Label Content="Label" Margin="11.8,14.2,8.4,5.4" Grid.Column="1" Grid.Row="2"/>
+      <Label Content="Label" Margin="9.6,14.2,9.8,5.4" Grid.Column="2" Grid.Row="2"/>
+      <TextBox Margin="10,4.6,12.2,9.8" Grid.Row="1" TextWrapping="Wrap" Text="TextBox"/>
+      <TextBox Margin="11.8,4.6,10.4,9.8" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" Grid.Column="1"/>
+      <TextBox Margin="5.6,4.6,15.8,9.8" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" Grid.Column="2"/>
+      <TextBox Margin="12,1.6,10.2,12" Grid.Row="3" TextWrapping="Wrap" Text="TextBox"/>
+      <TextBox Margin="11.8,0.6,10.4,13" Grid.Row="3" TextWrapping="Wrap" Text="TextBox" Grid.Column="1"/>
+      <TextBox Margin="7.6,49.2,13.8,14" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" Grid.Column="2" Grid.RowSpan="2"/>
     </Grid>
+  </Grid>
 </UserControl>

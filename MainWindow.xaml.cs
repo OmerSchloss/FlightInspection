@@ -36,7 +36,9 @@ namespace FlightInspection
             mediaPanelView.setFlightgearModel(flightgearModel);
             grd_media_panel.Children.Add(mediaPanelView);
 
-
+            infoView = new InfoView();
+            infoView.setFlightgearModel(flightgearModel);
+            grd_media_panel.Children.Add(infoView);
 
             FeaturesView featuresView = new FeaturesView();
             featuresView.setFlightgearModel(flightgearModel);

@@ -16,7 +16,7 @@ namespace FlightInspection
             try
             {
                 IPHostEntry ipHost = Dns.GetHostEntry(ip);
-                IPAddress ipAddr = ipHost.AddressList[0];
+                IPAddress ipAddr = ipHost.AddressList[1];
                 IPEndPoint localEndPoint = new IPEndPoint(ipAddr, port);
                 this.client = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
