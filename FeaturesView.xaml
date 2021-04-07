@@ -4,12 +4,35 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightInspection"
-             mc:Ignorable="d" Width="402.157" Height="360">
-    <Grid Margin="0,0,515,0">
-        <ListBox  x:Name="ListBox_Features_List" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="22,12,-217,25" SelectionChanged="ListBox_SelectionChanged">
+             xmlns:oxy="http://oxyplot.org/wpf"
 
-        </ListBox>
+             mc:Ignorable="d" Width="514.717" Height="360">
+    <Grid HorizontalAlignment="Left" Height="356" Margin="5,4,-1,0" VerticalAlignment="Top" Width="511">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175*"/>
+            <ColumnDefinition Width="170*"/>
+
+            <ColumnDefinition Width="178*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <ListBox  x:Name="ListBox_Features_List" Grid.Row="0" Grid.Column="0" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="5,7,7,24" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="2"/>
+        <oxy:Plot x:Name="Plot1"  Grid.Row="0" Grid.Column="2"   Margin="3,2,3,176" Grid.RowSpan="2" >
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_Points}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
+        <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="3,2,3,176" Grid.RowSpan="2" >
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativeFeatureToDisplay}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
 
 
     </Grid>
+
 </UserControl>

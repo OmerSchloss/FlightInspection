@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using OxyPlot;
 
 namespace FlightInspection
 {
@@ -31,21 +32,23 @@ namespace FlightInspection
         }
 
 
-        // TO DO: binding to this property with X
         public int VM_CurrentLineNumber
         {
             get { return model.CurrentLineNumber; }
 
         }
 
-        // TO DO: binding to this property with Y
-        public float VM_CurrentFeatureValue
+        public List<DataPoint> VM_Points
         {
-            get { return model.CurrentFeatureValue; }
+            get { return model.Points; }
+
         }
 
+        public List<DataPoint> VM_CorrelativePoints
+        {
+            get { return model.Points; }
 
-
+        }
 
         private string featureToDisplay;
         public string VM_FeatureToDisplay
@@ -54,10 +57,10 @@ namespace FlightInspection
             set
             {
                 featureToDisplay = value;
-                model.getCurrentFeatureValue(featureToDisplay);
+                model.setFeatureToDisplay(featureToDisplay);
+
             }
         }
-
 
 
 
@@ -65,6 +68,15 @@ namespace FlightInspection
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+
+
+
+        /*   public float VM_CurrentFeatureValue
+        {
+            get { return model.CurrentFeatureValue; }
+        }*/
+
 
     }
 }

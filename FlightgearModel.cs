@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
-using System.Xml;
+using System.Xml.Linq;
+using OxyPlot;
 
 namespace FlightInspection
 {
@@ -17,18 +19,21 @@ namespace FlightInspection
         private float _roll;
         private float _pitch;
         private float _yaw;
-        private float currentFeatureValue;
+        private int currentLineNumber;
+        private List<DataPoint> points;
+        private List<DataPoint> correlativePoints;
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+
+
         TelnetClient telnetClient;
         volatile bool stop;
         private CSVHandler csvHandler;
-        private string csvPath;
         private List<string> featuresList;
+        private string csvPath;
         private string fullcsvPath;
         private string xmlPath;
         private string featureToDisplay;
-        private int currentLineNumber;
+        private string correlativeFeatureToDisplay;
         private bool threatStarted;
         private bool isConnect;
 
@@ -73,8 +78,8 @@ namespace FlightInspection
                         }
                         if ((!stop) && (CurrentLineNumber < this.csvHandler.getNumOfLines() - 2))
                         {
+                            CorrelativePoints = getCorrelativePointsFromStart(CurrentLineNumber, featureToDisplay);
                             this.updateProperties();
-                            CurrentFeatureValue = getCurrentFeatureValue(featureToDisplay);
                             CurrentLineNumber = CurrentLineNumber + 1;
                         }
                         System.Threading.Thread.Sleep(100);
@@ -134,6 +139,9 @@ namespace FlightInspection
             telnetClient.disconnect();
         }
 
+
+
+
         internal int getNumberOfLines()
         {
             return this.csvHandler.getNumOfLines();
@@ -143,25 +151,9 @@ namespace FlightInspection
 
         private List<string> getFeaturesFromXml()
         {
-
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(this.xmlPath);
-            XmlNodeList featuresNames = xmlDoc.GetElementsByTagName("name");
-            List<string> features = new List<string>();
-
-
-            int i = 0;
-
-            while (i < featuresNames.Count)
-            {
-                features.Add(featuresNames[i].InnerText);
-                i++;
-                if (featuresNames[i].InnerText.Equals("aileron")) break;
-
-            }
-            features.TrimExcess();
-            return features;
-
+            XDocument xml = XDocument.Load(this.xmlPath);
+            IEnumerable<string> temp = xml.Descendants("output").Descendants("name").Select(name => (string)name);
+            return temp.ToList();
         }
 
         private int getColumnByFeature(string feature)
@@ -177,13 +169,28 @@ namespace FlightInspection
             return -1;
         }
 
-        public float getCurrentFeatureValue(string featureToDisplay)
+
+
+        public void setFeatureToDisplay(string feature)
         {
-            this.featureToDisplay = featureToDisplay;
-            int column = getColumnByFeature(featureToDisplay);
-            int line = currentLineNumber;
-            return csvHandler.getFeatureValueByLineAndColumn(line, column);
+            this.featureToDisplay = feature;
         }
+
+
+        public List<DataPoint> getPointsFromStart(int currentLine, string featurToDisplay)
+        {
+            List<DataPoint> points = new List<DataPoint>();
+            int column = getColumnByFeature(featureToDisplay);
+            for (int i = 0; i < currentLine; i++)
+            {
+                int line = i;
+                float value = csvHandler.getFeatureValueByLineAndColumn(line, column);
+                points.Add(new DataPoint(line, value));
+            }
+            return points;
+
+        }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -206,6 +213,7 @@ namespace FlightInspection
             roll = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("roll-deg"));
             pitch = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("pitch-deg"));
             yaw = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("side-slip-deg"));
+            Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
 
         }
 
@@ -313,9 +321,7 @@ namespace FlightInspection
         }
 
 
-
         // get a list of all the features in the csv
-
         public List<string> FeaturesList
         {
             get { return featuresList; }
@@ -328,18 +334,6 @@ namespace FlightInspection
         }
 
 
-        // get the current value of the given feature 
-        public float CurrentFeatureValue
-        {
-            get { return currentFeatureValue; }
-
-            set
-            {
-                currentFeatureValue = value;
-                NotifyPropertyChanged(nameof(CurrentFeatureValue));
-            }
-        }
-
         public int CurrentLineNumber
         {
             get { return currentLineNumber; }
@@ -349,6 +343,72 @@ namespace FlightInspection
                 NotifyPropertyChanged(nameof(CurrentLineNumber));
             }
         }
+
+        public string getCorrelativeFeature(string feature)
+        {
+            return null;
+        }
+
+        public List<DataPoint> getCorrelativePointsFromStart(int currentLine, string featurToDisplay)
+        {
+            return null;
+        }
+
+        public List<DataPoint> Points
+        {
+            get { return points; }
+            set
+            {
+                points = value;
+                NotifyPropertyChanged(nameof(Points));
+            }
+        }
+
+        public List<DataPoint> CorrelativePoints
+        {
+            get { return correlativePoints; }
+            set
+            {
+                points = value;
+                NotifyPropertyChanged(nameof(CorrelativePoints));
+            }
+
+        }
+
+
+
+
+
+
+        // private float currentFeatureValue;
+
+        /*public float getCurrentFeatureValue(string featureToDisplay)
+      {
+          this.featureToDisplay = featureToDisplay;
+          int column = getColumnByFeature(featureToDisplay);
+          int line = currentLineNumber;
+          return csvHandler.getFeatureValueByLineAndColumn(line, column);
+      }*/
+
+        //   CurrentFeatureValue = getCurrentFeatureValue(featureToDisplay);
+
+
+
+        // get the current value of the given feature 
+        /*  public float CurrentFeatureValue
+          {
+              get { return currentFeatureValue; }
+
+              set
+              {
+                  currentFeatureValue = value;
+                  NotifyPropertyChanged(nameof(CurrentFeatureValue));
+              }
+          }*/
+
+
+
+
 
     }
 }

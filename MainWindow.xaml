@@ -30,7 +30,7 @@
         <Grid x:Name="grd_media_panel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
 
         </Grid>
-        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,0"/>
+        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,0" HorizontalAlignment="Left" Width="512" Grid.ColumnSpan="3"/>
 
 
     </Grid >
