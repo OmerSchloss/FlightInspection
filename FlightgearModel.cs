@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -25,10 +26,11 @@ namespace FlightInspection
 
 
 
-        TelnetClient telnetClient;
         volatile bool stop;
+        private TelnetClient telnetClient;
         private CSVHandler csvHandler;
         private List<string> featuresList;
+        private Dictionary<int, int> correlations;
         private string csvPath;
         private string fullcsvPath;
         private string xmlPath;
@@ -37,6 +39,7 @@ namespace FlightInspection
         private bool threatStarted;
         private bool isConnect;
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public FlightgearModel(string csvPath, string xmlPath, TelnetClient telnetClient)
         {
@@ -44,12 +47,14 @@ namespace FlightInspection
             this.csvPath = csvPath;
             this.csvHandler = new CSVHandler(csvPath);
             this.xmlPath = xmlPath;
+            correlations = new Dictionary<int, int>();
             FeaturesList = getFeaturesFromXml();
             csvHandler.createNewCSV();
             fullcsvPath = "new_reg_flight.csv";
             CurrentLineNumber = 0;
             threatStarted = false;
             stop = false;
+            setCorrelatedFeatures();
         }
 
         public bool connect(string ip, int port)
@@ -59,6 +64,12 @@ namespace FlightInspection
                 return true;
             }
             return false;
+        }
+
+        public void disconnect()
+        {
+            stop = true;
+            telnetClient.disconnect();
         }
 
         public void play(bool isConnected)
@@ -78,7 +89,6 @@ namespace FlightInspection
                         }
                         if ((!stop) && (CurrentLineNumber < this.csvHandler.getNumOfLines() - 2))
                         {
-                            CorrelativePoints = getCorrelativePointsFromStart(CurrentLineNumber, featureToDisplay);
                             this.updateProperties();
                             CurrentLineNumber = CurrentLineNumber + 1;
                         }
@@ -90,6 +100,23 @@ namespace FlightInspection
             }
 
         }
+
+        private void updateProperties()
+        {
+            elevator = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("elevator"));
+            aileron = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("aileron"));
+            rudder = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("rudder"));
+            throttle = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("throttle"));
+            altimeter = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("altimeter_indicated-altitude-ft"));
+            airspeed = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("airspeed-kt"));
+            direction = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("heading-deg"));
+            roll = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("roll-deg"));
+            pitch = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("pitch-deg"));
+            yaw = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("side-slip-deg"));
+            Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
+            CorrelativePoints = getCorrelativePointsFromStart(CurrentLineNumber, featureToDisplay);
+        }
+
         internal void closeThread()
         {
             threatStarted = false;
@@ -99,10 +126,12 @@ namespace FlightInspection
         {
             CurrentLineNumber = 0;
         }
+
         public void pause()
         {
             stop = true;
         }
+
         internal void backwardTenSec()
         {
             if (CurrentLineNumber < 100)
@@ -120,9 +149,9 @@ namespace FlightInspection
             stop = true;
             CurrentLineNumber = this.csvHandler.getNumOfLines() - 2;
         }
+
         internal void forwardTenSec()
         {
-
             if (CurrentLineNumber < this.csvHandler.getNumOfLines() - 101)
             {
                 CurrentLineNumber = CurrentLineNumber + 100;
@@ -133,21 +162,10 @@ namespace FlightInspection
             }
         }
 
-        public void disconnect()
-        {
-            stop = true;
-            telnetClient.disconnect();
-        }
-
-
-
-
         internal int getNumberOfLines()
         {
             return this.csvHandler.getNumOfLines();
         }
-
-
 
         private List<string> getFeaturesFromXml()
         {
@@ -169,18 +187,25 @@ namespace FlightInspection
             return -1;
         }
 
-
-
         public void setFeatureToDisplay(string feature)
         {
             this.featureToDisplay = feature;
         }
 
+        List<float> getValuesOfFeature(int column)
+        {
+            List<float> listOfValues = new List<float>();
+            for (int i = 0; i < getNumberOfLines(); i++)
+            {
+                listOfValues.Add(csvHandler.getFeatureValueByLineAndColumn(i, column));
+            }
+            return listOfValues;
+        }
 
-        public List<DataPoint> getPointsFromStart(int currentLine, string featurToDisplay)
+        public List<DataPoint> getPointsFromStart(int currentLine, string feature)
         {
             List<DataPoint> points = new List<DataPoint>();
-            int column = getColumnByFeature(featureToDisplay);
+            int column = getColumnByFeature(feature);
             for (int i = 0; i < currentLine; i++)
             {
                 int line = i;
@@ -188,33 +213,52 @@ namespace FlightInspection
                 points.Add(new DataPoint(line, value));
             }
             return points;
-
         }
 
+        public List<DataPoint> getCorrelativePointsFromStart(int currentLine, string featurToDisplay)
+        {
+            CorrelativeFeature = getCorrelativeFeature(featureToDisplay);
+            return getPointsFromStart(currentLine, CorrelativeFeature);
+        }
 
+        public void setCorrelatedFeatures()
+        {
+            int size = featuresList.Count;
+            float max = 0;
+            int maxIndex = 0;
+            List<float> valuesOfFeaturI;
+            List<float> valuesOfFeaturJ;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+            for (int i = 0; i < size; i++)
+            {
+                valuesOfFeaturI = getValuesOfFeature(i);
+                if (i != 0)
+                {
+                    max = Math.Abs(csvHandler.pearson(valuesOfFeaturI, getValuesOfFeature(0)));
+                    maxIndex = 0;
+                }
+                for (int j = 1; j < size; j++)
+                {
+                    valuesOfFeaturJ = getValuesOfFeature(j);
+                    if (i != j && Math.Abs(csvHandler.pearson(valuesOfFeaturI, valuesOfFeaturJ)) > max)
+                    {
+                        max = Math.Abs(csvHandler.pearson(valuesOfFeaturI, valuesOfFeaturJ));
+                        maxIndex = j;
+                    }
+                }
+                correlations.Add(i, maxIndex);
+            }
+        }
 
+        public string getCorrelativeFeature(string feature)
+        {
+            int column = getColumnByFeature(feature);
+            return featuresList[correlations[column]];
+        }
 
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
-
-        private void updateProperties()
-        {
-            elevator = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("elevator"));
-            aileron = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("aileron"));
-            rudder = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("rudder"));
-            throttle = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("throttle"));
-            altimeter = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("altimeter_indicated-altitude-ft"));
-            airspeed = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("airspeed-kt"));
-            direction = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("heading-deg"));
-            roll = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("roll-deg"));
-            pitch = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("pitch-deg"));
-            yaw = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("side-slip-deg"));
-            Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
-
         }
 
         public float elevator
@@ -257,8 +301,6 @@ namespace FlightInspection
             }
         }
 
-
-
         public float altimeter
         {
             get { return _altimeter; }
@@ -278,7 +320,6 @@ namespace FlightInspection
                 NotifyPropertyChanged("airspeed");
             }
         }
-
 
         public float direction
         {
@@ -320,8 +361,6 @@ namespace FlightInspection
             }
         }
 
-
-        // get a list of all the features in the csv
         public List<string> FeaturesList
         {
             get { return featuresList; }
@@ -329,10 +368,8 @@ namespace FlightInspection
             {
                 featuresList = value;
                 NotifyPropertyChanged(nameof(FeaturesList));
-
             }
         }
-
 
         public int CurrentLineNumber
         {
@@ -342,16 +379,6 @@ namespace FlightInspection
                 currentLineNumber = value;
                 NotifyPropertyChanged(nameof(CurrentLineNumber));
             }
-        }
-
-        public string getCorrelativeFeature(string feature)
-        {
-            return null;
-        }
-
-        public List<DataPoint> getCorrelativePointsFromStart(int currentLine, string featurToDisplay)
-        {
-            return null;
         }
 
         public List<DataPoint> Points
@@ -369,46 +396,20 @@ namespace FlightInspection
             get { return correlativePoints; }
             set
             {
-                points = value;
+                correlativePoints = value;
                 NotifyPropertyChanged(nameof(CorrelativePoints));
             }
 
         }
 
-
-
-
-
-
-        // private float currentFeatureValue;
-
-        /*public float getCurrentFeatureValue(string featureToDisplay)
-      {
-          this.featureToDisplay = featureToDisplay;
-          int column = getColumnByFeature(featureToDisplay);
-          int line = currentLineNumber;
-          return csvHandler.getFeatureValueByLineAndColumn(line, column);
-      }*/
-
-        //   CurrentFeatureValue = getCurrentFeatureValue(featureToDisplay);
-
-
-
-        // get the current value of the given feature 
-        /*  public float CurrentFeatureValue
-          {
-              get { return currentFeatureValue; }
-
-              set
-              {
-                  currentFeatureValue = value;
-                  NotifyPropertyChanged(nameof(CurrentFeatureValue));
-              }
-          }*/
-
-
-
-
-
+        public string CorrelativeFeature
+        {
+            get { return correlativeFeatureToDisplay; }
+            set
+            {
+                correlativeFeatureToDisplay = value;
+                NotifyPropertyChanged(nameof(CorrelativeFeature));
+            }
+        }
     }
 }

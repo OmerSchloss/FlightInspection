@@ -9,29 +9,29 @@
              mc:Ignorable="d" Width="514.717" Height="360">
     <Grid HorizontalAlignment="Left" Height="356" Margin="5,4,-1,0" VerticalAlignment="Top" Width="511">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="191*"/>
+            <RowDefinition Height="165*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="175*"/>
-            <ColumnDefinition Width="170*"/>
+            <ColumnDefinition Width="161*"/>
+            <ColumnDefinition Width="172*"/>
 
             <ColumnDefinition Width="178*"/>
         </Grid.ColumnDefinitions>
 
 
-        <ListBox  x:Name="ListBox_Features_List" Grid.Row="0" Grid.Column="0" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="5,7,7,24" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="2"/>
-        <oxy:Plot x:Name="Plot1"  Grid.Row="0" Grid.Column="2"   Margin="3,2,3,176" Grid.RowSpan="2" >
+        <ListBox  x:Name="ListBox_Features_List" Grid.Row="0" Grid.Column="0" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="5,7,7,12" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="2"/>
+        <oxy:Plot x:Name="Plot1"  Grid.Row="0" Grid.Column="2"   Margin="3,31,15,0" >
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_Points}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="3,2,3,176" Grid.RowSpan="2" >
+        <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="5,31,1,0">
             <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativeFeatureToDisplay}"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativePoints}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-
+        <TextBlock HorizontalAlignment="Left" Margin="3,21,0,0" TextWrapping="Wrap" Text="{Binding VM_CorrelativeFeature}" VerticalAlignment="Top" Width="202" Grid.ColumnSpan="2" Height="22" FontWeight="Bold" Grid.Column="1"/>
 
     </Grid>
 
