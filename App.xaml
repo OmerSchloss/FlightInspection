@@ -18,6 +18,26 @@ public float throttle
         }
     
     
+List<DataPoint> firstList = VM_Points, secondList = VM_CorrelativePoints;
+List<DataPoint> corellatedList = new List<DataPoint>();
+if (firstList && secondList) {
+    int listSize = VM_Points.Count;
+    int i;
+    for (i = listSize - 300; i < listSize; i++){
+       corellatedList.Add(new DataPoint(firstList[i].x, secondList[i].y)); 
+    }
+}
+return corellatedList;
+    
+List<DataPoint> points = new List<DataPoint>();
+int i
+for (i = 0; i < 300; i++) {
+    points.Add(new DataPoint(i, i));    
+}
+return points;
+    
+if (i < 0) i = 0;    
+    
 currentLineNumber
     75 - 125
 1490
@@ -35,4 +55,60 @@ public float throttle
     canvas_joystick.children.Add(joystickView);
     2116
 Console.WriteLine(feature, i);
+   
+public List<DataPoint> VM_Correlated_points
+{
+    get {
+        return this.Correlated_points;
+    }
+    set
+    {
+
+        List<DataPoint> corellatedList = value;
+        List<DataPoint> firstList = model.Points, secondList = VM_CorrelativePoints;
+                
+        if ((firstList != null) && (secondList != null))
+        {
+            int listSize = firstList.Count;
+            int i = listSize - 300;
+            if (i < 0) i = 0;
+
+            for (; i < listSize; i++)
+            {
+                double x = firstList[i].X;
+                double y = secondList[i].Y;
+                corellatedList.Add(new DataPoint(x, y));
+            }
+        }
+        this.Correlated_points = corellatedList;
+    }
+}
+    
+    
+    public static Double Correlation(List<DataPoint> firstFeature,List<DataPoint> secondFeature) {
+    Double sumX = 0;
+    Double sumX2 = 0;
+    Double sumY = 0;
+    Double sumY2 = 0;
+    Double sumXY = 0;
+
+    int n = firstFeatureLength < secondFeature ? firstFeature.Length : secondFeature;
+
+    for (int i = 0; i < n; ++i) {
+      Double x = firstFeature[i].X;
+      Double y = secondFeature[i].Y;
+
+      sumX += x;
+      sumX2 += x * x;
+      sumY += y;
+      sumY2 += y * y;
+      sumXY += x * y;
+    }
+
+    Double stdX = Math.Sqrt(sumX2 / n - sumX * sumX / n / n);
+    Double stdY = Math.Sqrt(sumY2 / n - sumY * sumY / n / n);
+    Double covariance = (sumXY / n - sumX * sumY / n / n);
+
+    return covariance / stdX / stdY; 
+  } 
     -->
