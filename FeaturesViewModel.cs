@@ -37,9 +37,19 @@ namespace FlightInspection
             get { return model.Points; }
         }
 
-        public List<DataPoint> VM_CorrelativePoints
+        public List<DataPoint> VM_CorrelatedFeaturePoints
         {
-            get { return model.CorrelativePoints; }
+            get { return model.CorrelatedFeaturePoints; }
+        }
+
+        public List<DataPoint> VM_PointsForRegression
+        {
+            get { return model.PointsForRegression; }
+        }
+
+        public List<DataPoint> VM_RegressionLine
+        {
+            get { return model.RegressionLine; }
         }
 
         public string VM_FeatureToDisplay
@@ -52,22 +62,10 @@ namespace FlightInspection
             }
         }
 
-        public string VM_CorrelativeFeature
+        public string VM_CorrelatedFeature
         {
-            get { return model.CorrelativeFeature; }
+            get { return "The Correlated Feature: " + model.CorrelatedFeature; }
         }
-
-
-        public List<DataPoint> VM_Correlated_points
-        {
-            get { return model.Correlated_points; }
-        }
-
-        public List<DataPoint> VM_Correlated_line
-        {
-            get { return model.Correlated_points; }
-        }
-
 
         public void NotifyPropertyChanged(string propName)
         {

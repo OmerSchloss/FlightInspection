@@ -1,11 +1,7 @@
 ﻿
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlightInspection
 {
@@ -17,7 +13,8 @@ namespace FlightInspection
             this.fgModel = fg;
 
             fgModel.PropertyChanged +=
-        delegate (Object sender, PropertyChangedEventArgs e) {
+        delegate (Object sender, PropertyChangedEventArgs e)
+        {
             NotifyPropertyChanged("VM_" + e.PropertyName);
         };
         }
@@ -29,7 +26,7 @@ namespace FlightInspection
 
         public bool connectToFG()
         {
-            if(fgModel.connect("127.0.0.1", 5400))
+            if (fgModel.connect("localhost", 5400))
             {
                 return true;
             }
@@ -100,7 +97,9 @@ namespace FlightInspection
         }
         public string VM_TimeString
         {
-            get { return fgModel.GetTimeString();
+            get
+            {
+                return fgModel.GetTimeString();
             }
         }
     }

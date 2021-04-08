@@ -6,6 +6,7 @@ using System.Threading;
 using System.Xml.Linq;
 using OxyPlot;
 
+
 namespace FlightInspection
 {
     class FlightgearModel : INotifyPropertyChanged
@@ -21,21 +22,22 @@ namespace FlightInspection
         private float _pitch;
         private float _yaw;
         private int currentLineNumber;
+        private string featureToDisplay;
+        private string correlatedFeatureToDisplay;
         private List<DataPoint> points;
-        private List<DataPoint> correlativePoints;
-        private List<DataPoint> correlated_points;
-        private List<DataPoint> correlated_line;
+        private List<DataPoint> correlatedFeaturePoints;
+        private List<DataPoint> pointsForRegression;
+        private List<DataPoint> regressionLine;
 
         volatile bool stop;
         private TelnetClient telnetClient;
         private CSVHandler csvHandler;
+        private AnomalyUtil anomalyUtil;
         private List<string> featuresList;
         private Dictionary<int, int> correlations;
         private string csvPath;
         private string fullcsvPath;
         private string xmlPath;
-        private string featureToDisplay;
-        private string correlativeFeatureToDisplay;
         private bool threatStarted;
         private bool isConnect;
         private float speed;
@@ -46,8 +48,9 @@ namespace FlightInspection
         {
             this.telnetClient = telnetClient;
             this.csvPath = csvPath;
-            this.csvHandler = new CSVHandler(csvPath);
             this.xmlPath = xmlPath;
+            this.csvHandler = new CSVHandler(csvPath);
+            anomalyUtil = new AnomalyUtil();
             correlations = new Dictionary<int, int>();
             FeaturesList = getFeaturesFromXml();
             csvHandler.createNewCSV();
@@ -131,34 +134,11 @@ namespace FlightInspection
             pitch = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("pitch-deg"));
             yaw = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("side-slip-deg"));
             Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
-            CorrelativePoints = getCorrelativePointsFromStart(CurrentLineNumber, featureToDisplay);
-            Correlated_points = getCorrelatedPointsFromTwoList(Points, CorrelativePoints);
-            Correlated_line = getRegLineFromPoints(Correlated_points);
-        }
-        public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> firstList, List<DataPoint> secondList)
-        {
-            List<DataPoint> corellatedList = new List<DataPoint>();
-
-            if ((firstList != null) && (secondList != null))
-            {
-                int listSize = firstList.Count;
-                int i = listSize - 300;
-                if (i < 0) i = 0;
-
-                for (; i < listSize; i++)
-                {
-                    double x = firstList[i].X;
-                    double y = secondList[i].Y;
-                    corellatedList.Add(new DataPoint(x, y));
-                }
-            }
-            return corellatedList;
+            CorrelatedFeaturePoints = getCorrelatedFeaturePointsFromStart(CurrentLineNumber, featureToDisplay);
+            PointsForRegression = getPointsFromCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
+            RegressionLine = getRegLineFromPoints(featureToDisplay, CorrelatedFeature);
         }
 
-        public List<DataPoint> getRegLineFromPoints(List<DataPoint> points)
-        {
-            return null;
-        }
         internal void closeThread()
         {
             threatStarted = false;
@@ -239,10 +219,48 @@ namespace FlightInspection
         {
             this.featureToDisplay = feature;
         }
+        public void setCorrelatedFeatures()
+        {
+            int size = featuresList.Count;
+            float max = 0;
+            int maxIndex = 0;
+            List<float> valuesOfFeaturI;
+            List<float> valuesOfFeaturJ;
+
+            for (int i = 0; i < size; i++)
+            {
+                valuesOfFeaturI = getValuesOfFeature(i);
+                if (i != 0)
+                {
+                    max = Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, getValuesOfFeature(0)));
+                    maxIndex = 0;
+                }
+                for (int j = 1; j < size; j++)
+                {
+                    valuesOfFeaturJ = getValuesOfFeature(j);
+                    if (i != j && Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, valuesOfFeaturJ)) > max)
+                    {
+                        max = Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, valuesOfFeaturJ));
+                        maxIndex = j;
+                    }
+                }
+                correlations.Add(i, maxIndex);
+            }
+        }
 
         List<float> getValuesOfFeature(int column)
         {
             List<float> listOfValues = new List<float>();
+            for (int i = 0; i < getNumberOfLines(); i++)
+            {
+                listOfValues.Add(csvHandler.getFeatureValueByLineAndColumn(i, column));
+            }
+            return listOfValues;
+        }
+        List<float> getValuesOfFeature(string feature)
+        {
+            List<float> listOfValues = new List<float>();
+            int column = getColumnByFeature(feature);
             for (int i = 0; i < getNumberOfLines(); i++)
             {
                 listOfValues.Add(csvHandler.getFeatureValueByLineAndColumn(i, column));
@@ -263,39 +281,48 @@ namespace FlightInspection
             return points;
         }
 
-        public List<DataPoint> getCorrelativePointsFromStart(int currentLine, string featurToDisplay)
+        public List<DataPoint> getCorrelatedFeaturePointsFromStart(int currentLine, string featurToDisplay)
         {
-            CorrelativeFeature = getCorrelativeFeature(featureToDisplay);
-            return getPointsFromStart(currentLine, CorrelativeFeature);
+            CorrelatedFeature = getCorrelativeFeature(featureToDisplay);
+            return getPointsFromStart(currentLine, CorrelatedFeature);
         }
 
-        public void setCorrelatedFeatures()
+        public List<DataPoint> getPointsFromCorrelatedFeatures(string firstFeature, string secondFeature)
         {
-            int size = featuresList.Count;
-            float max = 0;
-            int maxIndex = 0;
-            List<float> valuesOfFeaturI;
-            List<float> valuesOfFeaturJ;
+            List<DataPoint> correlatedList = new List<DataPoint>();
+            int firstFeatureColumn = getColumnByFeature(firstFeature);
+            int secondFeatureColumn = getColumnByFeature(secondFeature);
+            int startLine;
 
-            for (int i = 0; i < size; i++)
+            if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
+            else startLine = 0;
+
+            for (int i = startLine; i < CurrentLineNumber; i++)
             {
-                valuesOfFeaturI = getValuesOfFeature(i);
-                if (i != 0)
-                {
-                    max = Math.Abs(csvHandler.pearson(valuesOfFeaturI, getValuesOfFeature(0)));
-                    maxIndex = 0;
-                }
-                for (int j = 1; j < size; j++)
-                {
-                    valuesOfFeaturJ = getValuesOfFeature(j);
-                    if (i != j && Math.Abs(csvHandler.pearson(valuesOfFeaturI, valuesOfFeaturJ)) > max)
-                    {
-                        max = Math.Abs(csvHandler.pearson(valuesOfFeaturI, valuesOfFeaturJ));
-                        maxIndex = j;
-                    }
-                }
-                correlations.Add(i, maxIndex);
+                float firstFeatureValue = csvHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
+                float secondFeatureValue = csvHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
+                correlatedList.Add(new DataPoint(firstFeatureValue, secondFeatureValue));
             }
+            return correlatedList;
+        }
+
+        public List<DataPoint> getRegLineFromPoints(string firstFeature, string secondFeature)
+        {
+            List<DataPoint> pointsOfLinearReg = new List<DataPoint>();
+            List<float> firstFeatureValues = getValuesOfFeature(firstFeature);
+            List<float> secondFeatureValues = getValuesOfFeature(secondFeature);
+            Line line = anomalyUtil.linear_reg(firstFeatureValues, secondFeatureValues);
+            int startLine;
+
+            if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
+            else startLine = 0;
+
+            for (int i = startLine; i < CurrentLineNumber; i++)
+            {
+                pointsOfLinearReg.Add(new DataPoint(firstFeatureValues[i], line.f(firstFeatureValues[i])));
+            }
+
+            return pointsOfLinearReg;
         }
 
         public string getCorrelativeFeature(string feature)
@@ -450,42 +477,42 @@ namespace FlightInspection
             }
         }
 
-        public List<DataPoint> CorrelativePoints
+        public List<DataPoint> CorrelatedFeaturePoints
         {
-            get { return correlativePoints; }
+            get { return correlatedFeaturePoints; }
             set
             {
-                correlativePoints = value;
-                NotifyPropertyChanged(nameof(CorrelativePoints));
+                correlatedFeaturePoints = value;
+                NotifyPropertyChanged(nameof(CorrelatedFeaturePoints));
             }
 
         }
 
-        public string CorrelativeFeature
+        public string CorrelatedFeature
         {
-            get { return correlativeFeatureToDisplay; }
+            get { return correlatedFeatureToDisplay; }
             set
             {
-                correlativeFeatureToDisplay = value;
-                NotifyPropertyChanged(nameof(CorrelativeFeature));
+                correlatedFeatureToDisplay = value;
+                NotifyPropertyChanged(nameof(CorrelatedFeature));
             }
         }
-        public List<DataPoint> Correlated_points
+        public List<DataPoint> PointsForRegression
         {
-            get { return correlated_points; }
+            get { return pointsForRegression; }
             set
             {
-                correlated_points = value;
-                NotifyPropertyChanged("Correlated_points");
+                pointsForRegression = value;
+                NotifyPropertyChanged(nameof(PointsForRegression));
             }
         }
-        public List<DataPoint> Correlated_line
+        public List<DataPoint> RegressionLine
         {
-            get { return correlated_line; }
+            get { return regressionLine; }
             set
             {
-                correlated_line = value;
-                NotifyPropertyChanged("Correlated_points");
+                regressionLine = value;
+                NotifyPropertyChanged(nameof(RegressionLine));
             }
         }
     }

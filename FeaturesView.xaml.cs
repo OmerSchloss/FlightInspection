@@ -2,9 +2,6 @@
 
 namespace FlightInspection
 {
-    /// <summary>
-    /// Interaction logic for FeaturesView.xaml
-    /// </summary>
     public partial class FeaturesView : UserControl
     {
         FeaturesViewModel featuresViewModel;
@@ -12,8 +9,6 @@ namespace FlightInspection
         public FeaturesView()
         {
             InitializeComponent();
-
-
         }
 
         internal void setFlightgearModel(FlightgearModel flightgearModel)

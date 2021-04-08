@@ -9,34 +9,35 @@
              mc:Ignorable="d" Width="514.717" Height="360">
     <Grid HorizontalAlignment="Left" Height="356" Margin="5,4,-1,0" VerticalAlignment="Top" Width="511">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="217*"/>
+            <RowDefinition Height="139*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="175*"/>
-            <ColumnDefinition Width="170*"/>
+            <ColumnDefinition Width="171*"/>
+            <ColumnDefinition Width="54*"/>
+            <ColumnDefinition Width="112*"/>
 
-            <ColumnDefinition Width="178*"/>
+            <ColumnDefinition Width="174*"/>
         </Grid.ColumnDefinitions>
 
 
         <ListBox  x:Name="ListBox_Features_List" Grid.Row="0" Grid.Column="0" SelectedIndex="0" ItemsSource ="{Binding VM_FeaturesList}" Margin="5,7,7,24" SelectionChanged="ListBox_SelectionChanged" Grid.RowSpan="2"/>
-        <oxy:Plot x:Name="Plot1"  Grid.Row="0" Grid.Column="2"   Margin="3,2,3,176" Grid.RowSpan="2" >
+        <oxy:Plot x:Name="Plot1"  Grid.Row="0" Grid.Column="3"   Margin="3,38,1,7" >
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_Points}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        
-        <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="3,2,3,176" Grid.RowSpan="2" >
+
+        <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="2,35,6,5" Grid.ColumnSpan="2" >
             <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativePoints}"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedFeaturePoints}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        <TextBlock HorizontalAlignment="Left" Margin="3,21,0,0" TextWrapping="Wrap" Text="{Binding VM_CorrelativeFeature}" VerticalAlignment="Top" Width="202" Grid.ColumnSpan="2" Height="22" FontWeight="Bold" Grid.Column="1"/>
-        <oxy:Plot x:Name="correlation_graph"  Grid.Row="1" Grid.Column="1"   Margin="10,2,21,0" Grid.ColumnSpan="2" >
+        <TextBlock HorizontalAlignment="Left" Margin="5,3,0,0" TextWrapping="Wrap" Text= "{Binding VM_CorrelatedFeature}" VerticalAlignment="Top" Width="202" Grid.ColumnSpan="3" Height="30" FontWeight="Bold" Grid.Column="1"/>
+        <oxy:Plot x:Name="correlation_graph"  Grid.Row="1" Grid.Column="1"   Margin="10,2,21,0" Grid.ColumnSpan="3" >
             <oxy:Plot.Series>
-                <oxy:BoxPlotSeries ItemsSource="{Binding VM_Correlated_points}" />
-                <oxy:LinearBarSeries ItemsSource="{Binding VM_Correlated_line}" />
+                <oxy:LineSeries ItemsSource="{Binding VM_PointsForRegression}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_RegressionLine}" />
             </oxy:Plot.Series>
         </oxy:Plot>
 

@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AnomalyUtil.cs" />
     <Compile Include="CSVHandler.cs" />
     <Compile Include="FeaturesView.xaml.cs">
       <DependentUpon>FeaturesView.xaml</DependentUpon>
@@ -77,6 +78,7 @@
       <DependentUpon>JoystickView.xaml</DependentUpon>
     </Compile>
     <Compile Include="JoystickViewModel.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="MediaPanelView.xaml.cs">
       <DependentUpon>MediaPanelView.xaml</DependentUpon>
     </Compile>
