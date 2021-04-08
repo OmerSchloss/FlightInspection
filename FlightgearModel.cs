@@ -118,9 +118,24 @@ namespace FlightInspection
             Correlated_points = getCorrelatedPointsFromTwoList(Points, CorrelativePoints);
             Correlated_line = getRegLineFromPoints(Correlated_points);
         }
-        public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> first, List<DataPoint> second)
+        public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> firstList, List<DataPoint> secondList)
         {
-            return null;
+            List<DataPoint> corellatedList = new List<DataPoint>();
+
+            if ((firstList != null) && (secondList != null))
+            {
+                int listSize = firstList.Count;
+                int i = listSize - 300;
+                if (i < 0) i = 0;
+
+                for (; i < listSize; i++)
+                {
+                    double x = firstList[i].X;
+                    double y = secondList[i].Y;
+                    corellatedList.Add(new DataPoint(x, y));
+                }
+            }
+            return corellatedList;
         }
 
         public List<DataPoint> getRegLineFromPoints(List<DataPoint> points)
