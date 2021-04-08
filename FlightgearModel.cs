@@ -23,8 +23,8 @@ namespace FlightInspection
         private int currentLineNumber;
         private List<DataPoint> points;
         private List<DataPoint> correlativePoints;
-
-
+        private List<DataPoint> correlated_points;
+        private List<DataPoint> correlated_line;
 
         volatile bool stop;
         private TelnetClient telnetClient;
@@ -115,8 +115,18 @@ namespace FlightInspection
             yaw = this.csvHandler.getFeatureValueByLineAndColumn(CurrentLineNumber, getColumnByFeature("side-slip-deg"));
             Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
             CorrelativePoints = getCorrelativePointsFromStart(CurrentLineNumber, featureToDisplay);
+            Correlated_points = getCorrelatedPointsFromTwoList(Points, CorrelativePoints);
+            Correlated_line = getRegLineFromPoints(Correlated_points);
+        }
+        public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> first, List<DataPoint> second)
+        {
+            return null;
         }
 
+        public List<DataPoint> getRegLineFromPoints(List<DataPoint> points)
+        {
+            return null;
+        }
         internal void closeThread()
         {
             threatStarted = false;
@@ -409,6 +419,24 @@ namespace FlightInspection
             {
                 correlativeFeatureToDisplay = value;
                 NotifyPropertyChanged(nameof(CorrelativeFeature));
+            }
+        }
+        public List<DataPoint> Correlated_points
+        {
+            get { return correlated_points; }
+            set
+            {
+                correlated_points = value;
+                NotifyPropertyChanged("Correlated_points");
+            }
+        }
+        public List<DataPoint> Correlated_line
+        {
+            get { return correlated_line; }
+            set
+            {
+                correlated_line = value;
+                NotifyPropertyChanged("Correlated_points");
             }
         }
     }

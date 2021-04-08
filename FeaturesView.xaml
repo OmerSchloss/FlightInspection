@@ -29,7 +29,7 @@
         
         <oxy:Plot x:Name="Plot2"  Grid.Row="0" Grid.Column="1"   Margin="3,2,3,176" Grid.RowSpan="2" >
             <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativeFeatureToDisplay}"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_CorrelativePoints}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
         <TextBlock HorizontalAlignment="Left" Margin="3,21,0,0" TextWrapping="Wrap" Text="{Binding VM_CorrelativeFeature}" VerticalAlignment="Top" Width="202" Grid.ColumnSpan="2" Height="22" FontWeight="Bold" Grid.Column="1"/>

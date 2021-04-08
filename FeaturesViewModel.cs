@@ -57,6 +57,18 @@ namespace FlightInspection
             get { return model.CorrelativeFeature; }
         }
 
+
+        public List<DataPoint> VM_Correlated_points
+        {
+            get { return model.Correlated_points; }
+        }
+
+        public List<DataPoint> VM_Correlated_line
+        {
+            get { return model.Correlated_points; }
+        }
+
+
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

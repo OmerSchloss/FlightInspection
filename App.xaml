@@ -83,7 +83,13 @@ public List<DataPoint> VM_Correlated_points
         this.Correlated_points = corellatedList;
     }
 }
-    
+public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> first, List<DataPoint> second){
+    return null;
+}
+
+public List<DataPoint> getRegLineFromPoints(List<DataPoint> points){
+    return null;
+}
     
     public static Double Correlation(List<DataPoint> firstFeature,List<DataPoint> secondFeature) {
     Double sumX = 0;
