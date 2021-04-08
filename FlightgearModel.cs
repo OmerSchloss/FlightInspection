@@ -38,6 +38,7 @@ namespace FlightInspection
         private string correlativeFeatureToDisplay;
         private bool threatStarted;
         private bool isConnect;
+        private float speed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -55,6 +56,7 @@ namespace FlightInspection
             threatStarted = false;
             stop = false;
             setCorrelatedFeatures();
+            Speed = 1;
         }
 
         public bool connect(string ip, int port)
@@ -87,18 +89,33 @@ namespace FlightInspection
                         {
                             this.telnetClient.write(this.csvHandler.getCSVLine(CurrentLineNumber) + "\r\n");
                         }
-                        if ((!stop) && (CurrentLineNumber < this.csvHandler.getNumOfLines() - 2))
+                        if ((!stop) && (CurrentLineNumber < this.csvHandler.getNumOfLines() - 1))
                         {
                             this.updateProperties();
                             CurrentLineNumber = CurrentLineNumber + 1;
                         }
-                        System.Threading.Thread.Sleep(100);
+                        System.Threading.Thread.Sleep((int)(100 / Speed));
 
                     }
                 }
                       ).Start();
             }
 
+        }
+
+        internal int getCurrentLineNumber()
+        {
+            return CurrentLineNumber;
+        }
+
+        internal void updateSpeed(float s)
+        {
+            Speed = s;
+        }
+
+        internal void setCurrentLineNumber(int value)
+        {
+            CurrentLineNumber = value;
         }
 
         private void updateProperties()
@@ -147,6 +164,12 @@ namespace FlightInspection
             threatStarted = false;
         }
 
+        internal string GetTimeString()
+        {
+            TimeSpan ts = TimeSpan.FromSeconds((double)(CurrentLineNumber / 10));
+            return new DateTime(ts.Ticks).ToString("HH:mm:ss");
+        }
+
         internal void resetCurrent()
         {
             CurrentLineNumber = 0;
@@ -172,7 +195,7 @@ namespace FlightInspection
         internal void endCurrentLine()
         {
             stop = true;
-            CurrentLineNumber = this.csvHandler.getNumOfLines() - 2;
+            CurrentLineNumber = this.csvHandler.getNumOfLines() - 1;
         }
 
         internal void forwardTenSec()
@@ -403,6 +426,17 @@ namespace FlightInspection
             {
                 currentLineNumber = value;
                 NotifyPropertyChanged(nameof(CurrentLineNumber));
+                NotifyPropertyChanged("TimeString");
+            }
+        }
+
+        public float Speed
+        {
+            get { return speed; }
+            set
+            {
+                speed = value;
+                NotifyPropertyChanged(nameof(Speed));
             }
         }
 

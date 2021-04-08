@@ -15,6 +15,16 @@ namespace FlightInspection
         public MediaPanelViewModel(FlightgearModel fg)
         {
             this.fgModel = fg;
+
+            fgModel.PropertyChanged +=
+        delegate (Object sender, PropertyChangedEventArgs e) {
+            NotifyPropertyChanged("VM_" + e.PropertyName);
+        };
+        }
+
+        public void NotifyPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         public bool connectToFG()
@@ -72,6 +82,26 @@ namespace FlightInspection
         internal void closeThread()
         {
             fgModel.closeThread();
+        }
+
+        internal void updateSpeedFg(float s)
+        {
+            fgModel.updateSpeed(s);
+        }
+
+        public int VM_CurrentLineNumber
+        {
+            get { return fgModel.getCurrentLineNumber(); }
+            set
+            {
+                fgModel.setCurrentLineNumber(value);
+            }
+
+        }
+        public string VM_TimeString
+        {
+            get { return fgModel.GetTimeString();
+            }
         }
     }
 }

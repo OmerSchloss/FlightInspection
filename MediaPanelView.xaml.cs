@@ -28,12 +28,14 @@ namespace FlightInspection
         {
             InitializeComponent();
             isConnected = false;
+
+
         }
 
         internal void setFlightgearModel(FlightgearModel flightgearModel)
         {
             mediaViewModel = new MediaPanelViewModel(flightgearModel);
-            DataContext = flightgearModel;
+            DataContext = mediaViewModel;
 
             sliderTime.Maximum = mediaViewModel.getNumOfLines();
         }
@@ -117,5 +119,19 @@ namespace FlightInspection
             btn_pause_Click(sender, e);
             btn_play_start_Click(sender, e);
         }
+
+        private void Btn_update_speed_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                mediaViewModel.updateSpeedFg(float.Parse(text_speed.Text));
+            }
+            catch(FormatException fe)
+            {
+
+            }
+        }
+
+
     }
 }
