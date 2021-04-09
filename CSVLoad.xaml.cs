@@ -37,21 +37,16 @@ namespace FlightInspection
 
         private void ContinueButton(object sender, RoutedEventArgs e)
         {
-            /*List<string> featuresList = new List<string>();
-            CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
-            csvFromXaml.setFeaturesFromXml(xmlPath.Text);
-            csvFromXaml.createNewCSV(csvPath.Text);*/
-
+            string detectCsv = "C:\\Users\\User\\Desktop\\CS\\שנה ב\\סמסטר ב\\Advanced Programming 2\\תרגילים\\תרגיל 1\\anomaly_flight.csv";
             this.Hide();
-            MainWindow mainWindow = new MainWindow(csvPath.Text, xmlPath.Text);
+            MainWindow mainWindow = new MainWindow(csvPath.Text, detectCsv, xmlPath.Text);
             mainWindow.ShowDialog();
             this.Show();
-
         }
-        
+
         private void ChooseXMLButton(object sender, RoutedEventArgs e)
         {
-                                                  
+
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "XML files (*.xml)|*.xml";
             if (openFileDialog.ShowDialog() == true)

@@ -12,22 +12,24 @@ namespace FlightInspection
     {
 
         private string xmlPath;
-        private string csvPath;
+        private string learnCsv;
+        private string detectCsv;
         private FlightgearModel flightgearModel;
         private TelnetClient tClient;
         private MediaPanelView mediaPanelView;
         private InfoView infoView;
 
 
-        public MainWindow(string csv, string xml)
+        public MainWindow(string learnCsv, string detectCsv, string xml)
         {
 
             InitializeComponent();
             this.xmlPath = xml;
-            this.csvPath = csv;
+            this.learnCsv = learnCsv;
+            this.detectCsv = detectCsv;
 
             tClient = new TelnetClient();
-            flightgearModel = new FlightgearModel(csvPath, xmlPath, tClient);
+            flightgearModel = new FlightgearModel(learnCsv, detectCsv, xmlPath, tClient);
 
 
             JoystickView joystickview = new JoystickView();

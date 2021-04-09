@@ -64,7 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AnomalyUtil.cs" />
-    <Compile Include="CSVHandler.cs" />
+    <Compile Include="DataHandler.cs" />
     <Compile Include="FeaturesView.xaml.cs">
       <DependentUpon>FeaturesView.xaml</DependentUpon>
     </Compile>
