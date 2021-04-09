@@ -152,7 +152,7 @@ namespace FlightInspection
        int lineCounter = 0;
        string currentLine;
 
-       using (StreamReader sr = new StreamReader(this.csvPath))
+       using (StreamReader sr = new StreamReader(this.csvTrainPath))
        {
            while ((currentLine = sr.ReadLine()) != null)
            {
@@ -167,7 +167,7 @@ namespace FlightInspection
 private void create2DArrayFromCsv()
 {
     int timeLine = 0;
-    FileStream fs = new FileStream(this.csvPath, FileMode.Open, FileAccess.Read); //    open for reading
+    FileStream fs = new FileStream(this.csvTrainPath, FileMode.Open, FileAccess.Read); //    open for reading
                                                                                   // the file has opened; can read it now
     StreamReader sr = new StreamReader(fs);
     while (!sr.EndOfStream)

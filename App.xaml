@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:FlightInspection"
-             StartupUri="CSVLoad.xaml">
+             StartupUri="PathLoader.xaml">
     <Application.Resources>
 
     </Application.Resources>
@@ -10,40 +10,40 @@
 
 <!-- JoystickViewModel joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, new TelnetClient()));
 
-    
+
 public float throttle
         {
             get { return model.throttle; }
             set { }
         }
-    
-    
+
+
 List<DataPoint> firstList = VM_Points, secondList = VM_CorrelativePoints;
 List<DataPoint> corellatedList = new List<DataPoint>();
 if (firstList && secondList) {
     int listSize = VM_Points.Count;
     int i;
     for (i = listSize - 300; i < listSize; i++){
-       corellatedList.Add(new DataPoint(firstList[i].x, secondList[i].y)); 
+       corellatedList.Add(new DataPoint(firstList[i].x, secondList[i].y));
     }
 }
 return corellatedList;
-    
+
 List<DataPoint> points = new List<DataPoint>();
 int i
 for (i = 0; i < 300; i++) {
-    points.Add(new DataPoint(i, i));    
+    points.Add(new DataPoint(i, i));
 }
 return points;
-    
-if (i < 0) i = 0;    
-    
+
+if (i < 0) i = 0;
+
 currentLineNumber
     75 - 125
 1490
-    
+
 UserControl1 joystickView;
-  this.featuresList = new List<string>();  
+  this.featuresList = new List<string>();
 public float throttle
     {
         get
@@ -55,7 +55,7 @@ public float throttle
     canvas_joystick.children.Add(joystickView);
     2116
 Console.WriteLine(feature, i);
-   
+
 public List<DataPoint> VM_Correlated_points
 {
     get {
@@ -66,7 +66,7 @@ public List<DataPoint> VM_Correlated_points
 
         List<DataPoint> corellatedList = value;
         List<DataPoint> firstList = model.Points, secondList = VM_CorrelativePoints;
-                
+
         if ((firstList != null) && (secondList != null))
         {
             int listSize = firstList.Count;
@@ -90,7 +90,7 @@ public List<DataPoint> getCorrelatedPointsFromTwoList(List<DataPoint> first, Lis
 public List<DataPoint> getRegLineFromPoints(List<DataPoint> points){
     return null;
 }
-    
+
     public static Double Correlation(List<DataPoint> firstFeature,List<DataPoint> secondFeature) {
     Double sumX = 0;
     Double sumX2 = 0;
@@ -115,6 +115,6 @@ public List<DataPoint> getRegLineFromPoints(List<DataPoint> points){
     Double stdY = Math.Sqrt(sumY2 / n - sumY * sumY / n / n);
     Double covariance = (sumXY / n - sumX * sumY / n / n);
 
-    return covariance / stdX / stdY; 
-  } 
+    return covariance / stdX / stdY;
+  }
     -->

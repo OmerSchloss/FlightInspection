@@ -14,22 +14,24 @@ namespace FlightInspection
         private string xmlPath;
         private string learnCsv;
         private string detectCsv;
+        private string dllPath;
         private FlightgearModel flightgearModel;
         private TelnetClient tClient;
         private MediaPanelView mediaPanelView;
         private InfoView infoView;
 
 
-        public MainWindow(string learnCsv, string detectCsv, string xml)
+        public MainWindow(string learnCsv, string detectCsv, string xml, string dll)
         {
 
             InitializeComponent();
             this.xmlPath = xml;
             this.learnCsv = learnCsv;
             this.detectCsv = detectCsv;
+            this.dllPath = dll;
 
             tClient = new TelnetClient();
-            flightgearModel = new FlightgearModel(learnCsv, detectCsv, xmlPath, tClient);
+            flightgearModel = new FlightgearModel(learnCsv, detectCsv, xmlPath ,dllPath, tClient);
 
 
             JoystickView joystickview = new JoystickView();
@@ -52,7 +54,7 @@ namespace FlightInspection
             /*List<string> featuresList = new List<string>();
             CreateNewCSVFromXml csvFromXaml = new CreateNewCSVFromXml();
             csvFromXaml.setFeaturesFromXml(xmlPath.Text);
-            csvFromXaml.createNewCSV(csvPath.Text);*/
+            csvFromXaml.createNewCSV(csvTrainPath.Text);*/
         }
 
 

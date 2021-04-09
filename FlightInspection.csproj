@@ -84,7 +84,7 @@
     </Compile>
     <Compile Include="MediaPanelViewModel.cs" />
     <Compile Include="TelnetClient.cs" />
-    <Page Include="CSVLoad.xaml">
+    <Page Include="PathLoader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,8 +108,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CSVLoad.xaml.cs">
-      <DependentUpon>CSVLoad.xaml</DependentUpon>
+    <Compile Include="PathLoader.xaml.cs">
+      <DependentUpon>PathLoader.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

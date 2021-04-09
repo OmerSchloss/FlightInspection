@@ -46,7 +46,7 @@ namespace FlightInspection
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FlightgearModel(string learnCsv, string detectCsv, string xmlPath, TelnetClient telnetClient)
+        public FlightgearModel(string learnCsv, string detectCsv, string xmlPath, string dllPath, TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
             this.learnCsv = learnCsv;
@@ -64,9 +64,9 @@ namespace FlightInspection
             threatStarted = false;
             stop = false;
             Speed = 1;
-            string dllpath = @"C:\Users\רון אליאב\source\repos\implement";
-            string dllFile = dllpath + "\\";
-            var assembly = Assembly.LoadFile(dllFile);
+            //string dllpath = @"C:\Users\רון אליאב\source\repos\implement";
+            //string dllFile = dllpath + "\\";
+            var assembly = Assembly.LoadFile(dllPath);
             var type = assembly.GetType("implement.Program");
             var obj = Activator.CreateInstance(type);
             var method = type.GetMethod("Main");
@@ -329,7 +329,7 @@ namespace FlightInspection
 
             return pointsOfLinearReg;
         }
-       
+
         public string getCorrelativeFeature(string feature)
         {
             int column = dataHandler.getColumnByFeature(feature);
