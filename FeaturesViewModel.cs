@@ -46,7 +46,10 @@ namespace FlightInspection
         {
             get { return model.PointsForRegression; }
         }
-
+        public List<DataPoint> VM_AnomalyPoints
+        {
+            get { return model.AnomalyPoints; }
+        }
         public List<DataPoint> VM_RegressionLine
         {
             get { return model.RegressionLine; }

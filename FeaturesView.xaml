@@ -37,6 +37,7 @@
         <oxy:Plot x:Name="correlation_graph"  Grid.Row="1" Grid.Column="1"   Margin="10,2,21,0" Grid.ColumnSpan="3" >
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_PointsForRegression}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_AnomalyPoints}" Color="Transparent"  MarkerFill="Red" MarkerType="Circle"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_RegressionLine}" />
             </oxy:Plot.Series>
         </oxy:Plot>

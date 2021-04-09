@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Threading;
 using OxyPlot;
 
@@ -25,6 +26,7 @@ namespace FlightInspection
         private List<DataPoint> correlatedFeaturePoints;
         private List<DataPoint> pointsForRegression;
         private List<DataPoint> regressionLine;
+        private List<DataPoint> anomalyPoints;
 
         //#############################################//
 
@@ -62,13 +64,13 @@ namespace FlightInspection
             threatStarted = false;
             stop = false;
             Speed = 1;
-            /*string dllpath = @"C:\Users\User\source\repos\FlightInspection\bin\Debug";
+            string dllpath = @"C:\Users\רון אליאב\source\repos\implement";
             string dllFile = dllpath + "\\";
             var assembly = Assembly.LoadFile(dllFile);
             var type = assembly.GetType("implement.Program");
             var obj = Activator.CreateInstance(type);
             var method = type.GetMethod("Main");
-            method.Invoke(obj, new object[] { });*/
+            method.Invoke(obj, new object[] { });
             anomalyDict = dataHandler.getOutputTxt("output.txt");
         }
 
@@ -157,6 +159,9 @@ namespace FlightInspection
             CorrelatedFeaturePoints = getCorrelatedFeaturePointsFromStart(CurrentLineNumber, featureToDisplay);
             PointsForRegression = getPointsFromCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
             RegressionLine = getRegLineFromPoints(featureToDisplay, CorrelatedFeature);
+            AnomalyPoints = getAnomalyPoints(featureToDisplay, CorrelatedFeature);
+
+
         }
 
         internal void closeThread()
@@ -285,7 +290,27 @@ namespace FlightInspection
             }
             return correlatedList;
         }
+        public List<DataPoint> getAnomalyPoints(string firstFeature, string secondFeature)
+        {
+            List<DataPoint> anomalyList = new List<DataPoint>();
+            int firstFeatureColumn = dataHandler.getColumnByFeature(firstFeature);
+            int secondFeatureColumn = dataHandler.getColumnByFeature(secondFeature);
+            int startLine;
+            if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
+            else startLine = 0;
 
+            for (int i = startLine; i < CurrentLineNumber; i++)
+            {
+                if (anomalyDict.ContainsKey(i) && anomalyDict[i].Contains(firstFeature))
+                {
+                    float firstFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
+                    float secondFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
+                    anomalyList.Add(new DataPoint(firstFeatureValue, secondFeatureValue));
+
+                }
+            }
+            return anomalyList;
+        }
         public List<DataPoint> getRegLineFromPoints(string firstFeature, string secondFeature)
         {
             List<DataPoint> pointsOfLinearReg = new List<DataPoint>();
@@ -304,7 +329,7 @@ namespace FlightInspection
 
             return pointsOfLinearReg;
         }
-
+       
         public string getCorrelativeFeature(string feature)
         {
             int column = dataHandler.getColumnByFeature(feature);
@@ -484,6 +509,16 @@ namespace FlightInspection
             {
                 pointsForRegression = value;
                 NotifyPropertyChanged(nameof(PointsForRegression));
+            }
+        }
+
+        public List<DataPoint> AnomalyPoints
+        {
+            get { return anomalyPoints; }
+            set
+            {
+                anomalyPoints = value;
+                NotifyPropertyChanged(nameof(AnomalyPoints));
             }
         }
         public List<DataPoint> RegressionLine
