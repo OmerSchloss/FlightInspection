@@ -10,16 +10,10 @@ namespace FlightInspection
     {
         private List<string> featuresList;
         private List<string> linesList;
-        private string learnCsv;
-        private string detectCsv;
-        private string xml;
 
-
-        public DataHandler(string learnCsv, string detectCsv, string xml)
+        public DataHandler()
         {
-            this.learnCsv = learnCsv;
-            this.detectCsv = detectCsv;
-            this.xml = xml;
+
         }
 
         public float getFeatureValueByLineAndColumn(int line, int column)
@@ -33,7 +27,7 @@ namespace FlightInspection
             List<string> csvLines = new List<string>();
             using (StreamReader sr = new StreamReader(csv))
             {
-                if (csv == detectCsv) currentLine = sr.ReadLine();
+                if (csv == @"C:\Users\User\Desktop\CS\שנה ב\סמסטר ב\Advanced Programming 2\תרגילים\תרגיל 1\anomaly_flight.csv") currentLine = sr.ReadLine();
                 while ((currentLine = sr.ReadLine()) != null)
                 {
                     csvLines.Add(currentLine);
@@ -42,7 +36,7 @@ namespace FlightInspection
             this.linesList = csvLines;
         }
 
-        public Dictionary<int, List<string>> getOutputTxt(string outputFile)
+        public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
         {
             string currentLine;
             Dictionary<int, List<string>> lineAndFeature = new Dictionary<int, List<string>>();
@@ -74,13 +68,13 @@ namespace FlightInspection
             return linesList[line];
         }
 
-        public void createNewTxtFileFromTwoFiles(string learnCsv, string detectCsv)
+        public static void createTxtFileFromTwoFiles(string learnCsv, string detectCsv, List<string> featuresList)
         {
             string currentLine;
             if (featuresList != null)
             {
-                string featuresLine = String.Join(",", this.featuresList.Select(x => x.ToString()).ToArray());
-                string newTxtFile = "intput.txt";
+                string featuresLine = String.Join(",", featuresList.Select(x => x.ToString()).ToArray());
+                string newTxtFile = "input.txt";
                 using (StreamWriter sw = new StreamWriter(newTxtFile, true))
                 {
                     sw.WriteLine(featuresLine);
@@ -104,22 +98,30 @@ namespace FlightInspection
             }
         }
 
-        public List<string> getFeaturesFromXml()
+
+        public static List<string> getFeaturesFromXml(string xmlPath)
         {
-            XDocument xml = XDocument.Load(this.xml);
+            XDocument xml = XDocument.Load(xmlPath);
             IEnumerable<string> temp = xml.Descendants("output").Descendants("name").Select(name => (string)name);
-            featuresList = temp.ToList();
             return temp.ToList();
+        }
+
+        public void setFeaturesList(List<string> featuresList)
+        {
+            this.featuresList = featuresList;
         }
 
         public int getColumnByFeature(string feature)
         {
-            int i = 0;
-            for (; i < this.featuresList.Count; i++)
+
+            if (this.featuresList != null)
             {
-                if (this.featuresList[i].Equals(feature))
+                for (int i = 0; i < this.featuresList.Count; i++)
                 {
-                    return i;
+                    if (this.featuresList[i].Equals(feature))
+                    {
+                        return i;
+                    }
                 }
             }
             return -1;
@@ -144,45 +146,5 @@ namespace FlightInspection
             }
             return listOfValues;
         }
-
-
-
-        /* public void tableSize()
-   {
-       int lineCounter = 0;
-       string currentLine;
-
-       using (StreamReader sr = new StreamReader(this.csvTrainPath))
-       {
-           while ((currentLine = sr.ReadLine()) != null)
-           {
-               lineCounter++;
-           }
-       }
-       this.numOfLines = lineCounter;
-       this.numOfColumns = 1100;
-   }*/
-
-        /*
-private void create2DArrayFromCsv()
-{
-    int timeLine = 0;
-    FileStream fs = new FileStream(this.csvTrainPath, FileMode.Open, FileAccess.Read); //    open for reading
-                                                                                  // the file has opened; can read it now
-    StreamReader sr = new StreamReader(fs);
-    while (!sr.EndOfStream)
-    {
-        string line = sr.ReadLine();
-        string[] parts = line.Split(',');
-        for (int i = 0; i < parts.Length; i++)
-        {
-            this.flightTable[timeLine,i] = float.Parse(parts[i]);
-        }
-        timeLine++;
-    }
-}
-*/
-
-
     }
 }

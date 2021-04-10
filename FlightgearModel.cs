@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 using System.Threading;
 using OxyPlot;
 
@@ -31,12 +30,13 @@ namespace FlightInspection
         //#############################################//
 
         private TelnetClient telnetClient;
-        private DataHandler dataHandler;
+        private DataHandler trainHandler;
+        private DataHandler detectHandler;
         private AnomalyUtil anomalyUtil;
         private List<string> featuresList;
         private Dictionary<int, int> correlations;
         private Dictionary<int, List<string>> anomalyDict;
-        private string learnCsv;
+        private string trainCsv;
         private string detectCsv;
         private string xmlPath;
         private float speed;
@@ -46,32 +46,38 @@ namespace FlightInspection
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public FlightgearModel(string learnCsv, string detectCsv, string xmlPath, string dllPath, TelnetClient telnetClient)
+        public FlightgearModel(string trainCsv, string detectCsv, string xmlPath, string dllPath, TelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
-            this.learnCsv = learnCsv;
+            this.trainCsv = trainCsv;
             this.detectCsv = detectCsv;
             this.xmlPath = xmlPath;
-            dataHandler = new DataHandler(learnCsv, detectCsv, xmlPath);
+            trainHandler = new DataHandler();
+            detectHandler = new DataHandler();
             correlations = new Dictionary<int, int>();
             anomalyUtil = new AnomalyUtil();
-            dataHandler.csvParser(learnCsv);
-            FeaturesList = dataHandler.getFeaturesFromXml();
-            setCorrelatedFeatures();
-            dataHandler.csvParser(detectCsv);
-            dataHandler.createNewTxtFileFromTwoFiles(learnCsv, detectCsv);
+            FeaturesList = DataHandler.getFeaturesFromXml(xmlPath);
+            DataHandler.createTxtFileFromTwoFiles(trainCsv, detectCsv, FeaturesList);
+            trainHandler.csvParser(trainCsv);
+            detectHandler.csvParser(detectCsv);
+            trainHandler.setFeaturesList(FeaturesList);
+            detectHandler.setFeaturesList(FeaturesList);
+            new Thread(delegate ()
+            {
+                setCorrelatedFeaturesFromTrainCsv(this.correlations);
+            }).Start();
             CurrentLineNumber = 0;
             threatStarted = false;
             stop = false;
             Speed = 1;
             //string dllpath = @"C:\Users\רון אליאב\source\repos\implement";
             //string dllFile = dllpath + "\\";
-            var assembly = Assembly.LoadFile(dllPath);
-            var type = assembly.GetType("implement.Program");
-            var obj = Activator.CreateInstance(type);
-            var method = type.GetMethod("Main");
-            method.Invoke(obj, new object[] { });
-            anomalyDict = dataHandler.getOutputTxt("output.txt");
+            /* var assembly = Assembly.LoadFile(dllPath);
+             var type = assembly.GetType("implement.Program");
+             var obj = Activator.CreateInstance(type);
+             var method = type.GetMethod("Main");
+             method.Invoke(obj, new object[] { });*/
+            anomalyDict = DataHandler.getOutputTxt("output.txt");
         }
 
         public bool connect(string ip, int port)
@@ -102,9 +108,9 @@ namespace FlightInspection
                     {
                         if (isConnect)
                         {
-                            this.telnetClient.write(this.dataHandler.getDetectionCsvLine(CurrentLineNumber) + "\r\n");
+                            this.telnetClient.write(this.detectHandler.getDetectionCsvLine(CurrentLineNumber) + "\r\n");
                         }
-                        if ((!stop) && (CurrentLineNumber < this.dataHandler.getNumOfLines() - 1))
+                        if ((!stop) && (CurrentLineNumber < this.detectHandler.getNumOfLines() - 1))
                         {
                             this.updateProperties();
                             CurrentLineNumber = CurrentLineNumber + 1;
@@ -124,6 +130,11 @@ namespace FlightInspection
 
         internal void updateSpeed(float s)
         {
+            if (s == 0)
+            {
+                stop = true;
+                return;
+            }
             Speed = s;
         }
 
@@ -134,31 +145,35 @@ namespace FlightInspection
 
         private void updateProperties()
         {
-            elevator = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("elevator"));
-            aileron = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("aileron"));
-            rudder = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("rudder"));
-            throttle = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("throttle"));
-            airspeed = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("airspeed-kt"));
-            direction = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("heading-deg"));
-            roll = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("roll-deg"));
-            pitch = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("pitch-deg"));
-            yaw = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature("side-slip-deg"));
-            altimeter = dataHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
-                                                                dataHandler.getColumnByFeature(
+            elevator = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("elevator"));
+            aileron = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("aileron"));
+            rudder = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("rudder"));
+            throttle = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("throttle"));
+            airspeed = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("airspeed-kt"));
+            direction = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("heading-deg"));
+            roll = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("roll-deg"));
+            pitch = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("pitch-deg"));
+            yaw = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature("side-slip-deg"));
+            altimeter = detectHandler.getFeatureValueByLineAndColumn(CurrentLineNumber,
+                                                                detectHandler.getColumnByFeature(
                                                                            "altimeter_indicated-altitude-ft"));
             Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
+
             CorrelatedFeaturePoints = getCorrelatedFeaturePointsFromStart(CurrentLineNumber, featureToDisplay);
-            PointsForRegression = getPointsFromCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
-            RegressionLine = getRegLineFromPoints(featureToDisplay, CorrelatedFeature);
+
+            PointsForRegression = getPointsOfCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
+
+            RegressionLine = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+
             AnomalyPoints = getAnomalyPoints(featureToDisplay, CorrelatedFeature);
 
 
@@ -200,31 +215,31 @@ namespace FlightInspection
         internal void endCurrentLine()
         {
             stop = true;
-            CurrentLineNumber = this.dataHandler.getNumOfLines() - 1;
+            CurrentLineNumber = this.detectHandler.getNumOfLines() - 1;
         }
 
         internal void forwardTenSec()
         {
-            if (CurrentLineNumber < this.dataHandler.getNumOfLines() - 101)
+            if (CurrentLineNumber < this.detectHandler.getNumOfLines() - 101)
             {
                 CurrentLineNumber = CurrentLineNumber + 100;
             }
             else
             {
-                CurrentLineNumber = this.dataHandler.getNumOfLines() - 1;
+                CurrentLineNumber = this.detectHandler.getNumOfLines() - 1;
             }
         }
 
         internal int getNumberOfLines()
         {
-            return this.dataHandler.getNumOfLines();
+            return this.detectHandler.getNumOfLines();
         }
 
         public void setFeatureToDisplay(string feature)
         {
             this.featureToDisplay = feature;
         }
-        public void setCorrelatedFeatures()
+        public void setCorrelatedFeaturesFromTrainCsv(Dictionary<int, int> correlations)
         {
             int size = featuresList.Count;
             float max = 0;
@@ -234,15 +249,15 @@ namespace FlightInspection
 
             for (int i = 0; i < size; i++)
             {
-                valuesOfFeaturI = dataHandler.getValuesOfFeature(i);
+                valuesOfFeaturI = trainHandler.getValuesOfFeature(i);
                 if (i != 0)
                 {
-                    max = Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, dataHandler.getValuesOfFeature(0)));
+                    max = Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, trainHandler.getValuesOfFeature(0)));
                     maxIndex = 0;
                 }
                 for (int j = 1; j < size; j++)
                 {
-                    valuesOfFeaturJ = dataHandler.getValuesOfFeature(j);
+                    valuesOfFeaturJ = trainHandler.getValuesOfFeature(j);
                     if (i != j && Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, valuesOfFeaturJ)) > max)
                     {
                         max = Math.Abs(anomalyUtil.pearson(valuesOfFeaturI, valuesOfFeaturJ));
@@ -256,11 +271,11 @@ namespace FlightInspection
         public List<DataPoint> getPointsFromStart(int currentLine, string feature)
         {
             List<DataPoint> points = new List<DataPoint>();
-            int column = dataHandler.getColumnByFeature(feature);
+            int column = detectHandler.getColumnByFeature(feature);
             for (int i = 0; i < currentLine; i++)
             {
                 int line = i;
-                float value = dataHandler.getFeatureValueByLineAndColumn(line, column);
+                float value = detectHandler.getFeatureValueByLineAndColumn(line, column);
                 points.Add(new DataPoint(line, value));
             }
             return points;
@@ -272,11 +287,11 @@ namespace FlightInspection
             return getPointsFromStart(currentLine, CorrelatedFeature);
         }
 
-        public List<DataPoint> getPointsFromCorrelatedFeatures(string firstFeature, string secondFeature)
+        public List<DataPoint> getPointsOfCorrelatedFeatures(string firstFeature, string secondFeature)
         {
             List<DataPoint> correlatedList = new List<DataPoint>();
-            int firstFeatureColumn = dataHandler.getColumnByFeature(firstFeature);
-            int secondFeatureColumn = dataHandler.getColumnByFeature(secondFeature);
+            int firstFeatureColumn = detectHandler.getColumnByFeature(firstFeature);
+            int secondFeatureColumn = detectHandler.getColumnByFeature(secondFeature);
             int startLine;
 
             if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
@@ -284,38 +299,18 @@ namespace FlightInspection
 
             for (int i = startLine; i < CurrentLineNumber; i++)
             {
-                float firstFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
-                float secondFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
+                float firstFeatureValue = detectHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
+                float secondFeatureValue = detectHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
                 correlatedList.Add(new DataPoint(firstFeatureValue, secondFeatureValue));
             }
             return correlatedList;
         }
-        public List<DataPoint> getAnomalyPoints(string firstFeature, string secondFeature)
-        {
-            List<DataPoint> anomalyList = new List<DataPoint>();
-            int firstFeatureColumn = dataHandler.getColumnByFeature(firstFeature);
-            int secondFeatureColumn = dataHandler.getColumnByFeature(secondFeature);
-            int startLine;
-            if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
-            else startLine = 0;
 
-            for (int i = startLine; i < CurrentLineNumber; i++)
-            {
-                if (anomalyDict.ContainsKey(i) && anomalyDict[i].Contains(firstFeature))
-                {
-                    float firstFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
-                    float secondFeatureValue = dataHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
-                    anomalyList.Add(new DataPoint(firstFeatureValue, secondFeatureValue));
-
-                }
-            }
-            return anomalyList;
-        }
-        public List<DataPoint> getRegLineFromPoints(string firstFeature, string secondFeature)
+        public List<DataPoint> getRegLineFromTrainCsv(string firstFeature, string secondFeature)
         {
             List<DataPoint> pointsOfLinearReg = new List<DataPoint>();
-            List<float> firstFeatureValues = dataHandler.getValuesOfFeature(firstFeature);
-            List<float> secondFeatureValues = dataHandler.getValuesOfFeature(secondFeature);
+            List<float> firstFeatureValues = trainHandler.getValuesOfFeature(firstFeature);
+            List<float> secondFeatureValues = trainHandler.getValuesOfFeature(secondFeature);
             Line line = anomalyUtil.linear_reg(firstFeatureValues, secondFeatureValues);
             int startLine;
 
@@ -330,9 +325,31 @@ namespace FlightInspection
             return pointsOfLinearReg;
         }
 
+        public List<DataPoint> getAnomalyPoints(string firstFeature, string secondFeature)
+        {
+            List<DataPoint> anomalyList = new List<DataPoint>();
+            int firstFeatureColumn = detectHandler.getColumnByFeature(firstFeature);
+            int secondFeatureColumn = detectHandler.getColumnByFeature(secondFeature);
+            int startLine;
+            if (CurrentLineNumber >= 300) startLine = CurrentLineNumber - 300;
+            else startLine = 0;
+
+            for (int i = startLine; i < CurrentLineNumber; i++)
+            {
+                if (anomalyDict.ContainsKey(i) && anomalyDict[i].Contains(firstFeature))
+                {
+                    float firstFeatureValue = detectHandler.getFeatureValueByLineAndColumn(i, firstFeatureColumn);
+                    float secondFeatureValue = detectHandler.getFeatureValueByLineAndColumn(i, secondFeatureColumn);
+                    anomalyList.Add(new DataPoint(firstFeatureValue, secondFeatureValue));
+
+                }
+            }
+            return anomalyList;
+        }
+
         public string getCorrelativeFeature(string feature)
         {
-            int column = dataHandler.getColumnByFeature(feature);
+            int column = detectHandler.getColumnByFeature(feature);
             return featuresList[correlations[column]];
         }
 
@@ -467,8 +484,12 @@ namespace FlightInspection
             get { return speed; }
             set
             {
-                speed = value;
-                NotifyPropertyChanged(nameof(Speed));
+                if (value > 0)
+                {
+                    speed = value;
+                    NotifyPropertyChanged(nameof(Speed));
+                }
+
             }
         }
 

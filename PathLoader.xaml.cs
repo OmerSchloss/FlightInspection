@@ -100,9 +100,8 @@ namespace FlightInspection
 
         private void ContinueButton(object sender, RoutedEventArgs e)
         {
-            string detectCsv = "C:\\Users\\User\\Desktop\\CS\\שנה ב\\סמסטר ב\\Advanced Programming 2\\תרגילים\\תרגיל 1\\anomaly_flight.csv";
             this.Hide();
-            MainWindow mainWindow = new MainWindow(csvTrainPath.Text, csvAnomalyPath.Text, xmlPath.Text , dllPath.Text);
+            MainWindow mainWindow = new MainWindow(csvTrainPath.Text, csvAnomalyPath.Text, xmlPath.Text, dllPath.Text);
             mainWindow.ShowDialog();
             this.Show();
         }
