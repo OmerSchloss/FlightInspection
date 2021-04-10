@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Threading;
 using OxyPlot;
 
@@ -70,13 +71,14 @@ namespace FlightInspection
             threatStarted = false;
             stop = false;
             Speed = 1;
-            //string dllpath = @"C:\Users\רון אליאב\source\repos\implement";
-            //string dllFile = dllpath + "\\";
-            /* var assembly = Assembly.LoadFile(dllPath);
-             var type = assembly.GetType("implement.Program");
-             var obj = Activator.CreateInstance(type);
-             var method = type.GetMethod("Main");
-             method.Invoke(obj, new object[] { });*/
+
+
+            var assembly = Assembly.LoadFile(dllPath);
+            var type = assembly.GetType("regression_line_dll.anomaly_detector");
+            var obj = Activator.CreateInstance(type);
+            var method = type.GetMethod("detector");
+            method.Invoke(obj, null);
+            //anomalyDict = DataHandler.getOutputTxt("output.txt");
             anomalyDict = DataHandler.getOutputTxt("output.txt");
         }
 
