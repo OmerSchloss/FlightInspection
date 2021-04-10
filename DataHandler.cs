@@ -27,7 +27,6 @@ namespace FlightInspection
             List<string> csvLines = new List<string>();
             using (StreamReader sr = new StreamReader(csv))
             {
-                if (csv == @"C:\Users\User\Desktop\CS\שנה ב\סמסטר ב\Advanced Programming 2\תרגילים\תרגיל 1\anomaly_flight.csv") currentLine = sr.ReadLine();
                 while ((currentLine = sr.ReadLine()) != null)
                 {
                     csvLines.Add(currentLine);
@@ -86,6 +85,7 @@ namespace FlightInspection
                         }
                         sw.WriteLine("done");
                     }
+                    sw.WriteLine(featuresLine);
                     using (StreamReader sr = new StreamReader(detectCsv))
                     {
                         while ((currentLine = sr.ReadLine()) != null)
