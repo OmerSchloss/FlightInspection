@@ -79,7 +79,7 @@ namespace FlightInspection
             var method = type.GetMethod("detector");
             method.Invoke(obj, null);
             //anomalyDict = DataHandler.getOutputTxt("output.txt");
-            anomalyDict = DataHandler.getOutputTxt("output.txt");
+            anomalyDict = DataHandler.getOutputTxt("output.txt", featuresList);
         }
 
         public bool connect(string ip, int port)

@@ -35,7 +35,7 @@ namespace FlightInspection
             this.linesList = csvLines;
         }
 
-        public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
+        public static Dictionary<int, List<string>> getOutputTxt(string outputFile, List<string> featuresList)
         {
             string currentLine;
             Dictionary<int, List<string>> lineAndFeature = new Dictionary<int, List<string>>();
@@ -53,13 +53,13 @@ namespace FlightInspection
 
                     if (lineAndFeature.ContainsKey(lineNumber))
                     {
-                        lineAndFeature[lineNumber].Add(feature);
+                        lineAndFeature[lineNumber].Add(featuresList[Convert.ToInt32(feature)-1]);
                     }
 
                     else
                     {
                         lineAndFeature.Add(lineNumber, new List<string>());
-                        lineAndFeature[lineNumber].Add(feature);
+                        lineAndFeature[lineNumber].Add(featuresList[Convert.ToInt32(feature) - 1]);
 
                     }
 
@@ -80,14 +80,24 @@ namespace FlightInspection
 
         public static void createTxtFileFromTwoFiles(string learnCsv, string detectCsv, List<string> featuresList)
         {
+
             string currentLine;
             if (featuresList != null)
             {
-                string featuresLine = String.Join(",", featuresList.Select(x => x.ToString()).ToArray());
+                //string featuresLine = String.Join(",", featuresList.Select(x => x.ToString()).ToArray());
+
+                string col = "";
+                int i = 0;
+                for (i = 1; i < featuresList.Count - 1; i++) {
+                    col += i.ToString() + ",";
+                }
+                col += i.ToString();
+
+
                 string newTxtFile = "input.txt";
                 using (StreamWriter sw = new StreamWriter(newTxtFile, true))
                 {
-                    sw.WriteLine(featuresLine);
+                    sw.WriteLine(col);
                     using (StreamReader sr = new StreamReader(learnCsv))
                     {
                         while ((currentLine = sr.ReadLine()) != null)
@@ -96,7 +106,7 @@ namespace FlightInspection
                         }
                         sw.WriteLine("done");
                     }
-                    sw.WriteLine(featuresLine);
+                    sw.WriteLine(col);
                     using (StreamReader sr = new StreamReader(detectCsv))
                     {
                         while ((currentLine = sr.ReadLine()) != null)
