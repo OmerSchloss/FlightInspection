@@ -39,9 +39,14 @@ namespace FlightInspection
         {
             string currentLine;
             Dictionary<int, List<string>> lineAndFeature = new Dictionary<int, List<string>>();
+
             using (StreamReader sr = new StreamReader(outputFile))
             {
-                while ((currentLine = sr.ReadLine()) != null)
+                currentLine = sr.ReadLine();
+
+                currentLine = sr.ReadLine();
+
+                while ((currentLine = sr.ReadLine()) != "done")
                 {
                     int lineNumber = int.Parse(currentLine.Split(',')[0]);
                     string feature = currentLine.Split(',')[1];
@@ -50,8 +55,14 @@ namespace FlightInspection
                     {
                         lineAndFeature[lineNumber].Add(feature);
                     }
-                    lineAndFeature.Add(lineNumber, new List<string>());
-                    lineAndFeature[lineNumber].Add(feature);
+
+                    else
+                    {
+                        lineAndFeature.Add(lineNumber, new List<string>());
+                        lineAndFeature[lineNumber].Add(feature);
+
+                    }
+
                 }
             }
             return lineAndFeature;
