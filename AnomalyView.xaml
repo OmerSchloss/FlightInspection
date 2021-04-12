@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="FlightInspection.AnomalyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FlightInspection"
+             xmlns:oxy="http://oxyplot.org/wpf"
+             mc:Ignorable="d" Height="163.31" Width="161.282">
+    <Grid Margin="0,0,1,29">
+        <oxy:Plot Margin="0,2,-1,-7" >
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_PointsOfCorrelatedFeatures}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_AnomalyPoints}" Color="Transparent"  MarkerFill="Red" MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_MinCircleAlgo}" MarkerFill="Red" Background="Transparent"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_LineAlgo}" />
+            </oxy:Plot.Series>
+        </oxy:Plot>
+    </Grid>
+</UserControl>

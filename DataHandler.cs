@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using OxyPlot;
 
 namespace FlightInspection
 {
@@ -10,6 +11,9 @@ namespace FlightInspection
     {
         private List<string> featuresList;
         private List<string> linesList;
+        public static Dictionary<string, int> featureAndRadius;
+        public static Dictionary<string, DataPoint> featureAndCenterPoint;
+        public static string detectionAlgorithm;
 
         public DataHandler()
         {
@@ -35,34 +39,71 @@ namespace FlightInspection
             this.linesList = csvLines;
         }
 
+        public static void setDetectionAlgorithm(string algo)
+        {
+            detectionAlgorithm = algo;
+        }
+
         public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
         {
+            int counter = 0;
             string currentLine;
+            featureAndCenterPoint = new Dictionary<string, DataPoint>();
+            featureAndRadius = new Dictionary<string, int>();
             Dictionary<int, List<string>> lineAndFeature = new Dictionary<int, List<string>>();
 
             using (StreamReader sr = new StreamReader(outputFile))
             {
                 currentLine = sr.ReadLine();
-
-                currentLine = sr.ReadLine();
-
-                while ((currentLine = sr.ReadLine()) != "done")
+                setDetectionAlgorithm(currentLine);
+                if (detectionAlgorithm == "Line")
                 {
-                    int lineNumber = int.Parse(currentLine.Split(',')[0]);
-                    string feature = currentLine.Split(',')[1];
-
-                    if (lineAndFeature.ContainsKey(lineNumber))
+                    while ((currentLine = sr.ReadLine()) != "done")
                     {
-                        lineAndFeature[lineNumber].Add(feature);
-                    }
+                        int lineNumber = int.Parse(currentLine.Split(',')[0]);
+                        string feature = currentLine.Split(',')[1];
 
-                    else
+                        if (lineAndFeature.ContainsKey(lineNumber))
+                        {
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                        else
+                        {
+                            lineAndFeature.Add(lineNumber, new List<string>());
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                    }
+                }
+                if (detectionAlgorithm == "Circle")
+                {
+                    while ((currentLine = sr.ReadLine()) != "done" && counter != 2)
                     {
-                        lineAndFeature.Add(lineNumber, new List<string>());
-                        lineAndFeature[lineNumber].Add(feature);
+                        if (counter == 0)
+                        {
+                            string feature = currentLine.Split(',')[0];
+                            int X = int.Parse(currentLine.Split(',')[1]);
+                            int Y = int.Parse(currentLine.Split(',')[2]);
+                            int radius = int.Parse(currentLine.Split(',')[3]);
+                            featureAndRadius.Add(feature, radius);
+                            featureAndCenterPoint.Add(feature, new DataPoint(X, Y));
+                        }
+                        if (counter == 1)
+                        {
+                            int lineNumber = int.Parse(currentLine.Split(',')[0]);
+                            string feature = currentLine.Split(',')[1];
 
+                            if (lineAndFeature.ContainsKey(lineNumber))
+                            {
+                                lineAndFeature[lineNumber].Add(feature);
+                            }
+                            else
+                            {
+                                lineAndFeature.Add(lineNumber, new List<string>());
+                                lineAndFeature[lineNumber].Add(feature);
+                            }
+                        }
+                        if (currentLine == "done") counter++;
                     }
-
                 }
             }
             return lineAndFeature;

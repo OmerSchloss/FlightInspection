@@ -24,9 +24,11 @@ namespace FlightInspection
         private string correlatedFeatureToDisplay;
         private List<DataPoint> points;
         private List<DataPoint> correlatedFeaturePoints;
-        private List<DataPoint> pointsForRegression;
+        private List<DataPoint> pointsOfCorrelatedFeatures;
         private List<DataPoint> regressionLine;
         private List<DataPoint> anomalyPoints;
+        private List<DataPoint> minCircle;
+        private List<DataPoint> lineAlgo;
 
         //#############################################//
 
@@ -37,9 +39,11 @@ namespace FlightInspection
         private List<string> featuresList;
         private Dictionary<int, int> correlations;
         private Dictionary<int, List<string>> anomalyDict;
+
         private string trainCsv;
         private string detectCsv;
         private string xmlPath;
+        private string detectionAlgorithm;
         private float speed;
         private bool threatStarted;
         private bool isConnect;
@@ -71,8 +75,6 @@ namespace FlightInspection
             threatStarted = false;
             stop = false;
             Speed = 1;
-
-
             var assembly = Assembly.LoadFile(dllPath);
             var type = assembly.GetType("regression_line_dll.anomaly_detector");
             var obj = Activator.CreateInstance(type);
@@ -80,6 +82,7 @@ namespace FlightInspection
             method.Invoke(obj, null);
             //anomalyDict = DataHandler.getOutputTxt("output.txt");
             anomalyDict = DataHandler.getOutputTxt("output.txt");
+            detectionAlgorithm = DataHandler.detectionAlgorithm;
         }
 
         public bool connect(string ip, int port)
@@ -121,7 +124,7 @@ namespace FlightInspection
 
                     }
                 }
-                      ).Start();
+                  ).Start();
             }
         }
 
@@ -172,13 +175,22 @@ namespace FlightInspection
 
             CorrelatedFeaturePoints = getCorrelatedFeaturePointsFromStart(CurrentLineNumber, featureToDisplay);
 
-            PointsForRegression = getPointsOfCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
-
-            RegressionLine = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+            PointsOfCorrelatedFeatures = getPointsOfCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
 
             AnomalyPoints = getAnomalyPoints(featureToDisplay, CorrelatedFeature);
 
+            RegressionLine = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
 
+            if (detectionAlgorithm == "Line")
+            {
+                LineAlgo = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+            }
+
+            if (detectionAlgorithm == "Circle")
+            {
+                MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
+                                                        DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
+            }
         }
 
         internal void closeThread()
@@ -347,6 +359,21 @@ namespace FlightInspection
                 }
             }
             return anomalyList;
+        }
+
+        public static List<DataPoint> getCircularPoints(double radius, DataPoint center, double angleInterval)
+        {
+            List<DataPoint> points = new List<DataPoint>();
+
+            for (double interval = angleInterval; interval < 2 * Math.PI; interval += angleInterval)
+            {
+                double X = center.X + (radius * Math.Cos(interval));
+                double Y = center.Y + (radius * Math.Sin(interval));
+
+                points.Add(new DataPoint((float)X, (float)Y));
+            }
+
+            return points;
         }
 
         public string getCorrelativeFeature(string feature)
@@ -525,13 +552,14 @@ namespace FlightInspection
                 NotifyPropertyChanged(nameof(CorrelatedFeature));
             }
         }
-        public List<DataPoint> PointsForRegression
+
+        public List<DataPoint> PointsOfCorrelatedFeatures
         {
-            get { return pointsForRegression; }
+            get { return pointsOfCorrelatedFeatures; }
             set
             {
-                pointsForRegression = value;
-                NotifyPropertyChanged(nameof(PointsForRegression));
+                pointsOfCorrelatedFeatures = value;
+                NotifyPropertyChanged(nameof(PointsOfCorrelatedFeatures));
             }
         }
 
@@ -544,6 +572,7 @@ namespace FlightInspection
                 NotifyPropertyChanged(nameof(AnomalyPoints));
             }
         }
+
         public List<DataPoint> RegressionLine
         {
             get { return regressionLine; }
@@ -551,6 +580,27 @@ namespace FlightInspection
             {
                 regressionLine = value;
                 NotifyPropertyChanged(nameof(RegressionLine));
+
+            }
+        }
+
+        public List<DataPoint> LineAlgo
+        {
+            get { return lineAlgo; }
+            set
+            {
+                lineAlgo = value;
+                NotifyPropertyChanged(nameof(LineAlgo));
+            }
+        }
+
+        public List<DataPoint> MinCircleAlgo
+        {
+            get { return minCircle; }
+            set
+            {
+                minCircle = value;
+                NotifyPropertyChanged(nameof(MinCircleAlgo));
             }
         }
     }

@@ -28,8 +28,8 @@
             <TextBox Margin="10,4.6,12.2,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_altimeter}" TextAlignment="Center" />
             <TextBox Margin="11.8,4.6,10.4,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_airspeed}" Grid.Column="1" TextAlignment="Center" />
             <TextBox Margin="5.6,4.6,15.8,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_direction}" Grid.Column="2" TextAlignment="Center" />
-            <TextBox Margin="12,1.6,10.2,12" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VM_roll}" TextAlignment="Center" />
-            <TextBox Margin="11.8,0.6,10.4,13" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VM_pitch}" Grid.Column="1" TextAlignment="Center" />
+            <TextBox Margin="12,49.2,10.2,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_roll}" TextAlignment="Center" Grid.RowSpan="2" />
+            <TextBox Margin="11.8,49.2,10.4,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_pitch}" Grid.Column="1" TextAlignment="Center" Grid.RowSpan="2" />
             <TextBox Margin="7.6,49.2,13.8,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_yaw}" Grid.Column="2" Grid.RowSpan="2" TextAlignment="Center" />
         </Grid>
     </Grid>

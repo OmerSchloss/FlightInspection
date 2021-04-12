@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="733.6"
+        Title="MainWindow" Height="500" Width="966.436"
         Closed="Window_Closed">
     <Grid x:Name="grd_main" Margin="0,0,3.2,0.4">
         <Grid.RowDefinitions>
@@ -18,22 +18,14 @@
             <ColumnDefinition Width="253*"/>
             <ColumnDefinition Width="229*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="grd_cor_data" Grid.Row="0" Grid.Column="1" Margin="12.6,6,10.2,11.2"/>
-        <!--   http://csharphelper.com/blog/2014/09/draw-graph-wpf-c/   -->
-        <Canvas x:Name="graph_features" Grid.Row="1" Grid.Column="1" Margin="11.6,1.8,9.2,10.4" />
 
+        <Canvas x:Name="canvas_joystick" Grid.Column="2" Margin="0,0,-0.2,0.2" HorizontalAlignment="Right" Width="223"/>
 
+        <Grid x:Name="grd_media_panel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0.4,1.8,0.4"/>
+        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="0,0,133.4,108.4" Grid.ColumnSpan="2"/>
 
-        <Canvas x:Name="canvas_joystick" Grid.Column="2" HorizontalAlignment="Left" Height="167" Margin="0.8,0,0,0" VerticalAlignment="Top" Width="223">
-
-        </Canvas>
-
-        <Grid x:Name="grd_media_panel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
-
-        </Grid>
-        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,0,0" HorizontalAlignment="Left" Width="512" Grid.ColumnSpan="3"/>
-
-        <Grid x:Name="grd_info_view" Grid.Column="2" HorizontalAlignment="Left" Height="193" Margin="0,2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="229"/>
+        <Grid x:Name="grd_info_view" Grid.Column="2" Margin="73.6,163,-0.2,5.6" Grid.RowSpan="2"/>
+        <Grid x:Name="grd_anomaly_view" Grid.Column="1" Margin="172,57,300,0" Grid.ColumnSpan="2" Grid.Row="1"/>
 
 
     </Grid >

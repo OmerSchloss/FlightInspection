@@ -19,6 +19,7 @@ namespace FlightInspection
         private TelnetClient tClient;
         private MediaPanelView mediaPanelView;
         private InfoView infoView;
+        private AnomalyView anomalyView;
 
 
         public MainWindow(string learnCsv, string detectCsv, string xml, string dll)
@@ -31,7 +32,7 @@ namespace FlightInspection
             this.dllPath = dll;
 
             tClient = new TelnetClient();
-            flightgearModel = new FlightgearModel(learnCsv, detectCsv, xmlPath ,dllPath, tClient);
+            flightgearModel = new FlightgearModel(learnCsv, detectCsv, xmlPath, dllPath, tClient);
 
 
             JoystickView joystickview = new JoystickView();
@@ -49,6 +50,10 @@ namespace FlightInspection
             FeaturesView featuresView = new FeaturesView();
             featuresView.setFlightgearModel(flightgearModel);
             grd_feature_view.Children.Add(featuresView);
+
+            anomalyView = new AnomalyView();
+            anomalyView.setFlightgearModel(flightgearModel);
+            grd_anomaly_view.Children.Add(anomalyView);
 
             //DataContext = mediaPanel;
             /*List<string> featuresList = new List<string>();

@@ -64,6 +64,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AnomalyUtil.cs" />
+    <Compile Include="AnomalyView.xaml.cs">
+      <DependentUpon>AnomalyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AnomalyViewModel.cs" />
     <Compile Include="DataHandler.cs" />
     <Compile Include="FeaturesView.xaml.cs">
       <DependentUpon>FeaturesView.xaml</DependentUpon>
@@ -84,6 +88,10 @@
     </Compile>
     <Compile Include="MediaPanelViewModel.cs" />
     <Compile Include="TelnetClient.cs" />
+    <Page Include="AnomalyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PathLoader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
