@@ -77,9 +77,9 @@ namespace FlightInspection
                     while ((currentLine = sr.ReadLine()) != "done")
                     {
                         string feature = currentLine.Split(',')[0];
-                        int X = int.Parse(currentLine.Split(',')[1]);
-                        int Y = int.Parse(currentLine.Split(',')[2]);
-                        int radius = int.Parse(currentLine.Split(',')[3]);
+                        int X = int.Parse(currentLine.Split(',')[2]);
+                        int Y = int.Parse(currentLine.Split(',')[3]);
+                        int radius = int.Parse(currentLine.Split(',')[4]);
                         featureAndRadius.Add(feature, radius);
                         featureAndCenterPoint.Add(feature, new DataPoint(X, Y));
                     }
