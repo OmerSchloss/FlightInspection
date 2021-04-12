@@ -18,5 +18,10 @@ namespace FlightInspection
             anomalyViewModel = new AnomalyViewModel(flightgearModel);
             DataContext = anomalyViewModel;
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

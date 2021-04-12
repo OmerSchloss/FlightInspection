@@ -54,8 +54,6 @@ namespace FlightInspection
                 MessageBox.Show("ready?","", MessageBoxButton.OKCancel);
                 if (mediaViewModel.connectToFG())
                 {
-                    MessageBox.Show("connected");
-
                     btn_connect.Content = "Stop connection";
                     isConnected = true;
                 }

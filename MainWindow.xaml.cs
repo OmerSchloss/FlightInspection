@@ -93,6 +93,10 @@ namespace FlightInspection
         private void Window_Closed(object sender, System.EventArgs e)
         {
             mediaPanelView.closeWindow();
+            File.Delete("input.txt");
+            File.Delete("output.txt");
+            File.Delete("anomalyTrain.csv");
+            File.Delete("anomalyTest.csv");
         }
     }
 }

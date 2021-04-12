@@ -43,7 +43,6 @@ namespace FlightInspection
         {
             detectionAlgorithm = algo;
         }
-
         public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
         {
             int counter = 0;
@@ -107,6 +106,36 @@ namespace FlightInspection
                 }
             }
             return lineAndFeature;
+        }
+        public static List<string> getAnomalyListBox(string outputFile)
+        {
+            int counter = 0;
+            string currentLine;
+            List<string> anomalyList = new List<string>();
+
+            using (StreamReader sr = new StreamReader(outputFile))
+            {
+                currentLine = sr.ReadLine();
+                if (currentLine == "Line")
+                {
+                    while ((currentLine = sr.ReadLine()) != "done")
+                    {
+                        anomalyList.Add(currentLine);
+                    }
+                }
+                if (currentLine == "Circle")
+                {
+                    while ((currentLine = sr.ReadLine()) != "done" && counter != 2)
+                    {
+                        if (counter == 1)
+                        {
+                            anomalyList.Add(currentLine);
+                        }
+                        if (currentLine == "done") counter++;
+                    }
+                }
+            }
+            return anomalyList;
         }
 
         public int getNumOfLines()

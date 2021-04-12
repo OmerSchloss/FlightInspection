@@ -46,6 +46,11 @@ namespace FlightInspection
             get { return model.MinCircleAlgo; }
         }
 
+        public List<string> VM_AnomalyListBox
+        {
+            get { return model.AnomalyListBox; }
+        }
+
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

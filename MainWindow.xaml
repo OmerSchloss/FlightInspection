@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="966.436"
+        Title="MainWindow" Height="500" Width="933.2"
         Closed="Window_Closed">
     <Grid x:Name="grd_main" Margin="0,0,3.2,0.4">
         <Grid.RowDefinitions>
@@ -14,18 +14,20 @@
             <RowDefinition Height="109*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="242*"/>
-            <ColumnDefinition Width="253*"/>
-            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="309*"/>
+            <ColumnDefinition Width="196*"/>
+            <ColumnDefinition Width="126*"/>
+            <ColumnDefinition Width="64*"/>
+            <ColumnDefinition Width="228*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="canvas_joystick" Grid.Column="2" Margin="0,0,-0.2,0.2" HorizontalAlignment="Right" Width="223"/>
+        <Canvas x:Name="canvas_joystick" Grid.Column="4" Margin="4.8,0,0.2,0.4"/>
 
-        <Grid x:Name="grd_media_panel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0.4,1.8,0.4"/>
-        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="0,0,133.4,108.4" Grid.ColumnSpan="2"/>
+        <Grid x:Name="grd_media_panel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,0.2,2.2,0.6"/>
+        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="0,0,6.8,108.6" Grid.ColumnSpan="2"/>
 
-        <Grid x:Name="grd_info_view" Grid.Column="2" Margin="73.6,163,-0.2,5.6" Grid.RowSpan="2"/>
-        <Grid x:Name="grd_anomaly_view" Grid.Column="1" Margin="172,57,300,0" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Grid x:Name="grd_info_view" Grid.Column="4" Margin="9.8,0.6,0.2,1.8" Grid.Row="1"/>
+        <Grid x:Name="grd_anomaly_view" Grid.Column="2" Margin="5.2,0,0.2,108.6" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
 
 
     </Grid >

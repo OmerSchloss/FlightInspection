@@ -9,28 +9,28 @@
 
         <Grid x:Name="graph_feature" Margin="0,0,-225,0.2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="33*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="altimeter" Margin="0,16,0,4" HorizontalContentAlignment="Center" />
+            <Label Content="altimeter" Margin="0,16,0.2,4.4" HorizontalContentAlignment="Center" />
             <Label Content="airspeed" Margin="11.8,16,8.4,4.4" RenderTransformOrigin="2.098,0.513" Grid.Column="1" HorizontalContentAlignment="Center"/>
             <Label Content="direction" Margin="5.6,15,9.8,5.4" Grid.Column="2"  HorizontalContentAlignment="Center" />
-            <Label Content="roll" Margin="11,14.2,9.2,5.4" Grid.Row="2"  HorizontalContentAlignment="Center" />
-            <Label Content="pitch" Margin="11.8,14.2,8.4,5.4" Grid.Column="1" Grid.Row="2"  HorizontalContentAlignment="Center" />
-            <Label Content="yaw" Margin="9.6,14.2,9.8,5.4" Grid.Column="2" Grid.Row="2"  HorizontalContentAlignment="Center" />
-            <TextBox Margin="10,4.6,12.2,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_altimeter}" TextAlignment="Center" />
-            <TextBox Margin="11.8,4.6,10.4,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_airspeed}" Grid.Column="1" TextAlignment="Center" />
-            <TextBox Margin="5.6,4.6,15.8,9.8" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_direction}" Grid.Column="2" TextAlignment="Center" />
-            <TextBox Margin="12,49.2,10.2,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_roll}" TextAlignment="Center" Grid.RowSpan="2" />
-            <TextBox Margin="11.8,49.2,10.4,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_pitch}" Grid.Column="1" TextAlignment="Center" Grid.RowSpan="2" />
-            <TextBox Margin="7.6,49.2,13.8,14" Grid.Row="2" TextWrapping="Wrap" Text="{Binding VM_yaw}" Grid.Column="2" Grid.RowSpan="2" TextAlignment="Center" />
+            <Label Content="roll" Margin="10,3,10.2,0.6" Grid.Row="2"  HorizontalContentAlignment="Center" />
+            <Label Content="pitch" Margin="11.8,3,8.4,0.6" Grid.Column="1" Grid.Row="2"  HorizontalContentAlignment="Center" />
+            <Label Content="yaw" Margin="4.6,3,14.8,0.6" Grid.Column="2" Grid.Row="2"  HorizontalContentAlignment="Center" />
+            <TextBox Margin="10,4.6,12.2,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_altimeter}" TextAlignment="Center" />
+            <TextBox Margin="11.8,4.6,10.4,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_airspeed}" Grid.Column="1" TextAlignment="Center" />
+            <TextBox Margin="5.6,4.6,15.8,10" Grid.Row="1" TextWrapping="Wrap" Text="{Binding VM_direction}" Grid.Column="2" TextAlignment="Center" />
+            <TextBox Margin="10,5.4,12.2,25" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VM_roll}" TextAlignment="Center" />
+            <TextBox Margin="11.8,5.4,10.4,25" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VM_pitch}" Grid.Column="1" TextAlignment="Center" />
+            <TextBox Margin="5.6,5.4,15.8,25" Grid.Row="3" TextWrapping="Wrap" Text="{Binding VM_yaw}" Grid.Column="2" TextAlignment="Center" />
         </Grid>
     </Grid>
 </UserControl>

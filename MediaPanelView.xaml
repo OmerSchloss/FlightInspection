@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FlightInspection" d:DataContext="{d:DesignInstance Type=local:MediaPanelViewModel}"
-             mc:Ignorable="d" d:DesignWidth="800" Height="100.8">
-    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,1,15,0" Height="61" VerticalAlignment="Top">
+             mc:Ignorable="d" Height="101" Width="921.3">
+    <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="6,1,0.6,38.8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="158*"/>
-            <ColumnDefinition Width="315*"/>
+            <ColumnDefinition Width="280*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="33*"/>
-            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition Width="111*"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="btn_connect"  Content="Connect to fg" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="15" FontWeight="SemiBold" Margin="10,3,0,10" Click="Btn_connect_Click" Foreground="White">
             <Button.Background>
@@ -22,7 +22,7 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="22.333,5,25.333,16">
+        <StackPanel x:Name="media_control_panel" Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Margin="70.2,5,33.8,16">
             <Button x:Name="btn_play_start" Content="⏮" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_play_start_Click" />
             <Button x:Name="btn_backward" Content="⏪" FontSize="23" HorizontalAlignment="Left" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_backward_Click" />
             <Button x:Name="btn_play" HorizontalAlignment="Left" Content="▶" FontSize="23" Click="btn_play_Click" Height="35" Width="Auto" Background="White" BorderBrush="White" />
@@ -32,14 +32,14 @@
             <Button x:Name="btn_end" HorizontalAlignment="Left" Content="⏭" FontSize="23" Height="35" Width="Auto" Background="White" BorderBrush="White" Click="btn_end_Click" />
         </StackPanel>
 
-        <Label Content="Play speed" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="19" FontWeight="SemiBold" Height="Auto" Margin="0,3,2.667,2"/>
+        <Label Content="Play speed"  Grid.Row="0" Grid.Column="2" FontStyle="Normal" FontSize="19" FontWeight="SemiBold" Height="Auto" Margin="0.2,3,2.6,23"/>
         <TextBox x:Name="text_speed"  Grid.Row="0" Grid.Column="3" FontStyle="Normal" FontSize="19" FontWeight="SemiBold" TextAlignment="Center" TextWrapping="Wrap" Text="1.0"  Margin="5,8,5,19" RenderTransformOrigin="1.173,0.532" />
         <Button Content="▶" FontSize="23" Grid.Column="4" Click="Btn_update_speed_Click" Margin="1,7,3,19" Height="35" Width="Auto" Background="White" BorderBrush="Black"/>
 
-        <Label Grid.Row="0" Grid.Column="5" Content="{Binding VM_TimeString}" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="1,6,0.667,10" RenderTransformOrigin="1.144,0.542"/>
+        <Label Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Content="{Binding VM_TimeString}" FontStyle="Normal" FontSize="20" FontWeight="SemiBold" Margin="1,6,0.667,10" RenderTransformOrigin="1.144,0.542"/>
 
 
-        <Slider x:Name="sliderTime" Minimum="0" Maximum="2000"  Value="{Binding VM_CurrentLineNumber}" Margin="50,62,0.667,-37" Grid.Column="0" Grid.ColumnSpan="6" LargeChange="1" IsMoveToPointEnabled="True" ValueChanged="Slider_ValueChanged"/>
+        <Slider x:Name="sliderTime" Minimum="0" Maximum="2000"  Value="{Binding VM_CurrentLineNumber}" Margin="50,62,45.2,-37" Grid.Column="0" Grid.ColumnSpan="6" LargeChange="1" IsMoveToPointEnabled="True" ValueChanged="Slider_ValueChanged"/>
 
     </Grid>
 </UserControl>

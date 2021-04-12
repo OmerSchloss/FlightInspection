@@ -37,6 +37,7 @@ namespace FlightInspection
         private DataHandler detectHandler;
         private AnomalyUtil anomalyUtil;
         private List<string> featuresList;
+        private List<string> anomalyListBox;
         private Dictionary<int, int> correlations;
         private Dictionary<int, List<string>> anomalyDict;
 
@@ -80,8 +81,8 @@ namespace FlightInspection
             var obj = Activator.CreateInstance(type);
             var method = type.GetMethod("detector");
             method.Invoke(obj, null);
-            //anomalyDict = DataHandler.getOutputTxt("output.txt");
             anomalyDict = DataHandler.getOutputTxt("output.txt");
+            AnomalyListBox = DataHandler.getAnomalyListBox("output.txt");
             detectionAlgorithm = DataHandler.detectionAlgorithm;
         }
 
@@ -494,6 +495,16 @@ namespace FlightInspection
             {
                 featuresList = value;
                 NotifyPropertyChanged(nameof(FeaturesList));
+            }
+        }
+
+        public List<string> AnomalyListBox
+        {
+            get { return anomalyListBox; }
+            set
+            {
+                anomalyListBox = value;
+                NotifyPropertyChanged(nameof(AnomalyListBox));
             }
         }
 
