@@ -45,7 +45,6 @@ namespace FlightInspection
         }
         public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
         {
-            int counter = 0;
             string currentLine;
             featureAndCenterPoint = new Dictionary<string, DataPoint>();
             featureAndRadius = new Dictionary<string, int>();
@@ -75,41 +74,38 @@ namespace FlightInspection
                 }
                 if (detectionAlgorithm == "Circle")
                 {
-                    while ((currentLine = sr.ReadLine()) != "done" && counter != 2)
+                    while ((currentLine = sr.ReadLine()) != "done")
                     {
-                        if (counter == 0)
-                        {
-                            string feature = currentLine.Split(',')[0];
-                            int X = int.Parse(currentLine.Split(',')[1]);
-                            int Y = int.Parse(currentLine.Split(',')[2]);
-                            int radius = int.Parse(currentLine.Split(',')[3]);
-                            featureAndRadius.Add(feature, radius);
-                            featureAndCenterPoint.Add(feature, new DataPoint(X, Y));
-                        }
-                        if (counter == 1)
-                        {
-                            int lineNumber = int.Parse(currentLine.Split(',')[0]);
-                            string feature = currentLine.Split(',')[1];
-
-                            if (lineAndFeature.ContainsKey(lineNumber))
-                            {
-                                lineAndFeature[lineNumber].Add(feature);
-                            }
-                            else
-                            {
-                                lineAndFeature.Add(lineNumber, new List<string>());
-                                lineAndFeature[lineNumber].Add(feature);
-                            }
-                        }
-                        if (currentLine == "done") counter++;
+                        string feature = currentLine.Split(',')[0];
+                        int X = int.Parse(currentLine.Split(',')[1]);
+                        int Y = int.Parse(currentLine.Split(',')[2]);
+                        int radius = int.Parse(currentLine.Split(',')[3]);
+                        featureAndRadius.Add(feature, radius);
+                        featureAndCenterPoint.Add(feature, new DataPoint(X, Y));
                     }
+                    while ((currentLine = sr.ReadLine()) != "done")
+                    {
+                        int lineNumber = int.Parse(currentLine.Split(',')[0]);
+                        string feature = currentLine.Split(',')[1];
+
+                        if (lineAndFeature.ContainsKey(lineNumber))
+                        {
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                        else
+                        {
+                            lineAndFeature.Add(lineNumber, new List<string>());
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                    }
+
+
                 }
             }
             return lineAndFeature;
         }
         public static List<string> getAnomalyListBox(string outputFile)
         {
-            int counter = 0;
             string currentLine;
             List<string> anomalyList = new List<string>();
 
@@ -125,13 +121,10 @@ namespace FlightInspection
                 }
                 if (currentLine == "Circle")
                 {
-                    while ((currentLine = sr.ReadLine()) != "done" && counter != 2)
+                    while ((currentLine = sr.ReadLine()) != "done") { }
+                    while ((currentLine = sr.ReadLine()) != "done")
                     {
-                        if (counter == 1)
-                        {
-                            anomalyList.Add(currentLine);
-                        }
-                        if (currentLine == "done") counter++;
+                        anomalyList.Add(currentLine);
                     }
                 }
             }

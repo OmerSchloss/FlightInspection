@@ -29,6 +29,7 @@ namespace FlightInspection
         {
             stop = true;
             CurrentLineNumber = v;
+            updateProperties();
         }
 
         private List<DataPoint> pointsOfCorrelatedFeatures;
@@ -154,6 +155,7 @@ namespace FlightInspection
         internal void setCurrentLineNumber(int value)
         {
             CurrentLineNumber = value;
+            updateProperties();
         }
 
         private void updateProperties()
