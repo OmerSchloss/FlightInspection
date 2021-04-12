@@ -24,6 +24,13 @@ namespace FlightInspection
         private string correlatedFeatureToDisplay;
         private List<DataPoint> points;
         private List<DataPoint> correlatedFeaturePoints;
+
+        internal void updateCurrentLine(int v)
+        {
+            stop = true;
+            CurrentLineNumber = v;
+        }
+
         private List<DataPoint> pointsOfCorrelatedFeatures;
         private List<DataPoint> regressionLine;
         private List<DataPoint> anomalyPoints;

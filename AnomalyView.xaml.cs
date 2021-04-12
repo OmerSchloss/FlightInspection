@@ -21,7 +21,7 @@ namespace FlightInspection
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            anomalyViewModel.updateCurrentLine(int.Parse(List_Anomaly.SelectedItem.ToString().Split(',')[0]));
         }
     }
 }

@@ -19,6 +19,6 @@
                 <oxy:LineSeries ItemsSource="{Binding VM_LineAlgo}" />
             </oxy:Plot.Series>
         </oxy:Plot>
-        <ListBox Margin="0,0,0,0.2" ItemsSource="{Binding VM_AnomalyListBox}" SelectionChanged="ListBox_SelectionChanged"/>
+        <ListBox x:Name="List_Anomaly" Margin="0,0,0,0.2" ItemsSource="{Binding VM_AnomalyListBox}" SelectionChanged="ListBox_SelectionChanged"/>
     </Grid>
 </UserControl>

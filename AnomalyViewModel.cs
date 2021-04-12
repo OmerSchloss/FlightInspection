@@ -26,6 +26,11 @@ namespace FlightInspection
             get { return model.AnomalyPoints; }
         }
 
+        internal void updateCurrentLine(int v)
+        {
+            model.updateCurrentLine(v);
+        }
+
         public List<DataPoint> VM_PointsOfCorrelatedFeatures
         {
             get { return model.PointsOfCorrelatedFeatures; }
