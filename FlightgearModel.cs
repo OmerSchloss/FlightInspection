@@ -190,16 +190,23 @@ namespace FlightInspection
             AnomalyPoints = getAnomalyPoints(featureToDisplay, CorrelatedFeature);
 
             RegressionLine = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
-
-            if (detectionAlgorithm == "Line")
+            try
             {
-                LineAlgo = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+
+                if (detectionAlgorithm == "Line")
+                {
+                    LineAlgo = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+                }
+
+                if (detectionAlgorithm == "Circle")
+                {
+                    MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
+                                                            DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
+                }
             }
-
-            if (detectionAlgorithm == "Circle")
+            catch (Exception e)
             {
-                MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
-                                                        DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
+
             }
         }
 
