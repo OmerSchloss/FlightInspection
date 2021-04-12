@@ -17,8 +17,15 @@ public float throttle
             set { }
         }
 
-
-List<DataPoint> firstList = VM_Points, secondList = VM_CorrelativePoints;
+string col = "";
+int i;
+for (i = 1; i < featuresList.Length-1; i++ {
+    col += i.ToString() + ",";
+}
+col += i.ToString() += "\n";    
+    
+    
+    List<DataPoint> firstList = VM_Points, secondList = VM_CorrelativePoints;
 List<DataPoint> corellatedList = new List<DataPoint>();
 if (firstList && secondList) {
     int listSize = VM_Points.Count;
