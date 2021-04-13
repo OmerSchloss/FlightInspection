@@ -12,18 +12,12 @@ In the main folder we have all of the cs and xaml files, and we have also a dire
 In the main folder you can see the 'FlightgearModel.cs' file which is the model of the program. You can also see all of the view models that are connected with the model. 
 
 ### What should I download?
-A great question.
-
-In order to download this platform, first you should clone this repository.
-
-Then, you have to download the flightgear simulator from [here](https://www.flightgear.org/).
-
-You also might have two csv files - one of a normal flight and the other of some fligth.
-
-You should  drag the provided 'play_back.xml' file into this path in your computer:  C:\Program Files\FlightGear 2020.3.6\data\Protocol.
-
-You can use the dll files in the 'plugins' directory or use a dll of your own.
-
+A great question. <br />
+In order to download this platform, first you should clone this repository.<br />
+Then, you have to download the flightgear simulator from [here](https://www.flightgear.org/).<br />
+You also might have two csv files - one of a normal flight and the other of some fligth.<br />
+You should  drag the provided 'play_back.xml' file into this path in your computer:  C:\Program Files\FlightGear 2020.3.6\data\Protocol.<br />
+You can use the dll files in the 'plugins' directory or use a dll of your own.<br />
 That's it :)
 
 ### An appropiate dll
