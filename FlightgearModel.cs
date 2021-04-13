@@ -23,7 +23,8 @@ namespace FlightInspection
         private string featureToDisplay;
         private string correlatedFeatureToDisplay;
         private List<DataPoint> points;
-        private List<DataPoint> correlatedFeaturePoints;
+        private List<DataPoint> correlatedFeaturePointsCsv;
+        private List<DataPoint> correlatedFeaturePointsDll;
 
         internal void updateCurrentLine(int v)
         {
@@ -32,7 +33,8 @@ namespace FlightInspection
             updateProperties();
         }
 
-        private List<DataPoint> pointsOfCorrelatedFeatures;
+        private List<DataPoint> pointsOfCorrelatedFeaturesCsv;
+        private List<DataPoint> pointsOfCorrelatedFeaturesDll;
         private List<DataPoint> regressionLine;
         private List<DataPoint> anomalyPoints;
         private List<DataPoint> minCircle;
@@ -183,25 +185,51 @@ namespace FlightInspection
                                                                            "altimeter_indicated-altitude-ft"));
             Points = getPointsFromStart(CurrentLineNumber, featureToDisplay);
 
-            CorrelatedFeaturePoints = getCorrelatedFeaturePointsFromStart(CurrentLineNumber, featureToDisplay);
+            CorrelatedFeaturePointsCsv = getCorrelatedFeaturePointsCsv(CurrentLineNumber, featureToDisplay);
 
-            PointsOfCorrelatedFeatures = getPointsOfCorrelatedFeatures(featureToDisplay, CorrelatedFeature);
+            PointsOfCorrelatedFeaturesCsv = getPointsOfCorrelatedFeatures(featureToDisplay, CorrelatedFeatureCsv);
 
-            AnomalyPoints = getAnomalyPoints(featureToDisplay, CorrelatedFeature);
+            RegressionLine = getRegLine(featureToDisplay, CorrelatedFeatureCsv);
 
-            RegressionLine = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+            AnomalyPoints = getAnomalyPoints(featureToDisplay, DataHandler.correlated[featureToDisplay]);
+
             try
             {
-
                 if (detectionAlgorithm == "Line")
                 {
-                    LineAlgo = getRegLineFromTrainCsv(featureToDisplay, CorrelatedFeature);
+                    if (DataHandler.correlated[featureToDisplay] != featureToDisplay)
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                    featureToDisplay, DataHandler.correlated[featureToDisplay]
+                                                    );
+                        LineAlgo = getRegLine(featureToDisplay, DataHandler.correlated[featureToDisplay]);
+                    }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                    featureToDisplay, featureToDisplay
+                                                    );
+                        LineAlgo = getRegLine(featureToDisplay, featureToDisplay);
+                    }
                 }
 
                 if (detectionAlgorithm == "Circle")
                 {
-                    MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
-                                                            DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
+                    if (DataHandler.correlated[featureToDisplay] != featureToDisplay)
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                        featureToDisplay, DataHandler.correlated[featureToDisplay]
+                                                        );
+                        MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
+                                                          DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
+                    }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                        featureToDisplay, featureToDisplay
+                                                        );
+                        MinCircleAlgo = getCircularPoints(0, new DataPoint(0, 0), 0.01);
+                    }
                 }
             }
             catch (Exception e)
@@ -268,11 +296,12 @@ namespace FlightInspection
 
         public void setFeatureToDisplay(string feature)
         {
-            this.featureToDisplay = feature;
+            FeatureToDisplay = feature;
         }
+
         public void setCorrelatedFeaturesFromTrainCsv(Dictionary<int, int> correlations)
         {
-            int size = featuresList.Count;
+            int size = FeaturesList.Count;
             float max = 0;
             int maxIndex = 0;
             List<float> valuesOfFeaturI;
@@ -312,10 +341,10 @@ namespace FlightInspection
             return points;
         }
 
-        public List<DataPoint> getCorrelatedFeaturePointsFromStart(int currentLine, string featurToDisplay)
+        public List<DataPoint> getCorrelatedFeaturePointsCsv(int currentLine, string featurToDisplay)
         {
-            CorrelatedFeature = getCorrelativeFeature(featureToDisplay);
-            return getPointsFromStart(currentLine, CorrelatedFeature);
+            CorrelatedFeatureCsv = getCorrelativeFeature(featureToDisplay);
+            return getPointsFromStart(currentLine, CorrelatedFeatureCsv);
         }
 
         public List<DataPoint> getPointsOfCorrelatedFeatures(string firstFeature, string secondFeature)
@@ -337,7 +366,7 @@ namespace FlightInspection
             return correlatedList;
         }
 
-        public List<DataPoint> getRegLineFromTrainCsv(string firstFeature, string secondFeature)
+        public List<DataPoint> getRegLine(string firstFeature, string secondFeature)
         {
             List<DataPoint> pointsOfLinearReg = new List<DataPoint>();
             List<float> firstFeatureValues = trainHandler.getValuesOfFeature(firstFeature);
@@ -559,34 +588,73 @@ namespace FlightInspection
             }
         }
 
-        public List<DataPoint> CorrelatedFeaturePoints
+        public List<DataPoint> CorrelatedFeaturePointsCsv
         {
-            get { return correlatedFeaturePoints; }
+            get { return correlatedFeaturePointsCsv; }
             set
             {
-                correlatedFeaturePoints = value;
-                NotifyPropertyChanged(nameof(CorrelatedFeaturePoints));
+                correlatedFeaturePointsCsv = value;
+                NotifyPropertyChanged(nameof(CorrelatedFeaturePointsCsv));
             }
-
         }
 
-        public string CorrelatedFeature
+        public List<DataPoint> CorrelatedFeaturePointsDll
+        {
+            get { return correlatedFeaturePointsDll; }
+            set
+            {
+                correlatedFeaturePointsDll = value;
+                NotifyPropertyChanged(nameof(CorrelatedFeaturePointsCsv));
+            }
+        }
+
+        public string CorrelatedFeatureCsv
         {
             get { return correlatedFeatureToDisplay; }
             set
             {
                 correlatedFeatureToDisplay = value;
-                NotifyPropertyChanged(nameof(CorrelatedFeature));
+                NotifyPropertyChanged(nameof(CorrelatedFeatureCsv));
             }
         }
 
-        public List<DataPoint> PointsOfCorrelatedFeatures
+        public string FeatureToDisplay
         {
-            get { return pointsOfCorrelatedFeatures; }
+            get { return featureToDisplay; }
             set
             {
-                pointsOfCorrelatedFeatures = value;
-                NotifyPropertyChanged(nameof(PointsOfCorrelatedFeatures));
+                featureToDisplay = value;
+                NotifyPropertyChanged(nameof(FeatureToDisplay));
+            }
+        }
+
+        public string CorrelatedFeatureDll
+        {
+            get { return correlatedFeatureToDisplay; }
+            set
+            {
+                correlatedFeatureToDisplay = value;
+                NotifyPropertyChanged(nameof(CorrelatedFeatureDll));
+            }
+        }
+
+        public List<DataPoint> PointsOfCorrelatedFeaturesCsv
+        {
+            get { return pointsOfCorrelatedFeaturesCsv; }
+            set
+            {
+                pointsOfCorrelatedFeaturesCsv = value;
+                NotifyPropertyChanged(nameof(PointsOfCorrelatedFeaturesCsv));
+            }
+        }
+
+        public List<DataPoint> PointsOfCorrelatedFeaturesDll
+        {
+            get { return pointsOfCorrelatedFeaturesDll; }
+            set
+            {
+                pointsOfCorrelatedFeaturesDll = value;
+                NotifyPropertyChanged(nameof(PointsOfCorrelatedFeaturesDll));
             }
         }
 

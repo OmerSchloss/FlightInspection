@@ -31,9 +31,9 @@ namespace FlightInspection
             model.updateCurrentLine(v);
         }
 
-        public List<DataPoint> VM_PointsOfCorrelatedFeatures
+        public List<DataPoint> VM_PointsOfCorrelatedFeaturesDll
         {
-            get { return model.PointsOfCorrelatedFeatures; }
+            get { return model.PointsOfCorrelatedFeaturesDll; }
         }
 
         public List<DataPoint> VM_LineAlgo

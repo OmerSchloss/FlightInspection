@@ -5,20 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FlightInspection"
              xmlns:oxy="http://oxyplot.org/wpf" d:DataContext="{d:DesignInstance Type=local:AnomalyViewModel}"
-             mc:Ignorable="d" Height="338.4" Width="159.841">
-    <Grid Margin="0,0,1,0.4" Height="338" VerticalAlignment="Bottom">
+             mc:Ignorable="d" Height="348.233" Width="158.008">
+    <Grid Margin="0,0,-3,3" Height="330" VerticalAlignment="Bottom">
         <Grid.RowDefinitions>
             <RowDefinition Height="175*"/>
             <RowDefinition Height="162*"/>
         </Grid.RowDefinitions>
-        <oxy:Plot Margin="0,9.8,0,-0.4" Grid.Row="1" HorizontalContentAlignment="Left">
+        <TextBlock Grid.Row="0"  Grid.Column="0" Margin="18,2,12,151" Text="Anomalies List" FontSize="12" TextAlignment="Center"  Foreground="White">
+            <TextBlock.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="SteelBlue" Offset="0"/>
+                    <GradientStop Color="#FF302A2A" Offset="3"/>
+                </RadialGradientBrush>
+            </TextBlock.Background>
+        </TextBlock>
+        <oxy:Plot TitleFontSize="12" Title="Anomalies Graph" Margin="0,10,9,8" Grid.Row="1" HorizontalContentAlignment="Left">
             <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding VM_PointsOfCorrelatedFeatures}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_PointsOfCorrelatedFeaturesDll}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_AnomalyPoints}" Color="Transparent"  MarkerFill="Red" MarkerType="Circle"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_MinCircleAlgo}" MarkerFill="Red" Background="Transparent"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_LineAlgo}" />
             </oxy:Plot.Series>
         </oxy:Plot>
-        <ListBox x:Name="List_Anomaly" Margin="0,0,0,0.2" ItemsSource="{Binding VM_AnomalyListBox}" SelectionChanged="ListBox_SelectionChanged"/>
+        <ListBox x:Name="List_Anomaly" Margin="18,22,11,7" ItemsSource="{Binding VM_AnomalyListBox}" SelectionChanged="ListBox_SelectionChanged"/>
     </Grid>
 </UserControl>

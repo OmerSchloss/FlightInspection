@@ -14,7 +14,7 @@
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="111*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btn_connect"  Content="Connect to fg" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="15" FontWeight="SemiBold" Margin="10,3,0,10" Click="Btn_connect_Click" Foreground="White">
+        <Button x:Name="btn_connect"  Content="Connect to FG" Grid.Row="0" Grid.Column="0" FontStyle="Normal" FontSize="15" FontWeight="SemiBold" Margin="10,3,0,10" Click="Btn_connect_Click" Foreground="White">
             <Button.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="SteelBlue" Offset="0"/>

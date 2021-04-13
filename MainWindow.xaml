@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FlightInspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="933.2"
+        Title="Flight Inspection" Height="500" Width="933.2"
         Closed="Window_Closed">
     <Grid x:Name="grd_main" Margin="0,0,3.2,0.4">
         <Grid.RowDefinitions>
@@ -24,10 +24,10 @@
         <Canvas x:Name="canvas_joystick" Grid.Column="4" Margin="4.8,0,0.2,0.4"/>
 
         <Grid x:Name="grd_media_panel" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" Margin="0,0.2,2.2,0.6"/>
-        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Margin="0,0,6.8,108.6" Grid.ColumnSpan="2"/>
+        <Grid x:Name="grd_feature_view" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0,0,103,0" Grid.ColumnSpan="3"/>
 
         <Grid x:Name="grd_info_view" Grid.Column="4" Margin="9.8,0.6,0.2,1.8" Grid.Row="1"/>
-        <Grid x:Name="grd_anomaly_view" Grid.Column="2" Margin="5.2,0,0.2,108.6" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <Grid x:Name="grd_anomaly_view" Grid.Column="2" Margin="36,23,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 
 
     </Grid >

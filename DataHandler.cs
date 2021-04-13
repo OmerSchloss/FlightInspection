@@ -9,10 +9,11 @@ namespace FlightInspection
 {
     class DataHandler
     {
-        private List<string> featuresList;
+        public static List<string> featuresList;
         private List<string> linesList;
         public static Dictionary<string, int> featureAndRadius;
         public static Dictionary<string, DataPoint> featureAndCenterPoint;
+        public static Dictionary<string, string> correlated;
         public static string detectionAlgorithm;
 
         public DataHandler()
@@ -43,8 +44,23 @@ namespace FlightInspection
         {
             detectionAlgorithm = algo;
         }
+
+        public static void setCorrelatedMapFromDll()
+        {
+            correlated = new Dictionary<string, string>();
+            if (featuresList != null)
+            {
+                foreach (string feature in featuresList)
+                {
+                    if (correlated.ContainsKey(feature)) continue;
+                    correlated.Add(feature, null);
+                }
+            }
+        }
+
         public static Dictionary<int, List<string>> getOutputTxt(string outputFile)
         {
+            setCorrelatedMapFromDll();
             string currentLine;
             featureAndCenterPoint = new Dictionary<string, DataPoint>();
             featureAndRadius = new Dictionary<string, int>();
@@ -54,8 +70,15 @@ namespace FlightInspection
             {
                 currentLine = sr.ReadLine();
                 setDetectionAlgorithm(currentLine);
+
                 if (detectionAlgorithm == "Line")
                 {
+                    while ((currentLine = sr.ReadLine()) != "done")
+                    {
+                        string feature1 = currentLine.Split(',')[0];
+                        string feature2 = currentLine.Split(',')[1];
+                        correlated[feature1] = feature2;
+                    }
                     while ((currentLine = sr.ReadLine()) != "done")
                     {
                         int lineNumber = int.Parse(currentLine.Split(',')[0]);
@@ -76,12 +99,15 @@ namespace FlightInspection
                 {
                     while ((currentLine = sr.ReadLine()) != "done")
                     {
-                        string feature = currentLine.Split(',')[0];
+                        string feature1 = currentLine.Split(',')[0];
+                        string feature2 = currentLine.Split(',')[1];
                         int X = int.Parse(currentLine.Split(',')[2]);
                         int Y = int.Parse(currentLine.Split(',')[3]);
                         int radius = int.Parse(currentLine.Split(',')[4]);
-                        featureAndRadius.Add(feature, radius);
-                        featureAndCenterPoint.Add(feature, new DataPoint(X, Y));
+                        featureAndRadius.Add(feature1, radius);
+                        featureAndCenterPoint.Add(feature1, new DataPoint(X, Y));
+                        correlated[feature1] = feature2;
+
                     }
                     while ((currentLine = sr.ReadLine()) != "done")
                     {
@@ -98,12 +124,16 @@ namespace FlightInspection
                             lineAndFeature[lineNumber].Add(feature);
                         }
                     }
-
-
                 }
+            }
+
+            foreach (string feature in featuresList)
+            {
+                if (correlated[feature] == null) correlated[feature] = feature;
             }
             return lineAndFeature;
         }
+
         public static List<string> getAnomalyListBox(string outputFile)
         {
             string currentLine;
@@ -114,6 +144,7 @@ namespace FlightInspection
                 currentLine = sr.ReadLine();
                 if (currentLine == "Line")
                 {
+                    while ((currentLine = sr.ReadLine()) != "done") { }
                     while ((currentLine = sr.ReadLine()) != "done")
                     {
                         anomalyList.Add(currentLine);
@@ -172,27 +203,33 @@ namespace FlightInspection
             }
         }
 
-
         public static List<string> getFeaturesFromXml(string xmlPath)
         {
             XDocument xml = XDocument.Load(xmlPath);
             IEnumerable<string> temp = xml.Descendants("output").Descendants("name").Select(name => (string)name);
             return temp.ToList();
+            List<string> fl = new List<string>();
+            /* foreach (string feature in temp.ToList())
+             {
+                 if (fl.Contains(feature)) continue;
+                 fl.Add(feature);
+             }
+             return fl;*/
         }
 
-        public void setFeaturesList(List<string> featuresList)
+        public void setFeaturesList(List<string> fl)
         {
-            this.featuresList = featuresList;
+            featuresList = fl;
         }
 
         public int getColumnByFeature(string feature)
         {
 
-            if (this.featuresList != null)
+            if (featuresList != null)
             {
-                for (int i = 0; i < this.featuresList.Count; i++)
+                for (int i = 0; i < featuresList.Count; i++)
                 {
-                    if (this.featuresList[i].Equals(feature))
+                    if (featuresList[i].Equals(feature))
                     {
                         return i;
                     }
