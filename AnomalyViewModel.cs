@@ -50,6 +50,11 @@ namespace FlightInspection
         {
             get { return model.MinCircleAlgo; }
         }
+        public List<DataPoint> VM_OtherAlgo
+        {
+            get { return model.OtherAlgo; }
+        }
+        
 
         public List<string> VM_AnomalyListBox
         {

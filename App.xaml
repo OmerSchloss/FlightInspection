@@ -10,7 +10,14 @@
 
 <!-- JoystickViewModel joystickViewModel = new JoystickViewModel(new FlightgearModel(csvPath, new TelnetClient()));
 
+if  (var(x) == 0)
+    a = 0;
+if (line >= linesList.size)
+    line = linesList.size;
 
+if (column >= this.linesList[line].Split(',').Count)
+    coulumn = this.linesList[line].Split(',').Count;
+    
 public float throttle
         {
             get { return model.throttle; }

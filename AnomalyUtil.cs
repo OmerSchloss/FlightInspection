@@ -46,6 +46,9 @@ namespace FlightInspection
         {
             int size = x.Count;
             float a = cov(x, y) / var(x);
+            if (var(x) == 0)
+                a = 0;
+
             float b = avg(y) - a * (avg(x));
             return new Line(a, b);
         }

@@ -39,6 +39,7 @@ namespace FlightInspection
         private List<DataPoint> anomalyPoints;
         private List<DataPoint> minCircle;
         private List<DataPoint> lineAlgo;
+        private List<DataPoint> otherAlgo;
 
         //#############################################//
 
@@ -229,6 +230,23 @@ namespace FlightInspection
                                                         featureToDisplay, featureToDisplay
                                                         );
                         MinCircleAlgo = getCircularPoints(0, new DataPoint(0, 0), 0.01);
+                    }
+                }
+                if (detectionAlgorithm == "Other")
+                {
+                    if (DataHandler.correlated[featureToDisplay] != featureToDisplay)
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                        featureToDisplay, DataHandler.correlated[featureToDisplay]
+                                                        );
+                        OtherAlgo = DataHandler.otherFeatureAndDataPoints[featureToDisplay];
+                    }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
+                                                        featureToDisplay, featureToDisplay
+                                                        );
+                        OtherAlgo = DataHandler.otherFeatureAndDataPoints[featureToDisplay];
                     }
                 }
             }
@@ -698,5 +716,16 @@ namespace FlightInspection
                 NotifyPropertyChanged(nameof(MinCircleAlgo));
             }
         }
+        public List<DataPoint> OtherAlgo
+        {
+            get { return otherAlgo; }
+            set
+            {
+                otherAlgo = value;
+                NotifyPropertyChanged(nameof(otherAlgo));
+            }
+        }
+
     }
+    
 }

@@ -13,6 +13,8 @@ namespace FlightInspection
         private List<string> linesList;
         public static Dictionary<string, int> featureAndRadius;
         public static Dictionary<string, DataPoint> featureAndCenterPoint;
+        public static Dictionary<string, List<DataPoint>> otherFeatureAndDataPoints;
+
         public static Dictionary<string, string> correlated;
         public static string detectionAlgorithm;
 
@@ -23,6 +25,10 @@ namespace FlightInspection
 
         public float getFeatureValueByLineAndColumn(int line, int column)
         {
+            if (line >= linesList.Count)
+                line = linesList.Count-1;
+            if (column >= this.linesList[line].Split(',').Length)
+                column = this.linesList[line].Split(',').Length - 1;
             return float.Parse(this.linesList[line].Split(',')[column]);
         }
 
@@ -125,13 +131,44 @@ namespace FlightInspection
                         }
                     }
                 }
-            }
+                if (detectionAlgorithm == "Other") 
+                {
+                    Dictionary<string, List<DataPoint>> otherFeatureAndDataPoints = new Dictionary<string, List<DataPoint>>();
 
-            foreach (string feature in featuresList)
-            {
-                if (correlated[feature] == null) correlated[feature] = feature;
-            }
+                    while ((currentLine = sr.ReadLine()) != "done") //get correlated features;
+                    {
+                        string feature1 = currentLine.Split(',')[0];
+                        string feature2 = currentLine.Split(',')[1];
+                        correlated[feature1] = feature2;
+                        otherFeatureAndDataPoints.Add(feature1, new List<DataPoint>());
+                        while ((currentLine = sr.ReadLine()) != "done")
+                            otherFeatureAndDataPoints[feature1].Add(new DataPoint(int.Parse(currentLine.Split(',')[0]), int.Parse(currentLine.Split(',')[1])));
+                    }
+
+                    currentLine = sr.ReadLine();//'start anomaly' line
+                    while ((currentLine = sr.ReadLine()) != "done")
+                    {
+                        int lineNumber = int.Parse(currentLine.Split(',')[0]);
+                        string feature = currentLine.Split(',')[1];
+
+                        if (lineAndFeature.ContainsKey(lineNumber))
+                        {
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                        else
+                        {
+                            lineAndFeature.Add(lineNumber, new List<string>());
+                            lineAndFeature[lineNumber].Add(feature);
+                        }
+                    }
+                }
+
+                foreach (string feature in featuresList)  //if there is no correlation
+                {
+                    if (correlated[feature] == null) correlated[feature] = feature;
+                }
             return lineAndFeature;
+            }
         }
 
         public static List<string> getAnomalyListBox(string outputFile)
@@ -158,6 +195,15 @@ namespace FlightInspection
                         anomalyList.Add(currentLine);
                     }
                 }
+                if (currentLine == "Other")
+                {
+                    while ((currentLine = sr.ReadLine()) != "start anomaly") { }
+                    while ((currentLine = sr.ReadLine()) != "done")
+                    {
+                        anomalyList.Add(currentLine);
+                    }
+                }
+
             }
             return anomalyList;
         }

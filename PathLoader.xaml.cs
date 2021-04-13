@@ -46,6 +46,10 @@ namespace FlightInspection
         private void ChooseDLL_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (Directory.Exists(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName))) + "\\plugins"))
+            {
+                openFileDialog.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName))) + "\\plugins";
+            }
             openFileDialog.Filter = "DLL files (*.dll)|*.dll";
             if (openFileDialog.ShowDialog() == true)
                 dllPath.Text = openFileDialog.FileName;

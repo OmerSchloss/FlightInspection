@@ -24,6 +24,7 @@
                 <oxy:LineSeries ItemsSource="{Binding VM_PointsOfCorrelatedFeaturesDll}" Color="Transparent"  MarkerFill="SteelBlue" MarkerType="Circle"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_AnomalyPoints}" Color="Transparent"  MarkerFill="Red" MarkerType="Circle"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_MinCircleAlgo}" MarkerFill="Red" Background="Transparent"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_OtherAlgo}" MarkerFill="Red" Background="Transparent"/>
                 <oxy:LineSeries ItemsSource="{Binding VM_LineAlgo}" />
             </oxy:Plot.Series>
         </oxy:Plot>
