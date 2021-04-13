@@ -1,7 +1,7 @@
 # FlightInspection
 
 ### SUMMARY
-This project is a MVVM-designed desktop app, that implemets a flight controller.
+This project is a MVVM-designed desktop app that implemets a flight controller.
 In the program, the user can upload a flight (that represented as a csv file) into it, and see different items of data about the uploaded flight.
 The idea is to first upload a normal flight in order to let the program learn the features and the data of a proper flight. Then to upload other flights in order to reseach if there are any anomalies in the flight. If there are any, they will be represented on the screen as red points.
 The program inerfaces with the flight-gear simulator so the user can see the uploaded fligth on the flight gear app screen.
@@ -16,7 +16,7 @@ A great question.
 In order to download this platform, first you should clone this repository.
 Also, you have to download the flightgear simulator from [here](https://www.flightgear.org/).
 You might have two csv files - one of a normal flight and the other of some fligth.
-You should also drag the provided 'play_back.xml' file into this path in your computer: C:\Program Files\FlightGear 2020.3.6\data\Protocol.
+You should also drag the provided 'play_back.xml' file into this path in your computer:  C:\Program Files\FlightGear 2020.3.6\data\Protocol.
 You can use the dll files in the 'plugins' directory or use a dll of your own.
 That's it :)
 
