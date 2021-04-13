@@ -2,9 +2,9 @@
 
 ### SUMMARY
 This project is a MVVM-designed desktop app that implemets a flight controller.
-In the program, the user can upload a flight (that represented as a csv file) into it, and see different items of data about the uploaded flight.
+In the program, the user can upload a flight (that represented as a csv file) to the program, and see different items of data about the uploaded flight.
 The idea is to first upload a normal flight in order to let the program learn the features and the data of a proper flight. Then to upload other flights in order to research if there are any anomalies in the flight. If there are any, they will be represented on the screen as red points.
-The program inerfaces with the flight-gear simulator so the user can see the uploaded fligth on the flight gear app screen.
+The program interfaces with the flight-gear simulator so the user can see the uploaded fligth on the flight gear app screen.
 Furthermore, on the openning screen there is an option for the user to uplaod dll file for using different algorithms to detect the anomalies. 
 
 ### Hierarchy
