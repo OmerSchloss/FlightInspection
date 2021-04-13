@@ -29,6 +29,6 @@ The dll write a new file called "output.txt" int this property: the first line i
 For example, if there is an anomaly in the second csv in line 45 between the correlative columns 'airspeed' and 'high',
 the dll will write in the 'output.txt' the line: "45,airspeed,high".
 
-#### Here is UML of the whole project for calrifying the hierarchy of this platform.
+#### Here is the UML of the whole project for making the hierarchy of the program clear.
 
 ![flightgear 1 0](https://user-images.githubusercontent.com/71650499/114557742-a433e000-9c72-11eb-84aa-e934ddc1d911.png)
