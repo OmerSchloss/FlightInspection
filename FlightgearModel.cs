@@ -286,18 +286,18 @@ namespace FlightInspection
         internal void endCurrentLine()
         {
             stop = true;
-            CurrentLineNumber = this.detectHandler.getNumOfLines() - 1;
+            CurrentLineNumber = this.detectHandler.getNumOfLines() - 2;
         }
 
         internal void forwardTenSec()
         {
-            if (CurrentLineNumber < this.detectHandler.getNumOfLines() - 101)
+            if (CurrentLineNumber < this.detectHandler.getNumOfLines() - 102)
             {
                 CurrentLineNumber = CurrentLineNumber + 100;
             }
             else
             {
-                CurrentLineNumber = this.detectHandler.getNumOfLines() - 1;
+                CurrentLineNumber = this.detectHandler.getNumOfLines() - 2;
             }
         }
 
