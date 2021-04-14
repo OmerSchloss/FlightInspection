@@ -205,13 +205,6 @@ namespace FlightInspection
                                                     );
                         LineAlgo = getRegLine(featureToDisplay, DataHandler.correlated[featureToDisplay]);
                     }
-                    else
-                    {
-                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
-                                                    featureToDisplay, featureToDisplay
-                                                    );
-                        LineAlgo = getRegLine(featureToDisplay, featureToDisplay);
-                    }
                 }
 
                 if (detectionAlgorithm == "Circle")
@@ -224,13 +217,6 @@ namespace FlightInspection
                         MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
                                                           DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
                     }
-                    else
-                    {
-                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
-                                                        featureToDisplay, featureToDisplay
-                                                        );
-                        MinCircleAlgo = getCircularPoints(0, new DataPoint(0, 0), 0.01);
-                    }
                 }
                 if (detectionAlgorithm == "Other")
                 {
@@ -238,13 +224,6 @@ namespace FlightInspection
                     {
                         PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
                                                         featureToDisplay, DataHandler.correlated[featureToDisplay]
-                                                        );
-                        OtherAlgo = DataHandler.otherFeatureAndDataPoints[featureToDisplay];
-                    }
-                    else
-                    {
-                        PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
-                                                        featureToDisplay, featureToDisplay
                                                         );
                         OtherAlgo = DataHandler.otherFeatureAndDataPoints[featureToDisplay];
                     }
