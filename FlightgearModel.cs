@@ -201,9 +201,14 @@ namespace FlightInspection
                     if (DataHandler.correlated[featureToDisplay] != featureToDisplay)
                     {
                         PointsOfCorrelatedFeaturesDll = getPointsOfCorrelatedFeatures(
-                                                    featureToDisplay, DataHandler.correlated[featureToDisplay]
-                                                    );
+                                                        featureToDisplay, DataHandler.correlated[featureToDisplay]
+                                                        );
                         LineAlgo = getRegLine(featureToDisplay, DataHandler.correlated[featureToDisplay]);
+                    }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = new List<DataPoint>();
+                        LineAlgo = new List<DataPoint>();
                     }
                 }
 
@@ -217,6 +222,11 @@ namespace FlightInspection
                         MinCircleAlgo = getCircularPoints(DataHandler.featureAndRadius[featureToDisplay],
                                                           DataHandler.featureAndCenterPoint[featureToDisplay], 0.01);
                     }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = new List<DataPoint>();
+                        MinCircleAlgo = new List<DataPoint>();
+                    }
                 }
                 if (detectionAlgorithm == "Other")
                 {
@@ -226,6 +236,11 @@ namespace FlightInspection
                                                         featureToDisplay, DataHandler.correlated[featureToDisplay]
                                                         );
                         OtherAlgo = DataHandler.otherFeatureAndDataPoints[featureToDisplay];
+                    }
+                    else
+                    {
+                        PointsOfCorrelatedFeaturesDll = new List<DataPoint>();
+                        OtherAlgo = new List<DataPoint>();
                     }
                 }
             }
