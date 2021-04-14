@@ -58,3 +58,5 @@ The lines afterwards will contain a line with 'start anomalies' line and then th
 ![flightgear 1 0](https://user-images.githubusercontent.com/71650499/114557742-a433e000-9c72-11eb-84aa-e934ddc1d911.png)
 
 ### You probably be enthauthiastic with our awesome [video](https://www.youtube.com/watch?v=EMMqsE31NI0)
+
+### Thank you for choosing EL-AL
