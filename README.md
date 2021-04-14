@@ -46,11 +46,11 @@ The lines afterwards will contain the following properties with ',' between them
 #### Other algorithm 'output.txt' schema
 The first line will be Other and enter.
 Then, there are pairs of all the correlated features in the csv file with ',' between them.
-After each pair will be written a list of points the algorithm detect anomalys by the draw which we get eith this points.
+After each pair will be written a list of points x,y that together build the shape that you want to detect according to.
 (each point will be written in a single line and ',' will sepearte between the x and the y indexes of the points). And a 'done' line.
 After all those information will be a 'done' line.
 
-The lines afterwards will contain a line with 'start anomalys' line and then the following properties with ',' between them: row number in the csv where the anomaly occured, the first feature and its correlated feature.
+The lines afterwards will contain a line with 'start anomalies' line and then the following properties with ',' between them: row number in the csv where the anomaly occured, the first feature and its correlated feature.
 
 
 #### Here is the UML of the whole project for making the hierarchy of the program clear.
