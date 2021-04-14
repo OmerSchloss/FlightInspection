@@ -59,4 +59,5 @@ The lines afterwards will contain a line with 'start anomalies' line and then th
 
 ### You probably be enthauthiastic with our awesome [video](https://www.youtube.com/watch?v=EMMqsE31NI0)
 
-### Thank you for choosing EL-AL
+### Thank you for choosing EL-AL ![image](https://user-images.githubusercontent.com/71728836/114742385-5e4f4880-9d54-11eb-9f2c-ff37d88e2a9a.png)
+
