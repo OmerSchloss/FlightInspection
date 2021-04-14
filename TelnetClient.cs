@@ -70,7 +70,9 @@ namespace FlightInspection
                     this.client.Send(messageSent);
                 }
             }
-            catch (ObjectDisposedException se) { }
+            catch (Exception e) {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
         }
         public string read()
         {

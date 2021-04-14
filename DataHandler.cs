@@ -131,9 +131,9 @@ namespace FlightInspection
                         }
                     }
                 }
-                if (detectionAlgorithm == "Other") 
+                if (detectionAlgorithm == "Other")
                 {
-                    Dictionary<string, List<DataPoint>> otherFeatureAndDataPoints = new Dictionary<string, List<DataPoint>>();
+                    otherFeatureAndDataPoints = new Dictionary<string, List<DataPoint>>();
 
                     while ((currentLine = sr.ReadLine()) != "done") //get correlated features;
                     {
@@ -254,13 +254,6 @@ namespace FlightInspection
             XDocument xml = XDocument.Load(xmlPath);
             IEnumerable<string> temp = xml.Descendants("output").Descendants("name").Select(name => (string)name);
             return temp.ToList();
-            List<string> fl = new List<string>();
-            /* foreach (string feature in temp.ToList())
-             {
-                 if (fl.Contains(feature)) continue;
-                 fl.Add(feature);
-             }
-             return fl;*/
         }
 
         public void setFeaturesList(List<string> fl)

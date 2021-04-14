@@ -45,7 +45,7 @@
         <TextBox x:Name="csvAnomalyPath" Grid.Row="6" Grid.Column="0" TextWrapping="Wrap" TextChanged="csvAnomalyPath_TextChanged"  Margin="10,1,11,14" Text="Type your path here or choose a file" />
         <Button x:Name ="ChooseCsvAnomaly" Grid.Row="6" Grid.Column="1" Content="Choose csv file" Click="ChooseCsvAnomaly_Click" Margin="5,1,6,14"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="0" FontSize ="15" Margin="10,9,4.2,0.4" TextWrapping="Wrap" Text="Please choose a dll file" FontWeight="Bold"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" FontSize ="15" Margin="10,9,4.2,0.4" TextWrapping="Wrap" Text="Please choose a dll algorithm file" FontWeight="Bold"/>
         <Button x:Name ="ChooseDLL" Grid.Row="8" Grid.Column="1" Content="Choose dll file" Click="ChooseDLL_Click" Margin="5,1,6,14"/>
         <TextBox x:Name="dllPath" Grid.Row="8" Grid.Column="0" TextWrapping="Wrap" TextChanged="dllPath_TextChanged"  Margin="10,1,11,14" Text="Type your path here or choose a file" />
 

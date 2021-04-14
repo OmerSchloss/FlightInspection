@@ -252,7 +252,7 @@ namespace FlightInspection
             }
             catch (Exception e)
             {
-
+                System.Diagnostics.Debug.WriteLine(e);
             }
         }
 
@@ -727,5 +727,5 @@ namespace FlightInspection
         }
 
     }
-    
+
 }

@@ -88,10 +88,6 @@ namespace FlightInspection
             mediaViewModel.pauseFg();
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-        }
-
         private void btn_play_start_Click(object sender, RoutedEventArgs e)
         {
             mediaViewModel.startFromZeroFg();
@@ -124,9 +120,8 @@ namespace FlightInspection
             {
                 mediaViewModel.updateSpeedFg(float.Parse(text_speed.Text));
             }
-            catch(FormatException fe)
+            catch (Exception)
             {
-
             }
         }
 
