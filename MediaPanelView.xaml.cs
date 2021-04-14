@@ -81,6 +81,12 @@ namespace FlightInspection
         internal void closeWindow()
         {
             mediaViewModel.closeThread();
+            if (isConnected)
+            {
+                mediaViewModel.disconnectFromFG();
+                btn_connect.Content = "connect to fg";
+                isConnected = false;
+            }
         }
 
         private void btn_pause_Click(object sender, RoutedEventArgs e)
