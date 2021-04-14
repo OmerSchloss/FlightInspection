@@ -79,22 +79,22 @@ namespace FlightInspection
             detectHandler.csvParser(detectCsv);
             trainHandler.setFeaturesList(FeaturesList);
             detectHandler.setFeaturesList(FeaturesList);
-            new Thread(delegate ()
-            {
-                setCorrelatedFeaturesFromTrainCsv(this.correlations);
-            }).Start();
             CurrentLineNumber = 0;
             threatStarted = false;
             stop = false;
             Speed = 1;
-            var assembly = Assembly.LoadFile(dllPath);
-            var type = assembly.GetType("regression_line_dll.anomaly_detector");
-            var obj = Activator.CreateInstance(type);
-            var method = type.GetMethod("detector");
-            method.Invoke(obj, null);
-            anomalyDict = DataHandler.getOutputTxt("output.txt");
-            AnomalyListBox = DataHandler.getAnomalyListBox("output.txt");
-            detectionAlgorithm = DataHandler.detectionAlgorithm;
+            new Thread(delegate ()
+            {
+                var assembly = Assembly.LoadFile(dllPath);
+                var type = assembly.GetType("regression_line_dll.anomaly_detector");
+                var obj = Activator.CreateInstance(type);
+                var method = type.GetMethod("detector");
+                method.Invoke(obj, null);
+                anomalyDict = DataHandler.getOutputTxt("output.txt");
+                AnomalyListBox = DataHandler.getAnomalyListBox("output.txt");
+                detectionAlgorithm = DataHandler.detectionAlgorithm;
+            }).Start();
+            setCorrelatedFeaturesFromTrainCsv(this.correlations);
         }
 
         public bool connect(string ip, int port)

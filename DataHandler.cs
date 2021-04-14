@@ -26,7 +26,7 @@ namespace FlightInspection
         public float getFeatureValueByLineAndColumn(int line, int column)
         {
             if (line >= linesList.Count)
-                line = linesList.Count-1;
+                line = linesList.Count - 1;
             if (column >= this.linesList[line].Split(',').Length)
                 column = this.linesList[line].Split(',').Length - 1;
             return float.Parse(this.linesList[line].Split(',')[column]);
@@ -165,9 +165,10 @@ namespace FlightInspection
 
                 foreach (string feature in featuresList)  //if there is no correlation
                 {
+                    if (!(correlated.ContainsKey(feature))) correlated.Add(feature, null);
                     if (correlated[feature] == null) correlated[feature] = feature;
                 }
-            return lineAndFeature;
+                return lineAndFeature;
             }
         }
 
